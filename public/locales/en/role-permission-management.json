@@ -1,0 +1,115 @@
+{
+  "title": {
+    "role-management-title": "Role Management",
+    "permission-management-title": "Permission Management",
+    "role-detail-title": "Role Detail",
+    "delete-role": "The following role with these informations will be deleted:"
+  },
+  "table": {
+    "permission-group": "Permission Group",
+    "role": "Role",
+    "user": "User"
+  },
+  "permission": {
+    "permission-management": "Managing Permissions",
+    "role-management": "Managing Roles",
+    "user-management": "Managing Users", 
+    "role-permission-management": "Managing Role Permissions",
+    "user-role-management": "Managing User Roles",
+    "show-permissions": "Viewing Permissions",
+    "show-permission": "Viewing Permission",
+    "create-permission": "Creating Permission",
+    "update-permission": "Updating Permission",
+    "delete-permission": "Deleting Permission",
+    "show-roles": "Viewing Roles",
+    "show-role": "Viewing Role",
+    "create-role": "Creating Role", 
+    "update-role": "Updating Role",
+    "delete-role": "Deleting Role",
+    "show-users": "Viewing Users",
+    "show-user": "Viewing User",
+    "create-user": "Creating User",
+    "update-user": "Updating User", 
+    "delete-user": "Deleting User",
+    "show-role-permissions": "Viewing Role Permissions",
+    "show-role-permission": "Viewing Role Permission",
+    "assign-permission": "Assigning Permission",
+    "revoke-permission": "Revoking Permission",
+    "show-all-roles-permissions": "Viewing All Role Permissions",
+    "show-user-roles": "Viewing User Roles",
+    "show-user-role": "Viewing User Role",
+    "assign-role": "Assigning Role",
+    "revoke-role": "Revoking Role",
+    "show-all-user-roles": "Viewing All User Roles"
+  },
+  "fields": {
+    "role": "Role Name",
+    "created-at": "Created At",
+    "updated-at": "Updated At"
+  },
+  "filters": {
+    "filterBy": "Filter by",
+    "role": "Role Name"
+  },
+  "form": {
+    "title": {
+      "create-new-role": "Create New Role",
+      "edit-profile": "Edit Profile"
+    },
+    "description": {
+      "create-new-role": "Create a new role by filling in the form below.",
+      "edit-profile": "Make changes to your profile here. Click save when you're done."
+    },
+    "tabs": {
+      "role-information": "Role Information"
+    }
+  },
+  "greeting": {
+    "welcome": "Welcome back!",
+    "description": "Below is the list of roles in the system"
+  },
+  "placeholders": {
+    "role": "ADMIN"
+  },
+  "button": {
+    "create": "Create new Role",
+    "save": "Save",
+    "saving": "Saving...",
+    "view": "View",
+    "delete": "Delete",
+    "deleting": "Deleting..."
+  },
+  "notification": {
+    "general": {
+      "error": "Error",
+      "success": "Success"
+    },
+    "success": {
+      "create": "Role created successfully",
+      "update": "Role updated successfully",
+      "delete": "Role deleted successfully",
+      "get": "Role fetched successfully"
+    },
+    "error": {
+      "not-found": "Role not found",
+      "create": "Failed to create Role",
+      "update": "Failed to update Role",
+      "delete": "Failed to delete Role",
+      "get": "Failed to get Role",
+      "validation": "Please fill in all required fields",
+      "unexpected": "An unexpected error occurred",
+      "exist": "Role name already exists"
+    },
+    "confirmation": {
+      "delete": "Are you sure you want to delete this Role?",
+      "save": "Are you sure to save changes?"
+    }
+  },
+  "validation": {
+    "role": {
+      "required": "Role name is required",
+      "length": "Role name must be between 1 and 50 characters"
+    }
+  }
+}
+

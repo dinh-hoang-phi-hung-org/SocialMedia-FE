@@ -1,11 +1,15 @@
+"use client";
+
 import { Label } from "@radix-ui/react-label";
-import { Button } from "@/components/ui/button";
+import { useTranslation } from "next-i18next";
+import Header from "@/shared/components/Base-layouts/Header";
 
 export default function Home() {
+  const { t } = useTranslation();
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Label>Hello</Label>
-      <Button variant="outline">Click me</Button>
+    <div className="flex flex-col w-full">
+      <Header />
+      <Label>{t("common:text.actions")}</Label>
     </div>
   );
 }

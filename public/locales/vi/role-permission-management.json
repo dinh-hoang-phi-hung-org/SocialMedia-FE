@@ -1,0 +1,115 @@
+{
+  "title": {
+    "role-management-title": "Quản lý vai trò",
+    "permission-management-title": "Quản lý quyền hạn",
+    "role-detail-title": "Chi tiết vai trò",
+    "delete-role": "Vai trò sau có thông tin này sẽ bị xóa:"
+  },
+  "table": {
+    "permission-group": "Nhóm quyền hạn",
+    "role": "Tên vai trò",
+    "user": "Tên người dùng"
+  },
+  "permission": {
+    "permission-management": "Quản lý quyền hạn",
+    "role-management": "Quản lý vai trò",
+    "user-management": "Quản lý người dùng", 
+    "role-permission-management": "Quản lý quyền hạn của vai trò",
+    "user-role-management": "Quản lý vai trò của người dùng",
+    "show-permissions": "Xem quyền hạn",
+    "show-permission": "Xem quyền hạn",
+    "create-permission": "Tạo quyền hạn",
+    "update-permission": "Cập nhật quyền hạn",
+    "delete-permission": "Xóa quyền hạn",
+    "show-roles": "Xem vai trò",
+    "show-role": "Xem vai trò",
+    "create-role": "Tạo vai trò", 
+    "update-role": "Cập nhật vai trò",
+    "delete-role": "Xóa vai trò",
+    "show-users": "Xem người dùng",
+    "show-user": "Xem người dùng",
+    "create-user": "Tạo người dùng",
+    "update-user": "Cập nhật người dùng", 
+    "delete-user": "Xóa người dùng",
+    "show-role-permissions": "Xem quyền hạn của vai trò",
+    "show-role-permission": "Xem quyền hạn của vai trò",
+    "assign-permission": "Gán quyền hạn",
+    "revoke-permission": "Thu hồi quyền hạn",
+    "show-all-roles-permissions": "Xem tất cả quyền hạn của vai trò",
+    "show-user-roles": "Xem vai trò của người dùng",
+    "show-user-role": "Xem vai trò của người dùng",
+    "assign-role": "Gán vai trò",
+    "revoke-role": "Thu hồi vai trò",
+    "show-all-user-roles": "Xem tất cả vai trò của người dùng"
+  },
+  "fields": {
+    "role": "Tên vai trò",
+    "created-at": "Ngày tạo",
+    "updated-at": "Ngày cập nhật"
+  },
+  "filters": {
+    "filterBy": "Lọc theo",
+    "role": "Tên vai trò"
+  },
+  "form": {
+    "title": {
+      "create-new-role": "Tạo vai trò mới",
+      "edit-profile": "Chỉnh sửa hồ sơ"
+    },
+    "description": {
+      "create-new-role": "Tạo một vai trò mới bằng cách điền vào biểu mẫu bên dưới.",
+      "edit-profile": "Thực hiện các thay đổi trong hồ sơ của bạn. Nhấp vào lưu khi bạn đã hoàn tất."
+    },
+    "tabs": {
+      "role-information": "Thông tin vai trò"
+    }
+  },
+  "greeting": {
+    "welcome": "Chào mừng trở lại!",
+    "description": "Dưới đây là danh sách vai trò trong hệ thống"
+  },
+  "placeholders": {
+    "role": "ADMIN"
+  },
+  "button": {
+    "create": "Tạo vai trò mới",
+    "save": "Lưu",
+    "saving": "Đang lưu...",
+    "view": "Xem",
+    "delete": "Xóa",
+    "deleting": "Đang xóa..."
+  },
+  "notification": {
+    "general": {
+      "error": "Lỗi",
+      "success": "Thành công"
+    },
+    "success": {
+      "create": "Tạo vai trò thành công",
+      "update": "Cập nhật vai trò thành công",
+      "delete": "Xóa vai trò thành công",
+      "get": "Lấy vai trò thành công"
+    },
+    "error": {
+      "not-found": "vai trò không tồn tại",
+      "create": "Không thể tạo vai trò",
+      "update": "Không thể cập nhật vai trò",
+      "delete": "Không thể xóa vai trò",
+      "get": "Không tìm thấy vai trò",
+      "validation": "Vui lòng điền đầy đủ các trường bắt buộc",
+      "unexpected": "Đã xảy ra lỗi không xác định",
+      "exist": "Tên đăng nhập hoặc email đã tồn tại"
+    },
+    "confirmation": {
+      "delete": "Bạn có chắc chắn muốn xóa vai trò này không?",
+      "save": "Bạn có chắc muốn lưu các thay đổi không?"
+    }
+  },
+  "validation": {
+    "role": {
+      "required": "Tên vai trò là bắt buộc",
+      "length": "Tên vai trò phải có độ dài từ 8 đến 32 ký tự"
+    }
+  }
+}
+
