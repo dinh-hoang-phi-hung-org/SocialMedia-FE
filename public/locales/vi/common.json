@@ -21,7 +21,9 @@
     "register": "Đăng ký",
     "registering": "Đang đăng ký...",
     "back-to-login": "Đã có tài khoản ?",
-    "change-password": "Đặt lại mật khẩu"
+    "change-password": "Đặt lại mật khẩu",
+    "try-again": "Thử lại",
+    "go-to-login": "Đi đến trang đăng nhập"
   },
   "text": {
     "actions": "Hành động",
@@ -55,7 +57,7 @@
     "login-failed": "Đăng nhập thất bại",
     "login-success": "Đăng nhập thành công",
     "logout-success": "Đăng xuất thành công",
-    "register-success": "Đăng ký thành công",
+    "register-success": "Đăng ký thành công. Vui lòng kiểm tra email để xác thực tài khoản",
     "welcome": "Chào mừng đến với hệ thống Zero Template!",
     "create-success": "Tạo mới thành công",
     "create-error": "Không thể tạo mới",
@@ -76,7 +78,12 @@
     "already-login": "Bạn vẫn đang trong phiên đăng nhập. Vui lòng đăng xuất để tiếp tục thao tác.",
     "checking-authentication": "Đang kiểm tra phiên đăng nhập...",
     "min-length-exceed-max": "Độ dài tối thiểu không được vượt quá độ dài tối đa",
-    "max-length-below-min": "Độ dài tối đa không được nhỏ hơn độ dài tối thiểu"
+    "max-length-below-min": "Độ dài tối đa không được nhỏ hơn độ dài tối thiểu",
+    "verification-failed": "Xác thực tài khoản thất bại",
+    "verification-success": "Xác thực tài khoản thành công",
+    "verifying-account": "Đang xác thực tài khoản...",
+    "error-occurred": "Đã xảy ra lỗi. Vui lòng thử lại",
+    "invalid-verification-link": "Liên kết xác thực không hợp lệ. Vui lòng thử lại."
   },
   "auth": {
     "login": "Đăng nhập",
@@ -87,10 +94,16 @@
     "enter-your-username": "Nhập tên đăng nhập",
     "enter-your-password": "Nhập mật khẩu",
     "username-must-be-at-least-2-characters-long": "Tên đăng nhập phải có ít nhất 2 ký tự",
-    "password-must-be-at-least-8-characters-long": "Mật khẩu phải có ít nhất 8 ký tự",
+    "phone-number-must-be-at-least-10-digits": "Số điện thoại phải có ít nhất 10 chữ số",
     "invalid-credentials": "Tên đăng nhập hoặc mật khẩu không đúng",
     "user-not-found": "Tên đăng nhập không tồn tại",
+    "user-not-verified": "Tài khoản chưa được xác thực",
     "this-field-is-required": "Trường này là bắt buộc",
+    "email-required": "Email là bắt buộc",
+    "email-invalid": "Email không hợp lệ",
+    "password-required": "Mật khẩu là bắt buộc",
+    "password-invalid": "Mật khẩu phải có từ 8 đến 32 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+    "username-required": "Tên đăng nhập là bắt buộc",
     "username-invalid": "Tên đăng nhập không hợp lệ",
     "error": "Lỗi",
     "register": "Đăng ký",
@@ -108,10 +121,12 @@
     "confirm-your-password": "Xác nhận lại mật khẩu",
     "passwords-do-not-match": "Mật khẩu không khớp",
     "confirm-password-required": "Xác thực mật khẩu là bắt buộc",
+    "new-password-required": "Mật khẩu mới là bắt buộc",
     "new-password": "Mật khẩu mới",
     "change-password": "Đổi mật khẩu",
     "invalid-email-address": "Địa chỉ Email không hợp lệ",
-    "phone-number-must-be-at-least-10-digits": "Số điện thoại phải có ít nhất 10 chữ số"
+    "verification-failed": "Không thể xác thực tài khoản, liên kết có thể đã hết hạn hoặc không hợp lệ",
+    "verification-success": "Email của bạn đã được xác thực thành công. Bạn có thể đăng nhập vào tài khoản của mình."
   },
   "path": {
     "home": "Trang chủ",
@@ -145,4 +160,3 @@
     }
   }
 }
-
