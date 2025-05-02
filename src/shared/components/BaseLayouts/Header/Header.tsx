@@ -7,14 +7,14 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { LanguagesIcon } from "lucide-react";
-import { useLanguage } from "../../hooks/useLanguage";
-import LabelShadcn from "../ui/LabelShadcn";
+import { useLanguage } from "@/shared/hooks/useLanguage";
+import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 
 const Header = () => {
   const { changeLanguage } = useLanguage();
   return (
-    <header className="sticky right-0 top-0 justify-between z-10 p-6 pl-0 bg-black w-screen">
-      <div className="flex items-center justify-center">
+    <header className="sticky top-0 right-0 left-0 z-50 bg-black h-[64px] w-full">
+      <div className="h-full flex items-center justify-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <LanguagesIcon className="w-6 h-6 text-white" />

@@ -41,6 +41,18 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: {
+          "500": "var(--success-500)",
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
+          foreground500: "var(--success-foreground-500)",
+        },
+        danger: {
+          "500": "var(--danger-500)",
+          DEFAULT: "var(--danger)",
+          foreground: "var(--danger-foreground)",
+          foreground500: "var(--danger-foreground-500)",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -61,4 +73,3 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
-

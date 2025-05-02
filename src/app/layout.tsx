@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import I18nextProvider from "@/shared/utils/functions/multilingual/i18nProvider";
 import { LanguageProvider } from "@/shared/hooks/useLanguage";
 import "./globals.css";
+import { Toaster } from "@/shared/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <I18nextProvider>
           <LanguageProvider>{children}</LanguageProvider>
+          <Toaster />
         </I18nextProvider>
       </body>
     </html>

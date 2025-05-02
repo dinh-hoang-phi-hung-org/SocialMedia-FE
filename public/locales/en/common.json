@@ -21,7 +21,9 @@
     "register": "Register",
     "registering": "Registering...",
     "back-to-login": "Already have an account ?",
-    "change-password": "Reset Password"
+    "change-password": "Reset Password",
+    "try-again": "Try again",
+    "go-to-login": "Go to login"
   },
   "text": {
     "actions": "Actions",
@@ -55,7 +57,7 @@
     "login-failed": "Login failed",
     "login-success": "Login success",
     "logout-success": "Logout successfully",
-    "register-success": "Register success",
+    "register-success": "Your email has been successfully registered. Please check your email to verify your account",
     "welcome": "Welcome to Zero Template System!",
     "create-success": "Created successfully",
     "create-error": "Failed to create",
@@ -76,7 +78,12 @@
     "already-login": "You are already logged in. Please logout to continue.",
     "checking-authentication": "Checking authentication...",
     "min-length-exceed-max": "Minimum length cannot exceed maximum length",
-    "max-length-below-min": "Maximum length cannot be less than minimum length"
+    "max-length-below-min": "Maximum length cannot be less than minimum length",
+    "verification-failed": "Account verification failed",
+    "verification-success": "Account verification successful",
+    "verifying-account": "Verifying your account...",
+    "error-occurred": "An error occurred. Please try again",
+    "invalid-verification-link": "Invalid verification link. Please try again."
   },
   "auth": {
     "login": "Login",
@@ -87,11 +94,16 @@
     "enter-your-username": "Enter your username",
     "enter-your-password": "Enter your password",
     "username-must-be-at-least-2-characters-long": "Username must be at least 2 characters long",
-    "password-must-be-at-least-8-characters-long": "Password must be at least 8 characters long",
     "phone-number-must-be-at-least-10-digits": "Phone number must be at least 10 digits",
     "invalid-credentials": "Invalid username or password",
     "user-not-found": "User not found",
+    "user-not-verified": "User not verified",
     "this-field-is-required": "This field is required",
+    "email-required": "Email is required",
+    "email-invalid": "Email is invalid",
+    "password-required": "Password is required",
+    "password-invalid": "Password must be at least 8 characters long, including uppercase, lowercase, numbers and special characters",
+    "username-required": "Username is required",
     "username-invalid": "Username is invalid",
     "error": "Error",
     "register": "Register",
@@ -112,7 +124,9 @@
     "confirm-password-required": "Confirm Password is required",
     "new-password": "New Password",
     "change-password": "Change Password",
-    "invalid-email-address": "Invalid email address"
+    "invalid-email-address": "Invalid email address",
+    "verification-failed": "Verification failed, link may have expired or is invalid",
+    "verification-success": "Your email has been verified successfully. You can now login to your account"
   },
   "path": {
     "home": "Home",
@@ -146,4 +160,3 @@
     }
   }
 }
-
