@@ -23,7 +23,13 @@
     "back-to-login": "Already have an account ?",
     "change-password": "Reset Password",
     "try-again": "Try again",
-    "go-to-login": "Go to login"
+    "go-to-login": "Go to login",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "message": "Message",
+    "edit-profile": "Edit Profile",
+    "post": "Post",
+    "posting": "Posting..."
   },
   "text": {
     "actions": "Actions",
@@ -52,6 +58,11 @@
   "notification": {
     "error": "Error",
     "success": "Success"
+  },
+  "error": {
+    "file_count_limit": "Cannot upload more than 13 files",
+    "invalid_file_type": "Invalid file type",
+    "file_size_limit": "File size cannot exceed 10MB"
   },
   "message": {
     "login-failed": "Login failed",
@@ -130,6 +141,9 @@
   },
   "path": {
     "home": "Home",
+    "search": "Search",
+    "message": "Message",
+    "notification": "Notification",
     "dashboard": "Dashboard",
     "profile": "Profile",
     "admin": "Administration",
@@ -143,6 +157,7 @@
     "settings": "Settings"
   },
   "language": {
+    "title": "Language",
     "en": "English",
     "vi": "Vietnamese"
   },
@@ -158,5 +173,14 @@
       "require-min-length": "Minimum length",
       "require-max-length": "Maximum length"
     }
+  },
+  "profile": {
+    "posts": "Posts",
+    "followers": "Followers",
+    "following": "Following"
+  },
+  "post": {
+    "new-post": "New Post",
+    "news": "What's new?"
   }
 }

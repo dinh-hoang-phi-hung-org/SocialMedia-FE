@@ -74,19 +74,7 @@ export type TransferType = {
   // eslint-disable-next-line
   repository: any;
   // eslint-disable-next-line
-  getListAPI?: (params: PaginationParamsType) => Promise<GetListResponse<any>>;
-  // eslint-disable-next-line
-  getAPI?: (id: string) => Promise<GetResponse<any>>;
-  // eslint-disable-next-line
-  createAPI?: (params: any) => Promise<PostResponse<any>>;
-  // eslint-disable-next-line
-  updateAPI?: (id: string, params: any) => Promise<PutResponse<any>>;
-  // eslint-disable-next-line
-  deleteAPI?: (id: string) => Promise<DeleteResponse<any>>;
-  // eslint-disable-next-line
   otherAPIs?: Record<string, (...args: any[]) => Promise<ApiSuccessResponse<any>>>;
-  // eslint-disable-next-line
-  patchAPIs?: Record<string, (id: string, params: any) => Promise<ApiSuccessResponse<any>>>;
   listPath?: string;
   detailPath?: string;
 };

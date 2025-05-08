@@ -50,10 +50,31 @@ export const authProvider = {
    */
   decodeToken: (token: string): JwtPayload => {
     try {
-      return JSON.parse(atob(token.split(".")[1])) as JwtPayload;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // JWT token has format: header.payload.signature
+      // We only need the payload part (second part)
+      const base64Url = token.split(".")[1];
+      if (!base64Url) {
+        throw new Error("Invalid token format");
+      }
+
+      // Convert base64url to regular base64
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+
+      // Decode base64 to get JWT payload as JSON string
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join(""),
+      );
+
+      // Parse JSON string to object
+      return JSON.parse(jsonPayload) as JwtPayload;
     } catch (error) {
-      throw new Error("Invalid token format");
+      console.error("Error decoding token:", error);
+      return {} as JwtPayload;
     }
   },
 
@@ -94,26 +115,6 @@ export const authProvider = {
       // Clear cache on error
       authCache = null;
       return authProvider.clearTokens();
-    }
-  },
-
-  /**
-   * Get user UUID from token
-   * Added caching and error handling
-   */
-  getUserUuid: (): string | null => {
-    if (typeof window === "undefined") return null;
-
-    try {
-      const token = authProvider.getToken();
-      if (!token) return null;
-
-      const decodedToken = authProvider.decodeToken(token);
-      const uuid = decodedToken.sub;
-      return uuid;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      return null;
     }
   },
 
@@ -166,6 +167,16 @@ export const authProvider = {
   getToken: (): string | null => {
     if (typeof window === "undefined") return null;
     return localStorage.getItem(TOKEN_KEY);
+  },
+
+  getUsername: (): string | null => {
+    if (typeof window === "undefined") return null;
+    const token = authProvider.getToken();
+    if (!token) return null;
+
+    const decodedToken = authProvider.decodeToken(token);
+    const username = decodedToken.username;
+    return username || null;
   },
 
   /**

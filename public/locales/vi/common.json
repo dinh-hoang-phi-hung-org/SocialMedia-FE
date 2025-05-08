@@ -23,7 +23,13 @@
     "back-to-login": "Đã có tài khoản ?",
     "change-password": "Đặt lại mật khẩu",
     "try-again": "Thử lại",
-    "go-to-login": "Đi đến trang đăng nhập"
+    "go-to-login": "Đi đến trang đăng nhập",
+    "follow": "Theo dõi",
+    "unfollow": "Hủy theo dõi",
+    "message": "Tin nhắn",
+    "edit-profile": "Chỉnh sửa hồ sơ",
+    "post": "Đăng bài",
+    "posting": "Đang đăng bài..."
   },
   "text": {
     "actions": "Hành động",
@@ -52,6 +58,11 @@
   "notification": {
     "error": "Lỗi",
     "success": "Thành công"
+  },
+  "error": {
+    "file_count_limit": "Không thể tải lên quá 13 tệp",
+    "invalid_file_type": "Tệp không hợp lệ",
+    "file_size_limit": "Kích thước mỗi tệp không được vượt quá 10MB"
   },
   "message": {
     "login-failed": "Đăng nhập thất bại",
@@ -130,8 +141,11 @@
   },
   "path": {
     "home": "Trang chủ",
+    "search": "Tìm kiếm",
+    "message": "Tin nhắn",
+    "notification": "Thông báo",
     "dashboard": "Bảng điều khiển",
-    "profile": "Hồ sơ",
+    "profile": "Trang cá nhân",
     "admin": "Quản trị",
     "admin-user": "Quản lý người dùng",
     "admin-user-detail": "Chi tiết người dùng",
@@ -143,6 +157,7 @@
     "settings": "Cài đặt"
   },
   "language": {
+    "title": "Ngôn ngữ",
     "en": "Tiếng Anh",
     "vi": "Tiếng Việt"
   },
@@ -158,5 +173,14 @@
       "require-min-length": "Độ dài tối thiểu",
       "require-max-length": "Độ dài tối đa"
     }
+  },
+  "profile": {
+    "posts": "Bài viết",
+    "followers": "Người theo dõi",
+    "following": "Người đang theo dõi"
+  },
+  "post": {
+    "new-post": "Đăng bài mới",
+    "news": "Có gì mới?"
   }
 }

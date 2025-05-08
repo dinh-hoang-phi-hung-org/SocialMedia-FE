@@ -1,0 +1,19 @@
+{
+  "uuid": "2de24917-2d79-47de-9b0d-c6bf6feb9cd2",
+  "username": "hung",
+  "email": "hung01092003@gmail.com",
+  "firstName": null,
+  "lastName": null,
+  "profilePictureUrl": "https://sgp1.digitaloceanspaces.com/graduation.project/test/1746411423751-IMG_1739237177601_1739237245086.jpg",
+  "bio": "alo 1234 1234 1234",
+  "dateOfBirth": null,
+  "gender": null,
+  "role": "user",
+  "isActive": true,
+  "createdAt": "2025-05-02T03:11:00.874Z",
+  "lastLogin": null,
+  "followersCount": 0,
+  "followingsCount": 0,
+  "postsCount": 0,
+  "isFollowed": true
+}

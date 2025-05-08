@@ -1,7 +1,6 @@
 "use client";
 
 import { LanguageProvider } from "@/shared/hooks/useLanguage";
-import Header from "@/shared/components/BaseLayouts/Header/Header";
 import { MainLayoutProps } from "@/shared/types/components-type/main-layout-type";
 
 const UnAuthLayoutWrapper = ({ children, bgImage = "/assets/images/background.webp" }: MainLayoutProps) => {
@@ -12,7 +11,6 @@ const UnAuthLayoutWrapper = ({ children, bgImage = "/assets/images/background.we
 
       <div className="flex flex-col min-h-screen relative z-10">
         <LanguageProvider>
-          <Header />
           <main className="flex flex-grow">{children}</main>
         </LanguageProvider>
       </div>

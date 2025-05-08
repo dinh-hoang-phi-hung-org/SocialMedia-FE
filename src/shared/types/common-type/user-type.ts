@@ -5,16 +5,26 @@ export type TUser = DefaultItemType & {
   uuid: string;
   username?: string;
   email?: string;
-  password?: string;
-  phoneNumber?: string;
+  firstName?: string;
+  lastName?: string;
+  profilePictureUrl?: string;
+  bio?: string;
+  dateOfBirth?: Date;
+  gender?: boolean;
+  role?: typeof RoleEnum;
   isActive: boolean;
+  createdAt?: Date;
+  password?: string;
   lastLogin?: Date;
-  roles?: typeof RoleEnum;
+  followersCount?: number;
+  followingsCount?: number;
+  postsCount?: number;
+  isFollowed?: boolean;
 };
 
 export type TUserUpdate = TUser & {
-  assignRole?: string[];
-  removeRole?: string[];
+  bio: string;
+  avatarUrl: string;
   firstname?: string;
   lastname?: string;
 };

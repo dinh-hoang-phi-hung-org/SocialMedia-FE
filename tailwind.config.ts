@@ -11,6 +11,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        "primary-purple": "#775da6",
+        "background-primary-purple": "#f5f0ff",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
