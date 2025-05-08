@@ -21,7 +21,7 @@ const LabelShadcn = (props: LabelProps) => {
             className={`
                 relative custom-label
                 ${props.onClick ? "cursor-pointer" : ""}
-                ${props.inheritedClass ? "" : "block text-sm font-medium text-gray-700"}
+                ${props.inheritedClass ? "" : "block font-medium text-base text-gray-700"}
                 ${props.className}
               )`}
             onClick={props.onClick}

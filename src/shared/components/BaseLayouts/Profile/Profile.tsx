@@ -1,0 +1,111 @@
+import { useEffect, useState, useRef } from "react";
+import { IoCameraOutline, IoSettingsOutline } from "react-icons/io5";
+import profileData from "@/shared/sample-data/profile.json";
+import { TUser } from "@/shared/types/common-type/user-type";
+import Image from "next/image";
+import { Button } from "../../ui/button";
+import LabelShadcn from "../../ui/LabelShadcn";
+
+type ProfileProps = {
+  isMyProfile: boolean;
+  user?: TUser;
+};
+
+const Profile = (props: ProfileProps) => {
+  const [user, setUser] = useState<TUser>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setUser(profileData as unknown as TUser);
+  }, [props.user]);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      console.log("File selected:", file);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center">
+      <div className="w-3/4 grid grid-cols-5">
+        <div className="object-center w-32 h-32 relative group">
+          <Image
+            alt="profile"
+            src={user?.profilePictureUrl || "/assets/images/sample-avatar.jpeg"}
+            className="rounded-full w-full h-full object-cover border border-slate-300"
+            width={128}
+            height={128}
+          />
+          {props.isMyProfile && (
+            <div
+              className="absolute bottom-0 right-0 bg-white rounded-full p-1 group-hover:bg-gray-200 cursor-pointer transition-colors"
+              onClick={handleUploadClick}
+            >
+              <input type="file" className="hidden" ref={fileInputRef} onChange={handleFileChange} accept="image/*" />
+              <IoCameraOutline className="h-6 w-6" />
+            </div>
+          )}
+        </div>
+
+        <div className="col-span-4 flex flex-col gap-4">
+          <div className="text-gray-800 flex flex-row gap-5 items-center">
+            <div className="text-2xl">{user?.username}</div>
+
+            {props.isMyProfile ? (
+              <Button variant="outline" className="p-2 rounded-md">
+                <LabelShadcn text="common:button.edit-profile" className="font-semibold" inheritedClass translate />
+              </Button>
+            ) : (
+              <div className="flex flex-row gap-2">
+                {user?.isFollowed ? (
+                  <Button variant="outline" className="p-2 rounded-md">
+                    <LabelShadcn text="common:button.unfollow" className="font-semibold" inheritedClass translate />
+                  </Button>
+                ) : (
+                  <Button variant="outline" className="p-2 rounded-md">
+                    <LabelShadcn text="common:button.follow" className="font-semibold" inheritedClass translate />
+                  </Button>
+                )}
+                <Button variant="outline" className="p-2 rounded-md">
+                  <LabelShadcn text="common:button.message" className="font-semibold" inheritedClass translate />
+                </Button>
+              </div>
+            )}
+
+            <IoSettingsOutline className="h-6 w-6" />
+          </div>
+
+          <div className="text-gray-800 flex flex-row gap-10 items-center">
+            <div className="flex flex-row gap-1 items-center">
+              <span className="font-semibold"> {user?.postsCount} </span>
+              <LabelShadcn text="common:profile.posts" translate />
+            </div>
+
+            <div className="flex flex-row gap-1 items-center">
+              <span className="font-semibold"> {user?.followersCount} </span>
+              <LabelShadcn text="common:profile.followers" translate />
+            </div>
+
+            <div className="flex flex-row gap-1 items-center">
+              <span className="font-semibold"> {user?.followingsCount} </span>
+              <LabelShadcn text="common:profile.following" translate />
+            </div>
+          </div>
+
+          {user?.bio && (
+            <div className="text-gray-800 flex flex-col">
+              <div>{user?.bio}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Profile;
