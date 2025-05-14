@@ -104,6 +104,7 @@ function formatFutureTime(diffInSeconds: number, language: string): string {
 /**
  * Simple translation function - can be expanded or integrated with i18n libraries
  */
+// eslint-disable-next-line
 function translateTime(text: string, language: string): string {
   // In a real app, you would use your i18n system here
   // This is a placeholder for demonstration

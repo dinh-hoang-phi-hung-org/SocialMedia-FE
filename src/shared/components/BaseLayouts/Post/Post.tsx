@@ -167,7 +167,9 @@ const Post = () => {
 
         {/* Content */}
         <div className="mt-1 mb-3">
-          <p className="text-gray-800 whitespace-pre-line">{post?.content}</p>
+          <p className="text-gray-800 whitespace-pre-line text-wrap break-words overflow-hidden max-w-full">
+            {post?.content}
+          </p>
         </div>
 
         {/* Media - Horizontal Scrolling with Drag */}

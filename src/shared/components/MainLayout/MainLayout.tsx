@@ -7,19 +7,15 @@ import { MainLayoutProps } from "@/shared/types/components-type/main-layout-type
 import Sidebar from "../BaseLayouts/Sidebar/Sidebar";
 import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import { toast } from "@/shared/components/ui/toast";
+import { useSocket } from "@/shared/hooks/use-socket";
 
 const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
   return (
     <div className="relative min-h-screen w-full bg-background-primary-purple">
-      <div className="fixed inset-0 bg-repeat bg-center z-0" />
-      <div className="fixed inset-0 bg-white bg-opacity-50 z-0"></div>
-
-      <div className="flex flex-col min-h-screen relative z-10">
+      <div className="flex flex-col min-h-screen relative z-10 ">
         <LanguageProvider>
-          <div className="flex">
-            <Sidebar />
-            <div className="ml-[16rem] w-full py-5">{children}</div>
-          </div>
+          <Sidebar />
+          <div className="ml-[16rem] py-5">{children}</div>
         </LanguageProvider>
       </div>
     </div>
@@ -29,6 +25,28 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
 const MainLayout = (props: MainLayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
+  const { socket, isConnected } = useSocket();
+
+  // Xử lý các sự kiện socket
+  useEffect(() => {
+    if (socket && isConnected) {
+      console.log("Socket connected in MainLayout");
+
+      // Đăng ký lắng nghe các sự kiện từ server
+      socket.on("notification", (data) => {
+        console.log("Received notification:", data);
+        toast.success({
+          title: "Thông báo mới",
+          description: data.message,
+        });
+      });
+
+      // Cleanup khi component unmount
+      return () => {
+        socket.off("notification");
+      };
+    }
+  }, [socket, isConnected]);
 
   const checkAuthRedirect = async (): Promise<boolean> => {
     const redirectPath = await authProvider.checkAuth();
@@ -48,6 +66,15 @@ const MainLayout = (props: MainLayoutProps) => {
   const checkInitialState = async () => {
     const authRedirect = await checkAuthRedirect();
     if (authRedirect) {
+      // Nếu xác thực thành công, đảm bảo socket được kết nối với ID người dùng thực
+      if (socket && isConnected) {
+        const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
+        if (userId) {
+          socket.emit("authenticate", userId);
+          console.log("User authenticated with socket:", userId);
+        }
+      }
+
       setTimeout(() => {
         setIsAuthenticated(true);
       }, 1000);
@@ -59,7 +86,12 @@ const MainLayout = (props: MainLayoutProps) => {
     // eslint-disable-next-line
   }, []);
 
-  return <>{isAuthenticated ? <MainLayoutWrapper {...props} /> : <p>Loading...</p>}</>;
+  return (
+    <>
+      {isAuthenticated ? <MainLayoutWrapper {...props} /> : <p>Loading...</p>}
+      {isConnected && <div className="hidden">Socket connected</div>}
+    </>
+  );
 };
 
 export default MainLayout;

@@ -5,7 +5,7 @@ const nextConfig = {
   /* config options here */
   i18n: i18nConfig.i18n,
   images: {
-    domains: ["sgp1.digitaloceanspaces.com"],
+    domains: ["sgp1.digitaloceanspaces.com", "localhost"],
   },
 };
 

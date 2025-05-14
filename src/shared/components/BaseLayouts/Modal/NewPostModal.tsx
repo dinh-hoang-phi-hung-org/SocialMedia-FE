@@ -4,7 +4,6 @@ import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
-import { HiOutlineHashtag } from "react-icons/hi";
 import { BsPlayFill } from "react-icons/bs";
 import { useTranslation } from "next-i18next";
 import EmojiPicker, { EmojiClickData, Theme, SuggestionMode } from "emoji-picker-react";
@@ -16,9 +15,9 @@ import {
   TMediaFile,
   isValidMediaType,
   isValidFileSize,
-  isValidFileCount,
   getFilesFromMedia,
   createMediaError,
+  validateNewMedia,
 } from "@/shared/types/common-type/file-type";
 
 const emojiRegex = /(\p{Emoji_Presentation}|\p{Emoji}\uFE0F)/u;
@@ -92,64 +91,11 @@ const NewPostModal = (props: NewPostModalProps) => {
     }
   };
 
-  const validateNewMedia = (files: FileList): File[] => {
-    const validFiles: File[] = [];
-    const errors: { type: string }[] = [];
-
-    // Kiểm tra số lượng tệp
-    if (!isValidFileCount(selectedMedia.length, files.length)) {
-      const error = createMediaError("fileCount");
-      toast.error({
-        title: "common:notification.error",
-        description: error.message,
-      });
-      return validFiles;
-    }
-
-    // Kiểm tra từng tệp về loại và kích thước
-    Array.from(files).forEach((file) => {
-      // Kiểm tra loại tệp
-      const typeCheck = isValidMediaType(file);
-      if (!typeCheck.valid) {
-        errors.push({ type: "invalidType" });
-        return;
-      }
-
-      // Kiểm tra kích thước tệp
-      if (!isValidFileSize(file)) {
-        errors.push({ type: "fileSize" });
-        return;
-      }
-
-      validFiles.push(file);
-    });
-
-    if (errors.length > 0) {
-      errors.forEach((error) => {
-        if (error.type === "invalidType") {
-          const mediaError = createMediaError("invalidType");
-          toast.error({
-            title: "common:notification.error",
-            description: mediaError.message,
-          });
-        } else if (error.type === "fileSize") {
-          const mediaError = createMediaError("fileSize");
-          toast.error({
-            title: "common:notification.error",
-            description: mediaError.message,
-          });
-        }
-      });
-    }
-
-    return validFiles;
-  };
-
   const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
 
-    const validFiles = validateNewMedia(files);
+    const validFiles = validateNewMedia(selectedMedia, files);
 
     if (validFiles.length === 0) {
       e.target.value = "";
@@ -185,7 +131,7 @@ const NewPostModal = (props: NewPostModalProps) => {
     if (!postContent.trim() && selectedMedia.length === 0) {
       toast.error({
         title: "common:notification.error",
-        description: t("common:error.add_content_or_media"),
+        description: "common:error.add_content_or_media",
       });
       return false;
     }
@@ -233,16 +179,17 @@ const NewPostModal = (props: NewPostModalProps) => {
 
       if (response?.payload?.postUuid) {
         toast.success({
-          title: t("common:message.post-created"),
-          description: t("common:message.post-created-description"),
+          title: "common:message.post-created",
+          description: "common:message.post-created-description",
         });
         props.onClose();
       }
+      // eslint-disable-next-line
     } catch (error: any) {
       console.error("Error creating post:", error);
       toast.error({
-        title: t("common:error.post_failed"),
-        description: error.message || t("common:error.something_went_wrong"),
+        title: "common:error.post_failed",
+        description: error.message || "common:error.something_went_wrong",
       });
     } finally {
       setIsPosting(false);
@@ -286,7 +233,7 @@ const NewPostModal = (props: NewPostModalProps) => {
         }
       });
     },
-    [postContent, MAX_CHARS],
+    [postContent],
   );
 
   const toggleEmojiPicker = () => {
