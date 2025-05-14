@@ -1,12 +1,4 @@
-import { PaginationParamsType } from "./pagination-params-type";
-import {
-  ApiSuccessResponse,
-  DeleteResponse,
-  GetListResponse,
-  GetResponse,
-  PostResponse,
-  PutResponse,
-} from "./api-type";
+import { ApiSuccessResponse } from "./api-type";
 import { ReactNode } from "react";
 
 export type Color = "primary" | "secondary" | "warning" | "success" | "danger" | "info" | "light" | "dark" | "default";

@@ -5,7 +5,7 @@ import { LanguagesIcon } from "lucide-react";
 import LabelShadcn from "../../ui/LabelShadcn";
 import Image from "next/image";
 import { useLanguage } from "@/shared/hooks/useLanguage";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,18 +15,17 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { useRouter } from "next/navigation";
 
-// Animation variants for the language indicator
-const languageVariants = {
-  initial: { opacity: 0, x: -20, scale: 0.8 },
-  animate: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.3, type: "spring", stiffness: 300 } },
-  exit: { opacity: 0, x: 20, scale: 0.8, transition: { duration: 0.2 } },
-};
-
 // Language flag component
 const LanguageFlag = ({ language }: { language: string }) => {
   return (
     <div className="rounded-full overflow-hidden w-6 h-6 border-2 border-white shadow-md">
-      <img src={`/assets/flags/${language}.svg`} alt={`${language} flag`} className="w-full h-full object-cover" />
+      <Image
+        src={`/assets/flags/${language}.svg`}
+        alt={`${language} flag`}
+        className="w-full h-full object-cover"
+        width={24}
+        height={24}
+      />
     </div>
   );
 };
@@ -70,7 +69,10 @@ const Sidebar = () => {
         </div>
         <div
           className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "Message" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
-          onClick={() => handleActive("Message")}
+          onClick={() => {
+            handleActive("Message");
+            router.push("/message");
+          }}
         >
           <FaCommentAlt className={`w-5 h-5 ${isActive === "Message" && "text-white"}`} />
           <LabelShadcn
@@ -137,7 +139,13 @@ const Sidebar = () => {
                     className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors ${currentLanguage === "en" ? "bg-blue-50" : "hover:bg-gray-50"}`}
                   >
                     <div className="w-5 h-5 rounded-full overflow-hidden">
-                      <img src="/assets/flags/en.svg" alt="English" className="w-full h-full object-cover" />
+                      <Image
+                        src="/assets/flags/en.svg"
+                        alt="English"
+                        className="w-full h-full object-cover"
+                        width={24}
+                        height={24}
+                      />
                     </div>
                     <LabelShadcn
                       text="common:language.en"
@@ -153,7 +161,13 @@ const Sidebar = () => {
                     className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors ${currentLanguage === "vi" ? "bg-blue-50" : "hover:bg-gray-50"}`}
                   >
                     <div className="w-5 h-5 rounded-full overflow-hidden">
-                      <img src="/assets/flags/vi.svg" alt="Tiếng Việt" className="w-full h-full object-cover" />
+                      <Image
+                        src="/assets/flags/vi.svg"
+                        alt="Tiếng Việt"
+                        className="w-full h-full object-cover"
+                        width={24}
+                        height={24}
+                      />
                     </div>
                     <LabelShadcn
                       text="common:language.vi"

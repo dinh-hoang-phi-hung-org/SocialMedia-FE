@@ -1,5 +1,7 @@
 import { IoClose } from "react-icons/io5";
 import { createPortal } from "react-dom";
+import Image from "next/image";
+import { useState } from "react";
 
 interface ImageModalProps {
   imageUrl: string;
@@ -7,7 +9,15 @@ interface ImageModalProps {
 }
 
 const ImageModal = ({ imageUrl, onClose }: ImageModalProps) => {
+  const [isImageError, setIsImageError] = useState(false);
+
   if (typeof document === "undefined") return null;
+
+  // Xử lý URL hình ảnh để đảm bảo nó hoạt động với Next.js Image
+  const handleImageError = () => {
+    console.error("Failed to load image with Next/Image, falling back to img tag");
+    setIsImageError(true);
+  };
 
   return createPortal(
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-90" onClick={onClose}>
@@ -25,7 +35,20 @@ const ImageModal = ({ imageUrl, onClose }: ImageModalProps) => {
 
         {/* Image */}
         <div className="relative w-full h-full max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
-          <img src={imageUrl} alt="Enlarged image" className="max-w-full max-h-[90vh] object-contain" />
+          {isImageError ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={imageUrl} alt="Enlarged image" className="max-w-full max-h-[90vh] object-contain" />
+          ) : (
+            <Image
+              src={imageUrl}
+              alt="Enlarged image"
+              className="max-w-full max-h-[90vh] object-contain"
+              width={1200}
+              height={800}
+              onError={handleImageError}
+              unoptimized={imageUrl.startsWith("http://localhost")}
+            />
+          )}
         </div>
       </div>
     </div>,

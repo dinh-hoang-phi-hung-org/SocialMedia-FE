@@ -179,6 +179,16 @@ export const authProvider = {
     return username || null;
   },
 
+  getUserUuid: (): string | null => {
+    if (typeof window === "undefined") return null;
+    const token = authProvider.getToken();
+    if (!token) return null;
+
+    const decodedToken = authProvider.decodeToken(token);
+    const userUuid = decodedToken.uuid;
+    return userUuid || null;
+  },
+
   /**
    * Clear tokens and return auth response
    */

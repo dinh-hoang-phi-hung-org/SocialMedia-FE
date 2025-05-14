@@ -1,18 +1,11 @@
 import { DefaultItemType } from "@/shared/types/common-type/default-item-type";
+import { TMediaUrl } from "./file-type";
 
-// Interface for media items within a post
-interface MediaItem {
-  url: string;
-  type: "image" | "video";
-}
-
-// Interface for all media within a post
 interface PostMedia {
-  images: MediaItem[];
-  videos: MediaItem[];
+  images: TMediaUrl[];
+  videos: TMediaUrl[];
 }
 
-// Interface for the minimal user information shown with a post
 interface PostUser {
   uuid: string;
   username: string;

@@ -40,6 +40,12 @@ export type TUserStore = {
   setUser: (user: Partial<TUser>) => void;
 };
 
+export type TUserShortCut = {
+  uuid: string;
+  username: string;
+  profilePictureUrl: string;
+};
+
 export const UserTableHeaders: TableHeaders = {
   username: {
     label: "user-management:fields.username",
