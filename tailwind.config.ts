@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -9,6 +10,10 @@ export default {
     "./src/shared/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      xl: "1536px",
+      "2xl": "1920px",
+    },
     extend: {
       colors: {
         "primary-purple": "#775da6",
@@ -73,5 +78,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

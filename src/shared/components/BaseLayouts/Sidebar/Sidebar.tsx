@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GoHomeFill, GoBellFill, GoSignOut } from "react-icons/go";
 import { FaCommentAlt, FaSearch } from "react-icons/fa";
 import { LanguagesIcon } from "lucide-react";
@@ -13,8 +13,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import { useRouter } from "next/navigation";
-
+import { usePathname, useRouter } from "next/navigation";
+import { store } from "@/shared/redux/store";
 // Language flag component
 const LanguageFlag = ({ language }: { language: string }) => {
   return (
@@ -34,6 +34,15 @@ const Sidebar = () => {
   const [isActive, setIsActive] = useState("Home");
   const router = useRouter();
   const { changeLanguage, currentLanguage } = useLanguage();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname.split("/")[1]) {
+      setIsActive(pathname.split("/")[1]);
+    } else {
+      setIsActive("home");
+    }
+  }, [pathname]);
 
   const handleActive = (active: string) => {
     setIsActive(active);
@@ -46,50 +55,80 @@ const Sidebar = () => {
           <Image src="/assets/images/logo.png" alt="logo" width={120} height={120} />
         </div>
         <div
-          className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "Home" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
-          onClick={() => handleActive("Home")}
+          className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "home" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
+          onClick={() => handleActive("home")}
         >
-          <GoHomeFill className={`w-6 h-6 ${isActive === "Home" && "text-white"}`} />
+          <div className="w-8">
+            <GoHomeFill className={`w-6 h-6 ${isActive === "home" && "text-white"}`} />
+          </div>
           <LabelShadcn
             text="common:path.home"
             translate
-            className={`font-semibold cursor-pointer ${isActive === "Home" && "text-white"}`}
+            className={`font-semibold cursor-pointer ${isActive === "home" && "text-white"}`}
           />
         </div>
         <div
-          className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "Search" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
-          onClick={() => handleActive("Search")}
+          className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "search" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
+          onClick={() => handleActive("search")}
         >
-          <FaSearch className={`w-5 h-5 ${isActive === "Search" && "text-white"}`} />
+          <div className="w-8">
+            <FaSearch className={`w-5 h-5 ${isActive === "search" && "text-white"}`} />
+          </div>
           <LabelShadcn
             text="common:path.search"
             translate
-            className={`font-semibold cursor-pointer ${isActive === "Search" && "text-white"}`}
+            className={`font-semibold cursor-pointer ${isActive === "search" && "text-white"}`}
           />
         </div>
         <div
-          className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "Message" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
+          className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "message" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
           onClick={() => {
-            handleActive("Message");
+            handleActive("message");
             router.push("/message");
           }}
         >
-          <FaCommentAlt className={`w-5 h-5 ${isActive === "Message" && "text-white"}`} />
+          <div className="w-8">
+            <FaCommentAlt className={`w-5 h-5 ${isActive === "message" && "text-white"}`} />
+          </div>
           <LabelShadcn
             text="common:path.message"
             translate
-            className={`font-semibold cursor-pointer ${isActive === "Message" && "text-white"}`}
+            className={`font-semibold cursor-pointer ${isActive === "message" && "text-white"}`}
           />
         </div>
         <div
-          className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "Notification" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
-          onClick={() => handleActive("Notification")}
+          className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "notification" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
+          onClick={() => handleActive("notification")}
         >
-          <GoBellFill className={`w-6 h-6 ${isActive === "Notification" && "text-white"}`} />
+          <div className="w-8">
+            <GoBellFill className={`w-6 h-6 ${isActive === "notification" && "text-white"}`} />
+          </div>
           <LabelShadcn
             text="common:path.notification"
             translate
-            className={`font-semibold cursor-pointer ${isActive === "Notification" && "text-white"}`}
+            className={`font-semibold cursor-pointer ${isActive === "notification" && "text-white"}`}
+          />
+        </div>
+        <div
+          className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "profile" ? "bg-primary-purple" : "hover:bg-gray-200"} transition-all duration-300`}
+          onClick={() => {
+            handleActive("profile");
+            router.push("/profile");
+          }}
+        >
+          <div className="w-8">
+            <Image
+              src={store.getState().avatar.avatar || "/assets/images/sample-avatar.jpeg"}
+              alt="avatar"
+              width={28}
+              height={28}
+              className="rounded-full border border-gray-300"
+            />
+          </div>
+          <LabelShadcn
+            text="common:path.profile"
+            translate
+            className={`font-semibold cursor-pointer ${isActive === "profile" && "text-white"}`}
           />
         </div>
       </div>

@@ -8,8 +8,7 @@ import { IoIosMore } from "react-icons/io";
 import ImageModal from "../Modal/ImageModal";
 import { ensureHttps } from "@/shared/helpers/ensure-https";
 
-const Post = () => {
-  const [post, setPost] = useState<TPost>();
+const Post = ({ post }: { post: TPost }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -18,10 +17,6 @@ const Post = () => {
   const [moveDistance, setMoveDistance] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    setPost(postData as unknown as TPost);
-  }, []);
 
   // Handlers for drag-to-scroll functionality
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -173,7 +168,7 @@ const Post = () => {
         </div>
 
         {/* Media - Horizontal Scrolling with Drag */}
-        {post?.mediaUrl.images && post.mediaUrl.images.length > 0 && (
+        {post?.mediaUrl && post?.mediaUrl?.images && post?.mediaUrl?.images?.length > 0 && (
           <div className="mb-3">
             <div
               ref={scrollContainerRef}
@@ -204,6 +199,7 @@ const Post = () => {
                     className="w-full h-full object-cover rounded-xl cursor-pointer border border-slate-300"
                     draggable={false}
                     onClick={() => handleExplicitImageClick(ensureHttps(image.url))}
+                    priority={true}
                   />
                 </div>
               ))}
