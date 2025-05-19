@@ -1,5 +1,5 @@
 import MainLayout from "@/shared/components/MainLayout/MainLayout";
 
-export default function ProfileLayout({ children }: { children: React.ReactNode }) {
+export default function PostLayout({ children }: { children: React.ReactNode }) {
   return <MainLayout>{children}</MainLayout>;
 }

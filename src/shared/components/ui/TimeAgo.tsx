@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getRelativeTime } from "@/shared/helpers/time-formatter";
 
 interface TimeAgoProps {
-  timestamp: string | Date;
+  timestamp: string | Date | undefined;
   updateInterval?: number; // in seconds
   className?: string;
   lang?: string;
@@ -15,7 +15,7 @@ interface TimeAgoProps {
  * and automatically updates at the specified interval.
  */
 const TimeAgo = ({
-  timestamp,
+  timestamp = new Date(),
   updateInterval = 60, // Default to updating every minute
   className = "",
   lang = "en",

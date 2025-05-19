@@ -1,12 +1,12 @@
 import { LoginRequest, RegisterFormData } from "@/shared/types/common-type/auth-type";
 import { TransferType, TypeTransferEntry } from "../types/common-type/shared-types";
 import { autherizeService } from "@/app/auth/_services/auth-services";
-import { postService } from "@/app/_post/_services/post-services";
+import { postService } from "@/app/post/_services/post-services";
 import { messageService } from "@/app/message/_services/message-services";
 import { PaginationParamsType } from "@/shared/types/common-type/pagination-params-type";
 import { userService } from "@/app/_user/_services/user-services";
 import { followService } from "@/app/_follow/_services/follow-services";
-
+import { commentService } from "@/app/_comment/_services/comment-service";
 const createAuthTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
   return {
     repository: entry.repository,
@@ -27,6 +27,7 @@ const createPostTypeTransferEntry = (entry: TypeTransferEntry): TransferType => 
     otherAPIs: {
       createPost: (content: string, files?: File[]) => entry.repository.createPost(content, files),
       getPosts: (userUuid: string, params: PaginationParamsType) => entry.repository.getPosts(userUuid, params),
+      getPostByUuid: (uuid: string) => entry.repository.getPostByUuid(uuid),
     },
   };
 };
@@ -63,6 +64,18 @@ const createFollowTypeTransferEntry = (entry: TypeTransferEntry): TransferType =
     },
   };
 };
+
+const createCommentTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
+  return {
+    repository: entry.repository,
+    otherAPIs: {
+      getComments: (postUuid: string, params: PaginationParamsType) => entry.repository.getComments(postUuid, params),
+      postComment: (content: string, postUuid: string, files?: File[], parentUuid?: string) =>
+        entry.repository.postComment(content, postUuid, files, parentUuid),
+    },
+  };
+};
+
 export const TypeTransfer: Record<string, TransferType> = {
   Auth: createAuthTypeTransferEntry({
     repository: autherizeService,
@@ -78,5 +91,8 @@ export const TypeTransfer: Record<string, TransferType> = {
   } as TypeTransferEntry),
   Follow: createFollowTypeTransferEntry({
     repository: followService,
+  } as TypeTransferEntry),
+  Comment: createCommentTypeTransferEntry({
+    repository: commentService,
   } as TypeTransferEntry),
 };

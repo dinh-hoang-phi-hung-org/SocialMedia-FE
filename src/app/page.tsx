@@ -47,7 +47,9 @@ export default function Home() {
           <Post />
         </div>
       </Card>
-      {showNewPostModal && <NewPostModal onClose={() => setShowNewPostModal(false)} />}
+      {showNewPostModal && (
+        <NewPostModal onClose={() => setShowNewPostModal(false)} title="common:post.new-post" type="post" />
+      )}
     </MainLayout>
   );
 }

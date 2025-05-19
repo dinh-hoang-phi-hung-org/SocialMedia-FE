@@ -1,15 +1,26 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
-import postData from "@/shared/sample-data/post.json";
+// import postData from "@/shared/sample-data/post.json";
 import { TPost } from "@/shared/types/common-type/post-type";
 import TimeAgo from "@/shared/components/ui/TimeAgo";
 import { FaRegComment, FaRegHeart, FaRegBookmark } from "react-icons/fa6";
 import { IoIosMore } from "react-icons/io";
 import ImageModal from "../Modal/ImageModal";
 import { ensureHttps } from "@/shared/helpers/ensure-https";
+import { useRouter } from "next/navigation";
+import { PostSkeleton } from "./PostSkeleton";
+import { TComment } from "@/shared/types/common-type/comment-type";
 
-const Post = ({ post }: { post: TPost }) => {
+interface PostProps {
+  type: "post" | "comment" | "comment-child";
+  post?: TPost;
+  comment?: TComment;
+  isLoading?: boolean;
+}
+
+const Post = ({ post, comment, isLoading = false, type = "post" }: PostProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -17,6 +28,10 @@ const Post = ({ post }: { post: TPost }) => {
   const [moveDistance, setMoveDistance] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  if (isLoading || ((!post || !post.user) && (!comment || !comment.user))) {
+    return <PostSkeleton />;
+  }
 
   // Handlers for drag-to-scroll functionality
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -135,12 +150,21 @@ const Post = ({ post }: { post: TPost }) => {
   };
 
   return (
-    <div className="w-full flex">
+    <div className={`w-full flex ${type === "comment" ? "pl-10" : type === "comment-child" ? "pl-20" : ""}`}>
       {/* Left Side - Avatar and Thread Line */}
       <div className="flex flex-col items-center mr-3">
         {/* Avatar */}
         <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 z-10">
-          <Image src="/assets/images/sample-avatar.jpeg" alt="avatar" width={40} height={40} className="object-cover" />
+          <Image
+            src={
+              ensureHttps(type === "post" ? post?.user.profilePictureUrl : comment?.user.profilePictureUrl) ||
+              "/assets/images/sample-avatar.jpeg"
+            }
+            alt="avatar"
+            width={40}
+            height={40}
+            className="object-cover"
+          />
         </div>
 
         {/* Thread Line */}
@@ -152,8 +176,11 @@ const Post = ({ post }: { post: TPost }) => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <p className="font-semibold">{post?.user.username}</p>
-            <TimeAgo timestamp={post?.createdAt || ""} className="text-xs text-gray-500" />
+            <p className="font-semibold">{type === "post" ? post?.user.username : comment?.user.username}</p>
+            <TimeAgo
+              timestamp={type === "post" ? post?.createdAt : comment?.createdAt || new Date()}
+              className="text-xs text-gray-500"
+            />
           </div>
           <button className="text-gray-400 hover:text-gray-600">
             <IoIosMore size={20} />
@@ -163,68 +190,113 @@ const Post = ({ post }: { post: TPost }) => {
         {/* Content */}
         <div className="mt-1 mb-3">
           <p className="text-gray-800 whitespace-pre-line text-wrap break-words overflow-hidden max-w-full">
-            {post?.content}
+            {type === "post" ? post?.content : comment?.content}
           </p>
         </div>
 
         {/* Media - Horizontal Scrolling with Drag */}
-        {post?.mediaUrl && post?.mediaUrl?.images && post?.mediaUrl?.images?.length > 0 && (
-          <div className="mb-3">
-            <div
-              ref={scrollContainerRef}
-              className="flex overflow-x-auto gap-2 pb-2 hide-scrollbar"
-              style={{ cursor: "grab" }}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseLeave}
-              onMouseMove={handleMouseMove}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-              onTouchMove={handleTouchMove}
-            >
-              {post.mediaUrl.images.map((image, index) => (
-                <div
-                  key={index}
-                  className="flex-shrink-0 relative group"
-                  style={{
-                    width: "auto",
-                    height: "280px",
-                  }}
-                >
-                  <Image
-                    src={ensureHttps(image.url)}
-                    alt={`post image ${index + 1}`}
-                    width={300}
-                    height={300}
-                    className="w-full h-full object-cover rounded-xl cursor-pointer border border-slate-300"
-                    draggable={false}
-                    onClick={() => handleExplicitImageClick(ensureHttps(image.url))}
-                    priority={true}
-                  />
-                </div>
-              ))}
+        {type === "post" &&
+          post?.mediaUrl &&
+          post?.mediaUrl?.images &&
+          post?.mediaUrl?.images?.length > 0 && (
+            <div className="mb-3">
+              <div
+                ref={scrollContainerRef}
+                className="flex overflow-x-auto gap-2 pb-2 hide-scrollbar"
+                style={{ cursor: "grab" }}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+                onMouseMove={handleMouseMove}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchMove={handleTouchMove}
+              >
+                {post.mediaUrl.images.map((image, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 relative group"
+                    style={{
+                      width: "auto",
+                      height: "280px",
+                    }}
+                  >
+                    <Image
+                      src={ensureHttps(image.url)}
+                      alt={`post image ${index + 1}`}
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover rounded-xl cursor-pointer border border-slate-300"
+                      draggable={false}
+                      onClick={() => handleExplicitImageClick(ensureHttps(image.url))}
+                      priority={true}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+
+        {type === "comment" &&
+          comment?.mediaUrl &&
+          comment?.mediaUrl?.images &&
+          comment?.mediaUrl?.images?.length > 0 && (
+            <div className="mb-3">
+              <div
+                ref={scrollContainerRef}
+                className="flex overflow-x-auto gap-2 pb-2 hide-scrollbar"
+                style={{ cursor: "grab" }}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+                onMouseMove={handleMouseMove}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchMove={handleTouchMove}
+              >
+                {comment.mediaUrl.images.map((image, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 relative group"
+                    style={{
+                      width: "auto",
+                      height: "200px",
+                    }}
+                  >
+                    <Image
+                      src={ensureHttps(image.url)}
+                      alt={`post image ${index + 1}`}
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover rounded-xl cursor-pointer border border-slate-300"
+                      draggable={false}
+                      onClick={() => handleExplicitImageClick(ensureHttps(image.url))}
+                      priority={true}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
         {/* Actions */}
         <div className="flex items-center gap-4 mt-2">
-          <button className="text-gray-600 hover:text-red-500">
+          <div className="text-gray-600 hover:text-red-500 flex items-center gap-1">
             <FaRegHeart className="w-5 h-5" />
-          </button>
-          <button className="text-gray-600 hover:text-blue-500">
+            {post?.likesCount}
+          </div>
+          <div
+            className="text-gray-600 hover:text-blue-500 flex items-center gap-1"
+            onClick={() => router.push(`/post/${post?.uuid}`)}
+          >
             <FaRegComment className="w-5 h-5" />
-          </button>
-          <button className="text-gray-600 hover:text-gray-900">
-            <FaRegBookmark className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Post Stats */}
-        <div className="mt-2 flex items-center text-xs text-gray-500">
-          <span>{post?.likesCount || 0} likes</span>
-          <span className="mx-2">•</span>
-          <span>{post?.commentsCount || 0} replies</span>
+            {post?.commentsCount}
+          </div>
+          {type === "post" && (
+            <div className="text-gray-600 hover:text-gray-900 flex items-center gap-1">
+              <FaRegBookmark className="w-5 h-5" />
+            </div>
+          )}
         </div>
       </div>
 
