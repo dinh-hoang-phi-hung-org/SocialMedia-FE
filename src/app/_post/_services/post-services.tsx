@@ -1,6 +1,8 @@
-import { PostResponse } from "@/shared/types/common-type/api-type";
+import { PostResponse, GetResponse } from "@/shared/types/common-type/api-type";
 import { IRequestBuilder, RequestBuilder } from "@/shared/utils/api/request-builder";
 import { httpClient } from "@/shared/utils/api";
+import { TPost } from "@/shared/types/common-type/post-type";
+import { PaginationParamsType } from "@/shared/types/common-type/pagination-params-type";
 
 interface IPostService {
   createPost(content: string, files?: File[]): Promise<PostResponse<{ message: string; postUuid: string }>>;
@@ -58,8 +60,14 @@ export class PostService implements IPostService {
       throw error;
     }
   }
-}
 
+  public async getPosts(userUuid: string, params: PaginationParamsType): Promise<GetResponse<TPost[]>> {
+    return await httpClient.get<TPost[]>({
+      url: this.requestBuilder.buildUrl(`user/${userUuid}`),
+      config: { params },
+    });
+  }
+}
 const requestBuilder = new RequestBuilder();
 requestBuilder.setResourcePath("posts");
 export const postService = PostService.getInstance(requestBuilder);

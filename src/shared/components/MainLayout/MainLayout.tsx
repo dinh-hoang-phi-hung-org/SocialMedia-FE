@@ -8,7 +8,11 @@ import Sidebar from "../BaseLayouts/Sidebar/Sidebar";
 import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import { toast } from "@/shared/components/ui/toast";
 import { useSocket } from "@/shared/hooks/use-socket";
-
+import { TypeTransfer } from "@/shared/constants/type-transfer";
+import { persistor, store } from "@/shared/redux/store";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { setAvatar } from "@/shared/redux/slices/avatarSlice";
 const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
   return (
     <div className="relative min-h-screen w-full bg-background-primary-purple">
@@ -59,6 +63,10 @@ const MainLayout = (props: MainLayoutProps) => {
       return false;
     } else {
       setIsAuthenticated(true);
+      const me = await TypeTransfer["User"]?.otherAPIs?.getMe();
+      if (me?.payload?.profilePictureUrl) {
+        store.dispatch(setAvatar(me.payload.profilePictureUrl));
+      }
       return true;
     }
   };
@@ -88,7 +96,15 @@ const MainLayout = (props: MainLayoutProps) => {
 
   return (
     <>
-      {isAuthenticated ? <MainLayoutWrapper {...props} /> : <p>Loading...</p>}
+      {isAuthenticated ? (
+        <Provider store={store}>
+          {/* <PersistGate loading={null} persistor={persistor}> */}
+          <MainLayoutWrapper {...props} />
+          {/* </PersistGate> */}
+        </Provider>
+      ) : (
+        <p>Loading...</p>
+      )}
       {isConnected && <div className="hidden">Socket connected</div>}
     </>
   );

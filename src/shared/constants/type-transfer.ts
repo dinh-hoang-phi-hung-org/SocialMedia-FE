@@ -4,6 +4,9 @@ import { autherizeService } from "@/app/auth/_services/auth-services";
 import { postService } from "@/app/_post/_services/post-services";
 import { messageService } from "@/app/message/_services/message-services";
 import { PaginationParamsType } from "@/shared/types/common-type/pagination-params-type";
+import { userService } from "@/app/_user/_services/user-services";
+import { followService } from "@/app/_follow/_services/follow-services";
+
 const createAuthTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
   return {
     repository: entry.repository,
@@ -23,6 +26,7 @@ const createPostTypeTransferEntry = (entry: TypeTransferEntry): TransferType => 
     repository: entry.repository,
     otherAPIs: {
       createPost: (content: string, files?: File[]) => entry.repository.createPost(content, files),
+      getPosts: (userUuid: string, params: PaginationParamsType) => entry.repository.getPosts(userUuid, params),
     },
   };
 };
@@ -39,6 +43,26 @@ const createMessageTypeTransferEntry = (entry: TypeTransferEntry): TransferType 
     },
   };
 };
+
+const createUserTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
+  return {
+    repository: entry.repository,
+    otherAPIs: {
+      getMe: () => entry.repository.getMe(),
+      getUserByUuid: (uuid: string) => entry.repository.getUserByUuid(uuid),
+    },
+  };
+};
+
+const createFollowTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
+  return {
+    repository: entry.repository,
+    otherAPIs: {
+      getFollowers: (userUuid: string, params: PaginationParamsType) => entry.repository.getFollowers(userUuid, params),
+      getFollowing: (userUuid: string, params: PaginationParamsType) => entry.repository.getFollowing(userUuid, params),
+    },
+  };
+};
 export const TypeTransfer: Record<string, TransferType> = {
   Auth: createAuthTypeTransferEntry({
     repository: autherizeService,
@@ -48,5 +72,11 @@ export const TypeTransfer: Record<string, TransferType> = {
   } as TypeTransferEntry),
   Message: createMessageTypeTransferEntry({
     repository: messageService,
+  } as TypeTransferEntry),
+  User: createUserTypeTransferEntry({
+    repository: userService,
+  } as TypeTransferEntry),
+  Follow: createFollowTypeTransferEntry({
+    repository: followService,
   } as TypeTransferEntry),
 };
