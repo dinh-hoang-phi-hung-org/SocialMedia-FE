@@ -29,7 +29,9 @@
     "message": "Message",
     "edit-profile": "Edit Profile",
     "post": "Post",
-    "posting": "Posting..."
+    "posting": "Posting...",
+    "submit-comment": "Submit Comment",
+    "submitting": "Submitting..."
   },
   "text": {
     "actions": "Actions",
@@ -94,7 +96,11 @@
     "verification-success": "Account verification successful",
     "verifying-account": "Verifying your account...",
     "error-occurred": "An error occurred. Please try again",
-    "invalid-verification-link": "Invalid verification link. Please try again."
+    "invalid-verification-link": "Invalid verification link. Please try again.",
+    "comment-created": "Comment created successfully",
+    "comment_failed": "Failed to create comment",
+    "post-created": "Post created successfully",
+    "post_failed": "Failed to create post"
   },
   "auth": {
     "login": "Login",
@@ -182,5 +188,9 @@
   "post": {
     "new-post": "New Post",
     "news": "What's new?"
+  },
+  "comment": {
+    "comments": "Comments",
+    "add-comment": "Add Comment"
   }
 }

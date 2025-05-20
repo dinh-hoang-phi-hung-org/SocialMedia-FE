@@ -9,7 +9,7 @@ import { TUser } from "@/shared/types/common-type/user-type";
 import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import { TPost } from "@/shared/types/common-type/post-type";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
-export default function InstagramPage() {
+export default function ProfilePage() {
   const [user, setUser] = useState<TUser>({} as TUser);
   const [posts, setPosts] = useState<TPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +77,7 @@ export default function InstagramPage() {
           ) : posts.length > 0 ? (
             posts.map((post, index) => (
               <div key={index} className="w-full border-b-2 border-gray-200 py-7 px-10">
-                <Post post={post} />
+                <Post post={post} type="post" />
               </div>
             ))
           ) : (

@@ -29,7 +29,9 @@
     "message": "Tin nhắn",
     "edit-profile": "Chỉnh sửa hồ sơ",
     "post": "Đăng bài",
-    "posting": "Đang đăng bài..."
+    "posting": "Đang đăng bài...",
+    "submit-comment": "Gửi bình luận",
+    "submitting": "Đang gửi bình luận..."
   },
   "text": {
     "actions": "Hành động",
@@ -94,7 +96,11 @@
     "verification-success": "Xác thực tài khoản thành công",
     "verifying-account": "Đang xác thực tài khoản...",
     "error-occurred": "Đã xảy ra lỗi. Vui lòng thử lại",
-    "invalid-verification-link": "Liên kết xác thực không hợp lệ. Vui lòng thử lại."
+    "invalid-verification-link": "Liên kết xác thực không hợp lệ. Vui lòng thử lại.",
+    "comment-created": "Bình luận đã được tạo thành công",
+    "comment_failed": "Không thể tạo bình luận",
+    "post-created": "Bài viết đã được tạo thành công",
+    "post_failed": "Không thể tạo bài viết"
   },
   "auth": {
     "login": "Đăng nhập",
@@ -182,5 +188,9 @@
   "post": {
     "new-post": "Đăng bài mới",
     "news": "Có gì mới?"
+  },
+  "comment": {
+    "comments": "Bình luận",
+    "add-comment": "Thêm bình luận"
   }
 }

@@ -11,14 +11,12 @@ import { TypeTransfer } from "@/shared/constants/type-transfer";
 import { toast } from "@/shared/components/ui/toast";
 import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import {
-  MAX_TOTAL_FILES,
   TMediaFile,
   isValidMediaType,
-  isValidFileSize,
   getFilesFromMedia,
-  createMediaError,
   validateNewMedia,
 } from "@/shared/types/common-type/file-type";
+import LabelShadcn from "../../ui/LabelShadcn";
 
 const emojiRegex = /(\p{Emoji_Presentation}|\p{Emoji}\uFE0F)/u;
 
@@ -27,11 +25,15 @@ const isEmoji = (text: string): boolean => {
 };
 
 interface NewPostModalProps {
+  type: "post" | "comment";
+  title: string;
   onClose: () => void;
+  postUuid?: string;
+  parentUuid?: string;
 }
 
 const MAX_CHARS = 500;
-const MAX_LINES = 3;
+const MAX_LINES = 5;
 
 const NewPostModal = (props: NewPostModalProps) => {
   const { t } = useTranslation();
@@ -127,48 +129,8 @@ const NewPostModal = (props: NewPostModalProps) => {
     fileInputRef.current?.click();
   };
 
-  const validateBeforeSubmit = (): boolean => {
-    if (!postContent.trim() && selectedMedia.length === 0) {
-      toast.error({
-        title: "common:notification.error",
-        description: "common:error.add_content_or_media",
-      });
-      return false;
-    }
-
-    if (selectedMedia.length > 0) {
-      const files = getFilesFromMedia(selectedMedia);
-
-      // Kiểm tra số lượng tệp
-      if (files.length > MAX_TOTAL_FILES) {
-        const error = createMediaError("fileCount");
-        toast.error({
-          title: "common:notification.error",
-          description: error.message,
-        });
-        return false;
-      }
-
-      // Kiểm tra kích thước từng tệp (thêm để đảm bảo)
-      for (const file of files) {
-        if (!isValidFileSize(file)) {
-          const error = createMediaError("fileSize");
-          toast.error({
-            title: "common:notification.error",
-            description: error.message,
-          });
-          return false;
-        }
-      }
-    }
-
-    return true;
-  };
-
-  const handleSubmit = async () => {
-    if (!validateBeforeSubmit()) {
-      return;
-    }
+  const handleSubmitPost = async () => {
+    if (!postContent.trim()) return;
 
     setIsPosting(true);
 
@@ -179,8 +141,8 @@ const NewPostModal = (props: NewPostModalProps) => {
 
       if (response?.payload?.postUuid) {
         toast.success({
-          title: "common:message.post-created",
-          description: "common:message.post-created-description",
+          title: "common:notification.success",
+          description: "common:message.post-created",
         });
         props.onClose();
       }
@@ -188,7 +150,36 @@ const NewPostModal = (props: NewPostModalProps) => {
     } catch (error: any) {
       console.error("Error creating post:", error);
       toast.error({
-        title: "common:error.post_failed",
+        title: "common:notification.error",
+        description: error.message || "common:error.something_went_wrong",
+      });
+    } finally {
+      setIsPosting(false);
+    }
+  };
+
+  const handleSubmitComment = async () => {
+    if (!postContent.trim()) return;
+
+    setIsPosting(true);
+
+    try {
+      const mediaFiles = getFilesFromMedia(selectedMedia);
+
+      const response = await TypeTransfer["Comment"].otherAPIs?.postComment(postContent, props.postUuid, mediaFiles, props.parentUuid);
+
+      if (response?.payload?.commentUuid) {
+        toast.success({
+          title: "common:notification.success",
+          description: "common:message.comment-created",
+        });
+        props.onClose();
+      }
+      // eslint-disable-next-line
+    } catch (error: any) {
+      console.error("Error creating post:", error);
+      toast.error({
+        title: "common:notification.error",
         description: error.message || "common:error.something_went_wrong",
       });
     } finally {
@@ -283,13 +274,22 @@ const NewPostModal = (props: NewPostModalProps) => {
           <button onClick={props.onClose}>
             <span className="font-medium text-black">{t("common:button.cancel")}</span>
           </button>
-          <h2 className="font-bold text-lg">{t("common:post.new-post")}</h2>
+          {/* <h2 className="font-bold text-lg">{t("common:post.new-post")}</h2> */}
+          <div className="absolute left-1/2 transform -translate-x-1/2">
+            <LabelShadcn text={props.title} translate className="font-bold text-lg" />
+          </div>
           <button
             className={`font-medium ${postContent.trim() || selectedMedia.length > 0 ? "text-primary-purple" : "text-gray-300"} ${isPosting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-            onClick={handleSubmit}
+            onClick={props.type === "post" ? handleSubmitPost : handleSubmitComment}
             disabled={isPosting || (!postContent.trim() && selectedMedia.length === 0)}
           >
-            {isPosting ? t("common:button.posting") : t("common:button.post")}
+            {props.type === "post"
+              ? isPosting
+                ? t("common:button.posting")
+                : t("common:button.post")
+              : isPosting
+                ? t("common:button.submitting")
+                : t("common:button.submit-comment")}
           </button>
         </div>
 
@@ -345,7 +345,7 @@ const NewPostModal = (props: NewPostModalProps) => {
                         style={{
                           width: "auto",
                           height: "280px",
-                          minWidth: selectedMedia.length === 1 ? "100%" : "280px",
+                          // minWidth: selectedMedia.length === 1 ? "100%" : "280px",
                         }}
                       >
                         {media.type === "image" ? (
