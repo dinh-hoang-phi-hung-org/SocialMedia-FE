@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LanguageProvider } from "@/shared/hooks/useLanguage";
 import { MainLayoutProps } from "@/shared/types/components-type/main-layout-type";
@@ -9,18 +9,54 @@ import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import { toast } from "@/shared/components/ui/toast";
 import { useSocket } from "@/shared/hooks/use-socket";
 import { TypeTransfer } from "@/shared/constants/type-transfer";
-import { persistor, store } from "@/shared/redux/store";
+import { store } from "@/shared/redux/store";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 import { setAvatar } from "@/shared/redux/slices/avatarSlice";
+
+const SIDEBAR_WIDTH_EXPANDED = "16rem";
+const SIDEBAR_WIDTH_COLLAPSED = "4.5rem";
+
+interface SidebarStateContextType {
+  expanded: boolean;
+  setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const SIDEBAR_STATE_KEY = "sidebar_expanded";
+
+const SidebarStateContext = React.createContext<SidebarStateContextType | undefined>(undefined);
+
+export const useSidebarState = (): SidebarStateContextType => {
+  const context = React.useContext(SidebarStateContext);
+  if (context === undefined) {
+    throw new Error("useSidebarState must be used within a SidebarStateProvider");
+  }
+  return context;
+};
+
 const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
+  // Initialize from localStorage if available, otherwise default to true
+  const [expanded, setExpanded] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedState = localStorage.getItem(SIDEBAR_STATE_KEY);
+      return savedState === null ? true : savedState === "true";
+    }
+    return true;
+  });
+
   return (
     <div className="relative min-h-screen w-full bg-background-primary-purple">
-      <div className="flex flex-col min-h-screen relative z-10 ">
-        <LanguageProvider>
-          <Sidebar />
-          <div className="ml-[16rem] py-5">{children}</div>
-        </LanguageProvider>
+      <div className="flex flex-col min-h-screen relative z-10">
+        <SidebarStateContext.Provider value={{ expanded, setExpanded }}>
+          <LanguageProvider>
+            <Sidebar />
+            <div
+              className="py-5 transition-all duration-300 ease-in-out"
+              style={{ marginLeft: expanded ? SIDEBAR_WIDTH_EXPANDED : SIDEBAR_WIDTH_COLLAPSED }}
+            >
+              {children}
+            </div>
+          </LanguageProvider>
+        </SidebarStateContext.Provider>
       </div>
     </div>
   );
