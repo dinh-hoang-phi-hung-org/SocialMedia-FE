@@ -55,7 +55,14 @@
     "keep-open-after-submit": "Don't close the window after saving",
     "page-not-found": "Page Not Found",
     "page-not-exist": "The page you are looking for does not exist.",
-    "go-to-home": "Go to Home"
+    "go-to-home": "Go to Home",
+    "search": "Search",
+    "recent-searches": "Recent Searches",
+    "clear-all": "Clear All",
+    "no-recent-searches": "No recent searches",
+    "search-users": "Search users, posts, or topics...",
+    "search-results": "Search Results",
+    "no-results": "No results found"
   },
   "notification": {
     "error": "Error",

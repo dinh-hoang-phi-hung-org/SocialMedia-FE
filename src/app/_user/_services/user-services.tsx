@@ -2,6 +2,7 @@ import { GetResponse } from "@/shared/types/common-type/api-type";
 import { IRequestBuilder, RequestBuilder } from "@/shared/utils/api/request-builder";
 import { httpClient } from "@/shared/utils/api";
 import { TUser } from "@/shared/types/common-type/user-type";
+import { PaginationParamsType } from "@/shared/types/common-type/pagination-params-type";
 
 interface IUserService {
   getMe(): Promise<GetResponse<TUser>>;
@@ -14,11 +15,6 @@ export class UserService implements IUserService {
 
   constructor(requestBuilder: IRequestBuilder) {
     this.requestBuilder = requestBuilder;
-  }
-  public async getUserByUuid(uuid: string): Promise<GetResponse<TUser>> {
-    return await httpClient.get<TUser>({
-      url: this.requestBuilder.buildUrl(`${uuid}`),
-    });
   }
 
   public static getInstance(requestBuilder: IRequestBuilder): UserService {
@@ -37,6 +33,21 @@ export class UserService implements IUserService {
   public async getMe(): Promise<GetResponse<TUser>> {
     return await httpClient.get<TUser>({
       url: this.requestBuilder.buildUrl("me"),
+    });
+  }
+
+  public async getUserByUuid(uuid: string): Promise<GetResponse<TUser>> {
+    return await httpClient.get<TUser>({
+      url: this.requestBuilder.buildUrl(`${uuid}`),
+    });
+  }
+
+  public async getUsers(params: PaginationParamsType): Promise<GetResponse<TUser>> {
+    return await httpClient.get<TUser>({
+      url: this.requestBuilder.buildUrl(),
+      config: {
+        params,
+      },
     });
   }
 }
