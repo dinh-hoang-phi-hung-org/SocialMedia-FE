@@ -55,7 +55,14 @@
     "keep-open-after-submit": "Không đóng cửa sổ sau khi lưu",
     "page-not-found": "Trang không tồn tại",
     "page-not-exist": "Trang bạn đang tìm kiếm không tồn tại.",
-    "go-to-home": "Trở về trang chủ"
+    "go-to-home": "Trở về trang chủ",
+    "search": "Tìm kiếm",
+    "recent-searches": "Tìm kiếm gần đây",
+    "clear-all": "Xóa tất cả",
+    "no-recent-searches": "Không có tìm kiếm gần đây",
+    "search-users": "Tìm kiếm người dùng ...",
+    "search-results": "Kết quả tìm kiếm",
+    "no-results": "Không tìm thấy kết quả"
   },
   "notification": {
     "error": "Lỗi",

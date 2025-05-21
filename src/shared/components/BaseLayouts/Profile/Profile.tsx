@@ -54,6 +54,28 @@ const Profile = (props: ProfileProps) => {
     }
   };
 
+  const handleFollow = async () => {
+    try {
+      const response = await TypeTransfer["Follow"]?.otherAPIs?.followUser(user?.uuid);
+      if (response?.success && user) {
+        setUser({ ...user, isFollowed: true });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnfollow = async () => {
+    try {
+      const response = await TypeTransfer["Follow"]?.otherAPIs?.unfollowUser(user?.uuid);
+      if (response?.success && user) {
+        setUser({ ...user, isFollowed: false });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="w-full grid grid-cols-5">
       <div className="object-center w-32 h-32 relative group">
@@ -81,21 +103,25 @@ const Profile = (props: ProfileProps) => {
 
           {props.isMyProfile ? (
             <Button variant="outline" className="p-2 rounded-md bg-primary-purple text-white">
-              <LabelShadcn text="common:button.edit-profile" className="font-semibold" inheritedClass translate />
+              <LabelShadcn text="common:button.edit-profile" className="font-semibold cursor-pointer" inheritedClass translate />
             </Button>
           ) : (
             <div className="flex flex-row gap-2">
               {user?.isFollowed ? (
-                <Button variant="outline" className="p-2 rounded-md">
-                  <LabelShadcn text="common:button.unfollow" className="font-semibold" inheritedClass translate />
+                <Button variant="outline" className="p-2 rounded-md" onClick={handleUnfollow}>
+                  <LabelShadcn text="common:button.unfollow" className="font-semibold cursor-pointer" inheritedClass translate />
                 </Button>
               ) : (
-                <Button variant="outline" className="p-2 rounded-md bg-primary-purple text-white">
-                  <LabelShadcn text="common:button.follow" className="font-semibold" inheritedClass translate />
+                <Button
+                  variant="outline"
+                  className="p-2 rounded-md bg-primary-purple text-white"
+                  onClick={handleFollow}
+                >
+                  <LabelShadcn text="common:button.follow" className="font-semibold cursor-pointer" inheritedClass translate />
                 </Button>
               )}
               <Button variant="outline" className="p-2 rounded-md">
-                <LabelShadcn text="common:button.message" className="font-semibold" inheritedClass translate />
+                <LabelShadcn text="common:button.message" className="font-semibold cursor-pointer" inheritedClass translate />
               </Button>
             </div>
           )}

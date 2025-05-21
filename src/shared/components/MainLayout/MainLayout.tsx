@@ -12,16 +12,19 @@ import { TypeTransfer } from "@/shared/constants/type-transfer";
 import { store } from "@/shared/redux/store";
 import { Provider } from "react-redux";
 import { setAvatar } from "@/shared/redux/slices/avatarSlice";
+import Search from "../BaseLayouts/Search/Search";
 
 const SIDEBAR_WIDTH_EXPANDED = "16rem";
 const SIDEBAR_WIDTH_COLLAPSED = "4.5rem";
+const SEARCH_PANEL_WIDTH = "20rem";
+export const SIDEBAR_STATE_KEY = "sidebar_expanded";
 
 interface SidebarStateContextType {
   expanded: boolean;
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  isSearchActive: boolean;
+  setIsSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-export const SIDEBAR_STATE_KEY = "sidebar_expanded";
 
 const SidebarStateContext = React.createContext<SidebarStateContextType | undefined>(undefined);
 
@@ -43,15 +46,45 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
     return true;
   });
 
+  const [isSearchActive, setIsSearchActive] = useState(false);
+
+  // When search is activated, ensure sidebar is collapsed
+  useEffect(() => {
+    if (isSearchActive && expanded) {
+      setExpanded(false);
+    }
+  }, [isSearchActive]);
+
   return (
     <div className="relative min-h-screen w-full bg-background-primary-purple">
       <div className="flex flex-col min-h-screen relative z-10">
-        <SidebarStateContext.Provider value={{ expanded, setExpanded }}>
+        <SidebarStateContext.Provider value={{ expanded, setExpanded, isSearchActive, setIsSearchActive }}>
           <LanguageProvider>
             <Sidebar />
+
+            {/* Search Panel */}
+            <div
+              className="fixed top-0 left-0 h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out"
+              style={{
+                width: isSearchActive ? SEARCH_PANEL_WIDTH : "0",
+                transform: isSearchActive ? `translateX(${SIDEBAR_WIDTH_COLLAPSED})` : "translateX(0)",
+                opacity: isSearchActive ? 1 : 0,
+                overflow: "hidden",
+                zIndex: isSearchActive ? 9 : -1,
+              }}
+            >
+              {isSearchActive && <Search />}
+            </div>
+
             <div
               className="py-5 transition-all duration-300 ease-in-out"
-              style={{ marginLeft: expanded ? SIDEBAR_WIDTH_EXPANDED : SIDEBAR_WIDTH_COLLAPSED }}
+              style={{
+                marginLeft: expanded
+                  ? SIDEBAR_WIDTH_EXPANDED
+                  : isSearchActive
+                    ? `calc(${SIDEBAR_WIDTH_COLLAPSED} + ${SEARCH_PANEL_WIDTH})`
+                    : SIDEBAR_WIDTH_COLLAPSED,
+              }}
             >
               {children}
             </div>

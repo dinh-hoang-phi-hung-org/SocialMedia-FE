@@ -43,7 +43,7 @@ const Sidebar = () => {
   const router = useRouter();
   const { changeLanguage, currentLanguage } = useLanguage();
   const pathname = usePathname();
-  const { expanded, setExpanded } = useSidebarState();
+  const { expanded, setExpanded, isSearchActive, setIsSearchActive } = useSidebarState();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
@@ -66,6 +66,7 @@ const Sidebar = () => {
 
   const handleLanguageClick = () => {
     if (!expanded) {
+      setIsSearchActive(false);
       setExpanded(true);
       localStorage.setItem(SIDEBAR_STATE_KEY, "true");
       setTimeout(() => {
@@ -85,6 +86,12 @@ const Sidebar = () => {
       authProvider.clearTokens();
       localStorage.setItem(SIDEBAR_STATE_KEY, "true");
     }
+  };
+
+  const handleSearchClick = () => {
+    // Toggle search panel instead of navigating
+    setIsActive("search");
+    setIsSearchActive(!isSearchActive);
   };
 
   return (
@@ -117,7 +124,7 @@ const Sidebar = () => {
               }}
             >
               <div className="flex justify-center items-center w-6 h-6">
-                <GoHomeFill className={`w-5 h-5 ${isActive === "home" && "text-white"}`} />
+                <GoHomeFill className={`w-6 h-6 ${isActive === "home" && "text-white"}`} />
               </div>
               {expanded && (
                 <LabelShadcn
@@ -132,7 +139,7 @@ const Sidebar = () => {
               className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
                 isActive === "search" ? "bg-primary-purple" : "hover:bg-gray-200"
               } transition-all duration-300`}
-              onClick={() => handleActive("search")}
+              onClick={handleSearchClick}
             >
               <div className="flex justify-center items-center w-6 h-6">
                 <FaSearch className={`w-5 h-5 ${isActive === "search" && "text-white"}`} />
@@ -323,15 +330,17 @@ const Sidebar = () => {
       </div>
 
       {/* Trigger Button */}
-      <button
-        onClick={toggleSidebar}
-        className="fixed top-5 z-20 rounded-full bg-white p-1.5 shadow-md border border-gray-200 transition-all duration-300"
-        style={{
-          left: expanded ? "17rem" : "5rem",
-        }}
-      >
-        <GoChevronLeft className={`h-4 w-4 transition-transform duration-200 ${!expanded ? "rotate-180" : ""}`} />
-      </button>
+      {!isSearchActive && (
+        <button
+          onClick={toggleSidebar}
+          className="fixed top-5 z-20 rounded-full bg-white p-1.5 shadow-md border border-gray-200 transition-all duration-300"
+          style={{
+            left: expanded ? "17rem" : "5rem",
+          }}
+        >
+          <GoChevronLeft className={`h-4 w-4 transition-transform duration-200 ${!expanded ? "rotate-180" : ""}`} />
+        </button>
+      )}
     </>
   );
 };

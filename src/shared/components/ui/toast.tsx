@@ -18,7 +18,7 @@ const createToastContent = (props: ToastProps) => {
     title: title ? <LabelShadcn text={title} translate className="text-white font-bold text-lg" /> : null,
     description:
       typeof description === "string" ? (
-        <LabelShadcn text={description} translate className="text-white" />
+        <LabelShadcn text={description} translate inheritedClass className="text-white" />
       ) : (
         description
       ),

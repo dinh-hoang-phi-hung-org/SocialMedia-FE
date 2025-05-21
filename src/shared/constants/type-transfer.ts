@@ -51,6 +51,7 @@ const createUserTypeTransferEntry = (entry: TypeTransferEntry): TransferType => 
     otherAPIs: {
       getMe: () => entry.repository.getMe(),
       getUserByUuid: (uuid: string) => entry.repository.getUserByUuid(uuid),
+      getUsers: (params: PaginationParamsType) => entry.repository.getUsers(params),
     },
   };
 };
@@ -61,6 +62,8 @@ const createFollowTypeTransferEntry = (entry: TypeTransferEntry): TransferType =
     otherAPIs: {
       getFollowers: (userUuid: string, params: PaginationParamsType) => entry.repository.getFollowers(userUuid, params),
       getFollowing: (userUuid: string, params: PaginationParamsType) => entry.repository.getFollowing(userUuid, params),
+      followUser: (userUuid: string) => entry.repository.followUser(userUuid),
+      unfollowUser: (userUuid: string) => entry.repository.unfollowUser(userUuid),
     },
   };
 };
