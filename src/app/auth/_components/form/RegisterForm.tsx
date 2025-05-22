@@ -141,10 +141,10 @@ export function RegisterForm({ setToRegister }: Readonly<LoginFormType>) {
               name="email"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <LabelShadcn className="text-inherit" text="common:auth.email" translate />
+                  <LabelShadcn className="text-inherit" text="common:auth.email" inheritedClass translate />
                   <FormControl>
                     <Input
-                      className={`rounded-lg ${error.email ? "border-red-500" : ""}`}
+                      className={`rounded-lg ${error.email ? "border-red-500" : ""} text-sm`}
                       placeholder={t("common:auth.enter-your-email")}
                       type="text"
                       {...field}
@@ -167,10 +167,10 @@ export function RegisterForm({ setToRegister }: Readonly<LoginFormType>) {
               name="username"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <LabelShadcn className="text-inherit" text="common:auth.username" translate />
+                  <LabelShadcn className="text-inherit" text="common:auth.username" inheritedClass translate />
                   <FormControl>
                     <Input
-                      className={`rounded-lg ${error.username ? "border-red-500" : ""}`}
+                      className={`rounded-lg ${error.username ? "border-red-500" : ""} text-sm`}
                       placeholder={t("common:auth.enter-your-username")}
                       {...field}
                       autoComplete="new-user"
@@ -193,12 +193,12 @@ export function RegisterForm({ setToRegister }: Readonly<LoginFormType>) {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <LabelShadcn className="text-inherit" text="common:auth.password" translate />
+                  <LabelShadcn className="text-inherit" text="common:auth.password" inheritedClass translate />
                   <div className="relative">
                     <FormControl>
                       <Input
                         type={showPassword ? "text" : "password"}
-                        className={`rounded-lg pr-10 ${error.password ? "border-red-500" : ""}`}
+                        className={`rounded-lg pr-10 ${error.password ? "border-red-500" : ""} text-sm`}
                         placeholder={t("common:auth.enter-your-password")}
                         {...field}
                         autoComplete="new-password"
@@ -231,12 +231,12 @@ export function RegisterForm({ setToRegister }: Readonly<LoginFormType>) {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <LabelShadcn className="text-inherit" text="common:auth.confirm-password" translate />
+                  <LabelShadcn className="text-inherit" text="common:auth.confirm-password" inheritedClass translate />
                   <div className="relative">
                     <FormControl>
                       <Input
                         type={showConfirmPassword ? "text" : "password"}
-                        className={`rounded-lg pr-10 ${error.confirmPassword ? "border-red-500" : ""}`}
+                        className={`rounded-lg pr-10 ${error.confirmPassword ? "border-red-500" : ""} text-sm`}
                         placeholder={t("common:auth.confirm-password")}
                         {...field}
                         onChange={(e) => {
@@ -267,22 +267,32 @@ export function RegisterForm({ setToRegister }: Readonly<LoginFormType>) {
           <Button
             variant="default"
             type="submit"
-            className={`w-full transition-all duration-300 ${loading ? "opacity-80" : ""}`}
+            className={`w-full transition-all duration-300 ${loading ? "opacity-80" : ""} mt-4`}
             disabled={loading}
           >
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                <LabelShadcn className="text-inherit cursor-pointer" text="common:button.registering" translate />
+                <LabelShadcn
+                  className="text-inherit cursor-pointer"
+                  text="common:button.registering"
+                  inheritedClass
+                  translate
+                />
               </>
             ) : (
-              <LabelShadcn className="text-inherit cursor-pointer" text="common:button.register" translate />
+              <LabelShadcn
+                className="text-inherit cursor-pointer"
+                text="common:button.register"
+                inheritedClass
+                translate
+              />
             )}
           </Button>
 
           {/* Login Link */}
           <div className="text-center flex items-center justify-center gap-2 mt-4">
-            <LabelShadcn className="text-inherit" text="common:button.back-to-login" translate />{" "}
+            <LabelShadcn className="text-inherit" text="common:button.back-to-login" inheritedClass translate />{" "}
             <Button
               type="button"
               className="cursor-pointer bg-transparent hover:opacity-70 p-0"
@@ -290,7 +300,12 @@ export function RegisterForm({ setToRegister }: Readonly<LoginFormType>) {
               variant="ghost"
               disabled={loading}
             >
-              <LabelShadcn className="text-primary cursor-pointer font-semibold" text="common:button.login" translate />
+              <LabelShadcn
+                className="text-primary cursor-pointer font-semibold"
+                text="common:button.login"
+                inheritedClass
+                translate
+              />
             </Button>
           </div>
         </form>

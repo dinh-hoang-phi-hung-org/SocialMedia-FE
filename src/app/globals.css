@@ -150,6 +150,7 @@
   }
 }
 
+/* Auth page animations */
 .move-left-to-hide {
   animation: moveLeftToHide 1s linear forwards;
 }
@@ -212,7 +213,35 @@
   }
 }
 
+/* Enhanced Auth Page Styles */
+.auth-card-container {
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
 
+.auth-card-container:hover {
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+.auth-decorative-circle {
+  background: linear-gradient(135deg, rgba(var(--primary), 0.1), rgba(var(--primary), 0.2));
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.auth-form-container {
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
 
 @layer base {
   * {

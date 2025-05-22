@@ -89,7 +89,7 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
 
   return (
     <Card className="w-[350px] h-full bg-white p-8 rounded-2xl shadow-lg">
-      <LabelShadcn className="text-center text-inherit text-2xl font-bold" text="common:button.login" translate />
+      <LabelShadcn className="text-center text-inherit text-2xl font-bold mb-3" text="common:button.login" translate />
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -99,10 +99,10 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <LabelShadcn className="text-inherit" text="common:auth.email" translate />
+                <LabelShadcn className="text-inherit" text="common:auth.email" inheritedClass translate />
                 <FormControl>
                   <Input
-                    className={`rounded-lg ${error.email ? "border-red-500" : ""}`}
+                    className={`rounded-lg ${error.email ? "border-red-500" : ""} text-sm`}
                     placeholder={t("common:auth.enter-your-email")}
                     {...field}
                     onChange={(e) => {
@@ -121,12 +121,12 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <LabelShadcn className="text-inherit" text="common:auth.password" translate />
+                <LabelShadcn className="text-inherit" text="common:auth.password" inheritedClass translate />
                 <div className="relative">
                   <FormControl>
                     <Input
                       type={showPassword ? "text" : "password"}
-                      className={`rounded-lg pr-10 ${error.password ? "border-red-500" : ""}`}
+                      className={`rounded-lg pr-10 ${error.password ? "border-red-500" : ""} text-sm`}
                       placeholder={t("common:auth.enter-your-password")}
                       {...field}
                       onChange={(e) => {
@@ -151,18 +151,23 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
 
           {/* Login Button */}
           <Button variant="default" type="submit" className="w-full">
-            <LabelShadcn className="text-inherit cursor-pointer" text="common:auth.login" translate />
+            <LabelShadcn className="text-inherit cursor-pointer font-semibold" text="common:auth.login" translate />
           </Button>
 
           <div className="text-center flex items-center justify-center gap-2">
-            <LabelShadcn className="text-inherit" text="common:button.dont-have-account" translate />
+            <LabelShadcn className="text-inherit" text="common:button.dont-have-account" inheritedClass translate />
             <Button
               type="button"
               className="cursor-pointer bg-transparent hover:opacity-70 p-0"
               onClick={() => setToRegister(true)}
               variant="ghost"
             >
-              <LabelShadcn className="text-primary cursor-pointer font-semibold" text="common:auth.sign-up" translate />
+              <LabelShadcn
+                className="text-primary cursor-pointer font-semibold"
+                text="common:auth.sign-up"
+                inheritedClass
+                translate
+              />
             </Button>
           </div>
         </form>
