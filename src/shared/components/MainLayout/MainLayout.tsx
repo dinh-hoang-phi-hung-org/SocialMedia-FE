@@ -122,7 +122,7 @@ const MainLayout = (props: MainLayoutProps) => {
   }, [socket, isConnected]);
 
   const checkAuthRedirect = async (): Promise<boolean> => {
-    const redirectPath = await authProvider.checkAuth();
+    const redirectPath = await authProvider.checkUser();
     if (redirectPath.path && redirectPath.path !== "/" && redirectPath.path !== "") {
       toast.error({
         title: "common:text.error",

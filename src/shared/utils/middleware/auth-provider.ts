@@ -15,7 +15,7 @@ export const authProvider = {
    * Check if user is authenticated
    * Optimized with caching to reduce API calls
    */
-  checkAuth: async (): Promise<AuthResponse> => {
+  checkUser: async (): Promise<AuthResponse> => {
     if (typeof window === "undefined") {
       return { path: "/auth", message: "common:message.login-required" };
     }
@@ -42,6 +42,38 @@ export const authProvider = {
       // }
     }
     return { path: "/", message: "common:message.already-login" };
+  },
+
+  checkAdmin: async (): Promise<AuthResponse> => {
+    if (typeof window === "undefined") {
+      return { path: "/auth", message: "common:message.login-required" };
+    }
+
+    const accessToken = Cookies.get("accessToken");
+    const refreshToken = Cookies.get("refreshToken");
+
+    if (!accessToken || !refreshToken) {
+      return { path: "/auth", message: "common:message.login-required" };
+    }
+
+    if (authProvider.isTokenExpired(accessToken)) {
+      // try {
+      // const refreshResponse = await authProvider.resetAccessToken();
+      // if (refreshResponse.path === "/auth") {
+      //   await authProvider.logout();
+      //   return { path: "/auth", message: "common:message.session-expired" };
+      // }
+      await authProvider.logout();
+      return { path: "/auth", message: "common:message.session-expired" };
+      // } catch (error) {
+      //   await authProvider.logout();
+      //   return { path: "/auth", message: "common:message.session-expired" };
+      // }
+    }
+    if (authProvider.getRole() !== "admin") {
+      return { path: "/", message: "common:message.not-admin" };
+    }
+    return { path: "/admin", message: "common:message.already-login" };
   },
 
   /**
@@ -187,6 +219,16 @@ export const authProvider = {
     const decodedToken = authProvider.decodeToken(token);
     const userUuid = decodedToken.uuid;
     return userUuid || null;
+  },
+
+  getRole: (): string | null => {
+    if (typeof window === "undefined") return null;
+    const token = authProvider.getToken();
+    if (!token) return null;
+
+    const decodedToken = authProvider.decodeToken(token);
+    const role = decodedToken.role;
+    return role || null;
   },
 
   /**

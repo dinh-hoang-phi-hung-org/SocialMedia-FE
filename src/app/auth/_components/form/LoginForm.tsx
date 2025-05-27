@@ -35,7 +35,7 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
 
   useEffect(() => {
     const checkAuthen = async () => {
-      const isAuth = await authProvider.checkAuth();
+      const isAuth = await authProvider.checkUser();
       if (isAuth.path && isAuth.path === "/") {
         router.push(isAuth.path);
       }

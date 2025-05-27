@@ -1,0 +1,21 @@
+{
+  "title": {
+    "user-management-title": "Quản lý người dùng",
+    "description": "Chào mừng đến trang quản lý người dùng"
+  },
+  "fields": {
+    "order-number": "Số thứ tự",
+    "username": "Tên người dùng",
+    "email": "Email",
+    "gender": "Giới tính",
+    "followers-count": "Số lượng người theo dõi",
+    "followings-count": "Số lượng người đang theo dõi",
+    "posts-count": "Số lượng bài viết",
+    "created-at": "Ngày tạo",
+    "last-login": "Ngày đăng nhập gần đây nhất",
+    "first-name": "Tên",
+    "last-name": "Họ",
+    "phone-number": "Số điện thoại",
+    "is-active": "Trạng thái"
+  }
+}

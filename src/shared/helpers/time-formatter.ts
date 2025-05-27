@@ -112,21 +112,3 @@ function translateTime(text: string, language: string): string {
   // For now, return English (could be expanded with translations)
   return text;
 }
-
-/**
- * Additional examples:
- *
- * // Example with the specific timestamp from the post data
- * // If you run this code on 2025-05-06T04:06:54.236Z (14 minutes after the post timestamp):
- * getRelativeTime("2025-05-06T03:52:54.236Z"); // Would return "14 mins ago"
- *
- * // For testing this functionality without waiting:
- * function simulateTimeAgo(minutes: number): string {
- *   // Create a date that's X minutes in the past from now
- *   const date = new Date(Date.now() - minutes * 60 * 1000);
- *   return getRelativeTime(date);
- * }
- *
- * // This will always return "14 mins ago" regardless of when you run it:
- * simulateTimeAgo(14); // "14 mins ago"
- */

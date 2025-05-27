@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { GoHomeFill, GoBellFill, GoSignOut, GoChevronLeft } from "react-icons/go";
-import { FaCommentAlt, FaSearch } from "react-icons/fa";
+import { GoHomeFill, GoSignOut, GoChevronLeft } from "react-icons/go";
 import { LanguagesIcon } from "lucide-react";
 import LabelShadcn from "../../ui/LabelShadcn";
 import Image from "next/image";
@@ -14,11 +13,12 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { usePathname, useRouter } from "next/navigation";
-import { store } from "@/shared/redux/store";
-import { useSidebarState, SIDEBAR_STATE_KEY } from "../../MainLayout/MainLayout";
 import { TypeTransfer } from "@/shared/constants/type-transfer";
 import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import { toast } from "../../ui/toast";
+import { SIDEBAR_STATE_KEY, useAdminSidebarState } from "@/shared/components/MainLayout/AdminLayout";
+import { FaUser } from "react-icons/fa";
+import { MdReport } from "react-icons/md";
 
 const SIDEBAR_WIDTH_EXPANDED = "16rem";
 const SIDEBAR_WIDTH_COLLAPSED = "4.5rem";
@@ -43,14 +43,18 @@ const Sidebar = () => {
   const router = useRouter();
   const { changeLanguage, currentLanguage } = useLanguage();
   const pathname = usePathname();
-  const { expanded, setExpanded, isSearchActive, setIsSearchActive } = useSidebarState();
+  const { expanded, setExpanded, isSearchActive, setIsSearchActive } = useAdminSidebarState();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
-    if (pathname.split("/")[1]) {
-      setIsActive(pathname.split("/")[1]);
-    } else {
+    const pathSegments = pathname.split("/").filter(Boolean);
+
+    if (pathSegments.length === 0) {
       setIsActive("home");
+    } else if (pathSegments[0] === "admin" && pathSegments.length > 1) {
+      setIsActive(`${pathSegments[0]}/${pathSegments[1]}`);
+    } else {
+      setIsActive(pathSegments[0]);
     }
   }, [pathname]);
 
@@ -88,12 +92,6 @@ const Sidebar = () => {
     }
   };
 
-  const handleSearchClick = () => {
-    // Toggle search panel instead of navigating
-    setIsActive("search");
-    setIsSearchActive(!isSearchActive);
-  };
-
   return (
     <>
       <div
@@ -115,101 +113,64 @@ const Sidebar = () => {
 
           <div className="flex flex-col gap-2 px-3">
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "home" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "admin" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => {
-                handleActive("home");
-                router.push("/");
+                handleActive("admin");
+                router.push("/admin");
               }}
             >
               <div className="flex justify-center items-center w-6 h-6">
-                <GoHomeFill className={`w-6 h-6 ${isActive === "home" && "text-white"}`} />
+                <GoHomeFill className={`w-6 h-6 ${isActive === "admin" && "text-white"}`} />
               </div>
               {expanded && (
                 <LabelShadcn
                   text="common:path.home"
                   translate
-                  className={`font-semibold cursor-pointer ${isActive === "home" && "text-white"}`}
+                  className={`font-semibold cursor-pointer ${isActive === "admin" && "text-white"}`}
                 />
               )}
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "search" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
-              onClick={handleSearchClick}
-            >
-              <div className="flex justify-center items-center w-6 h-6">
-                <FaSearch className={`w-5 h-5 ${isActive === "search" && "text-white"}`} />
-              </div>
-              {expanded && (
-                <LabelShadcn
-                  text="common:path.search"
-                  translate
-                  className={`font-semibold cursor-pointer ${isActive === "search" && "text-white"}`}
-                />
-              )}
-            </div>
-
-            <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "message" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "admin/user" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => {
-                handleActive("message");
-                router.push("/message");
+                handleActive("admin/user");
+                router.push("/admin/user");
               }}
             >
               <div className="flex justify-center items-center w-6 h-6">
-                <FaCommentAlt className={`w-5 h-5 ${isActive === "message" && "text-white"}`} />
+                <FaUser className={`w-5 h-5 ${isActive === "admin/user" && "text-white"}`} />
               </div>
               {expanded && (
                 <LabelShadcn
-                  text="common:path.message"
+                  text="common:path.admin-user"
                   translate
-                  className={`font-semibold cursor-pointer ${isActive === "message" && "text-white"}`}
+                  className={`font-semibold cursor-pointer ${isActive === "admin/user" && "text-white"}`}
                 />
               )}
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "notification" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
-              onClick={() => handleActive("notification")}
-            >
-              <div className="flex justify-center items-center w-6 h-6">
-                <GoBellFill className={`w-5 h-5 ${isActive === "notification" && "text-white"}`} />
-              </div>
-              {expanded && (
-                <LabelShadcn
-                  text="common:path.notification"
-                  translate
-                  className={`font-semibold cursor-pointer ${isActive === "notification" && "text-white"}`}
-                />
-              )}
-            </div>
-
-            <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "profile" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "admin/report" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => {
-                handleActive("profile");
-                router.push("/profile");
+                handleActive("admin/report");
+                router.push("/admin/report");
               }}
             >
               <div className="flex justify-center items-center w-6 h-6">
-                <Image
-                  src={store.getState().avatar.avatar || "/assets/images/sample-avatar.jpeg"}
-                  alt="avatar"
-                  width={26}
-                  height={26}
-                  className="rounded-full border border-gray-300"
-                />
+                <MdReport className={`w-6 h-6 ${isActive === "admin/report" && "text-white"}`} />
               </div>
               {expanded && (
                 <LabelShadcn
-                  text="common:path.profile"
+                  text="common:path.admin-report"
                   translate
-                  className={`font-semibold cursor-pointer ${isActive === "profile" && "text-white"}`}
+                  className={`font-semibold cursor-pointer ${isActive === "admin/report" && "text-white"}`}
                 />
               )}
             </div>
