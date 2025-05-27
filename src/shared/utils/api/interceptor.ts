@@ -18,7 +18,7 @@ export const onRequest = async (config: AdaptAxiosRequestConfig): Promise<AdaptA
     config.headers.Authorization = `Bearer ${accessToken || ""}`;
 
     try {
-      await authProvider.checkAuth();
+      await authProvider.checkUser();
 
       // if (tokenInfo.exp && tokenInfo.exp < Date.now() / 1000) {
       //   try {

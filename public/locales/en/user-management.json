@@ -1,0 +1,21 @@
+{
+  "title": {
+    "user-management-title": "User Management",
+    "description": "Welcome to the user management page"
+  },
+  "fields": {
+    "order-number": "Order Number",
+    "username": "Username",
+    "email": "Email",
+    "gender": "Gender",
+    "followers-count": "Followers Count",
+    "followings-count": "Followings Count",
+    "posts-count": "Posts Count",
+    "created-at": "Created At",
+    "last-login": "Last Login",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "phone-number": "Phone Number",
+    "is-active": "Is Active"
+  }
+}

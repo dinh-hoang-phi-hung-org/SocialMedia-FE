@@ -47,6 +47,8 @@ const createMessageTypeTransferEntry = (entry: TypeTransferEntry): TransferType 
 
 const createUserTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
   return {
+    headers: entry.headers,
+    detailFields: entry.detailFields,
     repository: entry.repository,
     otherAPIs: {
       getMe: () => entry.repository.getMe(),

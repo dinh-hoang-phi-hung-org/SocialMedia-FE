@@ -29,7 +29,7 @@ const initI18n = async () => {
     });
 
   // Explicitly load all namespaces for both languages
-  await Promise.all([i18n.loadNamespaces(["common"]), i18n.loadLanguages(["en", "vi"])]);
+  await Promise.all([i18n.loadNamespaces(["common", "user-management"]), i18n.loadLanguages(["en", "vi"])]);
 
   return i18n;
 };

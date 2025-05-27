@@ -62,7 +62,9 @@
     "no-recent-searches": "No recent searches",
     "search-users": "Search users, posts, or topics...",
     "search-results": "Search Results",
-    "no-results": "No results found"
+    "no-results": "No results found",
+    "n-a": "N/A",
+    "try-adjusting-your-search-or-filter": "Try adjusting your search or filter to find what you're looking for."
   },
   "notification": {
     "error": "Error",
@@ -165,6 +167,7 @@
     "admin-users-roles": "Users Roles Management",
     "admin-roles": "Roles Management",
     "admin-permissions": "Permissions Management",
+    "admin-report": "Report Management",
     "help": "Help",
     "about": "About",
     "settings": "Settings"
@@ -199,5 +202,13 @@
   "comment": {
     "comments": "Comments",
     "add-comment": "Add Comment"
+  },
+  "pagination": {
+    "records-per-page": "records per page"
+  },
+  "filter": {
+    "all": "All",
+    "filter-by": "Filter by",
+    "clear": "Clear"
   }
 }

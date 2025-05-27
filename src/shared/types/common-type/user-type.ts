@@ -59,25 +59,34 @@ export const UserTableHeaders: TableHeaders = {
     searchable: true,
     hidden: false,
   },
-  phoneNumber: {
-    label: "user-management:fields.phone-number",
+  first_name: {
+    label: "user-management:fields.first-name",
     sortable: true,
     searchable: true,
     hidden: false,
   },
-  lastLogin: {
-    label: "user-management:fields.last-login",
+  last_name: {
+    label: "user-management:fields.last-name",
     sortable: true,
+    searchable: true,
     hidden: false,
   },
-  createdAt: {
-    label: "user-management:fields.created-at",
+  followers_count: {
+    label: "user-management:fields.followers-count",
     sortable: true,
+    searchable: true,
     hidden: false,
   },
-  updatedAt: {
-    label: "user-management:fields.updated-at",
+  following_count: {
+    label: "user-management:fields.following-count",
     sortable: true,
+    searchable: true,
+    hidden: false,
+  },
+  posts_count: {
+    label: "user-management:fields.posts-count",
+    sortable: true,
+    searchable: true,
     hidden: false,
   },
 };
@@ -99,36 +108,33 @@ export const UserDetailFields: DetailFields = {
     detailChangeable: false,
     hidden: false,
   },
-  phoneNumber: {
-    label: "user-management:fields.phone-number",
+  firstName: {
+    label: "user-management:fields.first-name",
     changable: true,
-    placeholder: "+84903999888",
-    required: false,
-    detailChangeable: true,
-    hidden: false,
-  },
-  password: {
-    label: "user-management:fields.password",
-    changable: true,
-    placeholder: "********",
+    placeholder: "John",
     required: false,
     detailChangeable: false,
-    hidden: true,
+    hidden: false,
   },
-  lastLogin: {
-    label: "user-management:fields.last-login",
+  lastName: {
+    label: "user-management:fields.last-name",
+    changable: true,
+    placeholder: "Doe",
+  },
+  followersCount: {
+    label: "user-management:fields.followers-count",
     changable: false,
     detailChangeable: false,
     hidden: false,
   },
-  createdAt: {
-    label: "user-management:fields.created-at",
+  followingCount: {
+    label: "user-management:fields.following-count",
     changable: false,
     detailChangeable: false,
     hidden: false,
   },
-  updatedAt: {
-    label: "user-management:fields.updated-at",
+  postsCount: {
+    label: "user-management:fields.posts-count",
     changable: false,
     detailChangeable: false,
     hidden: false,
@@ -137,8 +143,7 @@ export const UserDetailFields: DetailFields = {
     label: "user-management:fields.is-active",
     changable: true,
     detailChangeable: true,
-    required: false,
-    inputType: "switch",
+    hidden: false,
   },
 };
 

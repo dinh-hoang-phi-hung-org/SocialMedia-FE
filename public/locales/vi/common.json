@@ -62,7 +62,9 @@
     "no-recent-searches": "Không có tìm kiếm gần đây",
     "search-users": "Tìm kiếm người dùng ...",
     "search-results": "Kết quả tìm kiếm",
-    "no-results": "Không tìm thấy kết quả"
+    "no-results": "Không tìm thấy kết quả",
+    "n-a": "N/A",
+    "try-adjusting-your-search-or-filter": "Thử điều chỉnh tìm kiếm hoặc lọc để tìm kiếm điều bạn đang tìm kiếm."
   },
   "notification": {
     "error": "Lỗi",
@@ -165,6 +167,7 @@
     "admin-users-roles": "Quản lý vai trò người dùng",
     "admin-roles": "Quản lý vai trò",
     "admin-permissions": "Quản lý quyền hạn",
+    "admin-report": "Quản lý báo cáo",
     "help": "Trợ giúp",
     "about": "Giới thiệu",
     "settings": "Cài đặt"
@@ -199,5 +202,13 @@
   "comment": {
     "comments": "Bình luận",
     "add-comment": "Thêm bình luận"
+  },
+  "pagination": {
+    "records-per-page": "bản ghi trên trang"
+  },
+  "filter": {
+    "filter-by": "Lọc theo",
+    "clear": "Xóa",
+    "all": "Tất cả"
   }
 }
