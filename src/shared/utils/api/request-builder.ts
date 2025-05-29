@@ -2,6 +2,7 @@ export interface IRequestBuilder {
   setPrefix(prefix: string): this;
   setResourcePath(resourcePath: string): this;
   buildUrl(additionalPath?: string): string;
+  buildUrlAI(additionalPath?: string): string;
 }
 
 export class RequestBuilder implements IRequestBuilder {
@@ -20,6 +21,11 @@ export class RequestBuilder implements IRequestBuilder {
 
   buildUrl(additionalPath?: string): string {
     const baseUrl = `${process.env.NEXT_PUBLIC_URL_API}/${this.prefix}/${this.resourcePath}`;
+    return additionalPath ? `${baseUrl}/${additionalPath}` : baseUrl;
+  }
+
+  buildUrlAI(additionalPath?: string): string {
+    const baseUrl = `${process.env.NEXT_PUBLIC_URL_API_AI}/${this.prefix}/${this.resourcePath}`;
     return additionalPath ? `${baseUrl}/${additionalPath}` : baseUrl;
   }
 }

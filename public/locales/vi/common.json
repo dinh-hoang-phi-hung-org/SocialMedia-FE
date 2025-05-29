@@ -30,8 +30,10 @@
     "edit-profile": "Chỉnh sửa hồ sơ",
     "post": "Đăng bài",
     "posting": "Đang đăng bài...",
+    "submit": "Gửi",
     "submit-comment": "Gửi bình luận",
-    "submitting": "Đang gửi bình luận..."
+    "submitting": "Đang gửi bình luận...",
+    "report": "Báo cáo"
   },
   "text": {
     "actions": "Hành động",
@@ -109,7 +111,11 @@
     "comment-created": "Bình luận đã được tạo thành công",
     "comment_failed": "Không thể tạo bình luận",
     "post-created": "Bài viết đã được tạo thành công",
-    "post_failed": "Không thể tạo bài viết"
+    "post_failed": "Không thể tạo bài viết",
+    "comment-toxic": "Bình luận đã được đánh giá là độc hại, vui lòng kiểm tra lại",
+    "report-success": "Báo cáo đã được tạo thành công",
+    "delete-content-success": "Nội dung đã được xóa thành công",
+    "close-report-success": "Báo cáo đã được đóng thành công"
   },
   "auth": {
     "login": "Đăng nhập",
@@ -210,5 +216,8 @@
     "filter-by": "Lọc theo",
     "clear": "Xóa",
     "all": "Tất cả"
+  },
+  "report": {
+    "placeholder": "Nội dung báo cáo..."
   }
 }

@@ -16,7 +16,7 @@ const initI18n = async () => {
       interpolation: {
         escapeValue: false,
       },
-      ns: ["common"],
+      ns: ["common", "user-management", "report-management"],
       defaultNS: "common",
       backend: {
         loadPath: "/locales/{{lng}}/{{ns}}.json",
@@ -29,7 +29,10 @@ const initI18n = async () => {
     });
 
   // Explicitly load all namespaces for both languages
-  await Promise.all([i18n.loadNamespaces(["common", "user-management"]), i18n.loadLanguages(["en", "vi"])]);
+  await Promise.all([
+    i18n.loadNamespaces(["common", "user-management", "report-management"]),
+    i18n.loadLanguages(["en", "vi"]),
+  ]);
 
   return i18n;
 };

@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { Card } from "@/shared/components/ui/card";
 import { TPost } from "@/shared/types/common-type/post-type";
 import { TypeTransfer } from "@/shared/constants/type-transfer";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Post from "@/shared/components/BaseLayouts/Post/Post";
 import { TComment } from "@/shared/types/common-type/comment-type";
 import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 import { FaPlus } from "react-icons/fa6";
 import NewPostModal from "@/shared/components/BaseLayouts/Modal/NewPostModal";
+import NotFound from "@/shared/components/BaseLayouts/NotFound/NotFound";
 
 export default function PostPage() {
   const { uuid } = useParams();
@@ -16,6 +17,7 @@ export default function PostPage() {
   const [comments, setComments] = useState<TComment[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCommentForm, setShowCommentForm] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -26,7 +28,7 @@ export default function PostPage() {
           setPost(post.payload);
         }
       } catch (error) {
-        console.error("Error fetching post:", error);
+        setIsError(true);
       } finally {
         setLoading(false);
       }
@@ -45,6 +47,14 @@ export default function PostPage() {
     fetchPost();
     fetchComments();
   }, [uuid]);
+
+  const handleAddComment = (comment: TComment) => {
+    setComments([comment, ...comments]);
+  };
+
+  if (isError) {
+    return <NotFound />;
+  }
 
   return (
     <Card className="2xl:mx-96 xl:mx-60 min-h-[calc(100vh-2.5rem)]">
@@ -67,7 +77,13 @@ export default function PostPage() {
           </div>
         ))}
       {showCommentForm && (
-        <NewPostModal onClose={() => setShowCommentForm(false)} title="common:comment.add-comment" type="comment" postUuid={uuid as string} />
+        <NewPostModal
+          onClose={() => setShowCommentForm(false)}
+          title="common:comment.add-comment"
+          type="comment"
+          postUuid={uuid as string}
+          setComments={handleAddComment}
+        />
       )}
     </Card>
   );

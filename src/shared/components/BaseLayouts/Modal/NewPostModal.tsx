@@ -17,6 +17,7 @@ import {
   validateNewMedia,
 } from "@/shared/types/common-type/file-type";
 import LabelShadcn from "../../ui/LabelShadcn";
+import { TComment } from "@/shared/types/common-type/comment-type";
 
 const emojiRegex = /(\p{Emoji_Presentation}|\p{Emoji}\uFE0F)/u;
 
@@ -30,6 +31,7 @@ interface NewPostModalProps {
   onClose: () => void;
   postUuid?: string;
   parentUuid?: string;
+  setComments?: (comment: TComment) => void;
 }
 
 const MAX_CHARS = 500;
@@ -166,14 +168,34 @@ const NewPostModal = (props: NewPostModalProps) => {
     try {
       const mediaFiles = getFilesFromMedia(selectedMedia);
 
-      const response = await TypeTransfer["Comment"].otherAPIs?.postComment(postContent, props.postUuid, mediaFiles, props.parentUuid);
+      const checkToxic = await TypeTransfer["AI"].otherAPIs?.checkLevelToxicOfComment(postContent);
 
-      if (response?.payload?.commentUuid) {
+      if (checkToxic?.payload?.is_toxic) {
+        toast.error({
+          title: "common:notification.error",
+          description: "common:message.comment-toxic",
+        });
+        return;
+      }
+
+      const response = await TypeTransfer["Comment"].otherAPIs?.postComment(
+        postContent,
+        props.postUuid,
+        mediaFiles,
+        props.parentUuid,
+      );
+
+      if (response?.payload?.comment) {
         toast.success({
           title: "common:notification.success",
           description: "common:message.comment-created",
         });
         props.onClose();
+        if (props.setComments) {
+          const newComment = response.payload.comment;
+          console.log("newComment", newComment);
+          props.setComments(newComment);
+        }
       }
       // eslint-disable-next-line
     } catch (error: any) {

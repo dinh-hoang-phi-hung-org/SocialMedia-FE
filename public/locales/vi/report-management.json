@@ -1,0 +1,27 @@
+{
+  "title": {
+    "detail-report-title": "Chi tiết báo cáo",
+    "report-content": "Nội dung báo cáo",
+    "report-management-title": "Quản lý báo cáo",
+    "description": "Chào mừng đến trang quản lý báo cáo"
+  },
+  "fields": {
+    "order-number": "Số thứ tự",
+    "content-type": "Loại nội dung",
+    "reporter": "Người báo cáo",
+    "status": "Trạng thái",
+    "created-at": "Ngày tạo",
+    "reviewed-at": "Ngày xử lý"
+  },
+  "filter": {
+    "post": "Bài viết",
+    "comment": "Bình luận",
+    "pending": "Chờ xử lý",
+    "banned": "Đã khóa",
+    "closed": "Đã đóng"
+  },
+  "button": {
+    "delete-content": "Xóa nội dung",
+    "close-report": "Đóng báo cáo"
+  }
+}

@@ -30,8 +30,10 @@
     "edit-profile": "Edit Profile",
     "post": "Post",
     "posting": "Posting...",
+    "submit": "Submit",
     "submit-comment": "Submit Comment",
-    "submitting": "Submitting..."
+    "submitting": "Submitting...",
+    "report": "Report"
   },
   "text": {
     "actions": "Actions",
@@ -109,7 +111,11 @@
     "comment-created": "Comment created successfully",
     "comment_failed": "Failed to create comment",
     "post-created": "Post created successfully",
-    "post_failed": "Failed to create post"
+    "post_failed": "Failed to create post",
+    "comment-toxic": "Comment is toxic, please check your comment",
+    "report-success": "Report created successfully",
+    "delete-content-success": "Content deleted successfully",
+    "close-report-success": "Report closed successfully"
   },
   "auth": {
     "login": "Login",
@@ -210,5 +216,8 @@
     "all": "All",
     "filter-by": "Filter by",
     "clear": "Clear"
+  },
+  "report": {
+    "placeholder": "Report Content..."
   }
 }

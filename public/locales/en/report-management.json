@@ -1,0 +1,27 @@
+{
+  "title": {
+    "detail-report-title": "Detail Report",
+    "report-content": "Report Content",
+    "report-management-title": "Report Management",
+    "description": "Welcome to the report management page"
+  },
+  "fields": {
+    "order-number": "Order Number",
+    "content-type": "Content Type",
+    "reporter": "Reporter",
+    "status": "Status",
+    "created-at": "Created At",
+    "reviewed-at": "Reviewed At"
+  },
+  "filter": {
+    "post": "Post",
+    "comment": "Comment",
+    "pending": "Pending",
+    "banned": "Banned",
+    "closed": "Closed"
+  },
+  "button": {
+    "delete-content": "Delete Content",
+    "close-report": "Close Report"
+  }
+}
