@@ -5,20 +5,30 @@ import { TPost } from "@/shared/types/common-type/post-type";
 import TimeAgo from "@/shared/components/ui/TimeAgo";
 import { FaRegComment, FaRegHeart, FaRegBookmark } from "react-icons/fa6";
 import { IoIosMore } from "react-icons/io";
+import { TbMessageReport } from "react-icons/tb";
 import ImageModal from "../Modal/ImageModal";
+import ReportContent from "../Modal/ReportComment";
 import { ensureHttps } from "@/shared/helpers/ensure-https";
 import { useRouter } from "next/navigation";
 import { PostSkeleton } from "./PostSkeleton";
 import { TComment } from "@/shared/types/common-type/comment-type";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/shared/components/ui/dropdown-menu";
+import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 
 interface PostProps {
   type: "post" | "comment" | "comment-child";
-  post?: TPost;
-  comment?: TComment;
+  post?: TPost | null;
+  comment?: TComment | null;
   isLoading?: boolean;
+  isAdminReview?: boolean;
 }
 
-const Post = ({ post, comment, isLoading = false, type = "post" }: PostProps) => {
+const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview = false }: PostProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [isDragging, setIsDragging] = useState(false);
@@ -28,6 +38,7 @@ const Post = ({ post, comment, isLoading = false, type = "post" }: PostProps) =>
   const [moveDistance, setMoveDistance] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   if (isLoading || ((!post || !post.user) && (!comment || !comment.user))) {
     return <PostSkeleton />;
@@ -149,6 +160,10 @@ const Post = ({ post, comment, isLoading = false, type = "post" }: PostProps) =>
     }
   };
 
+  const handleReportClose = () => {
+    setShowReportModal(false);
+  };
+
   return (
     <div className={`w-full flex ${type === "comment" ? "pl-10" : type === "comment-child" ? "pl-20" : ""}`}>
       {/* Left Side - Avatar and Thread Line */}
@@ -182,9 +197,29 @@ const Post = ({ post, comment, isLoading = false, type = "post" }: PostProps) =>
               className="text-xs text-gray-500"
             />
           </div>
-          <button className="text-gray-400 hover:text-gray-600">
-            <IoIosMore size={20} />
-          </button>
+          {!isAdminReview && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="text-gray-400 hover:text-gray-600">
+                  <IoIosMore size={20} />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuItem
+                  className="flex items-center justify-between gap-2 cursor-pointer"
+                  onClick={() => setShowReportModal(true)}
+                >
+                  <LabelShadcn
+                    text="common:button.report"
+                    className="font-semibold cursor-pointer"
+                    inheritedClass
+                    translate
+                  />
+                  <TbMessageReport className="h-4 w-4 text-red-500" />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
 
         {/* Content */}
@@ -195,47 +230,44 @@ const Post = ({ post, comment, isLoading = false, type = "post" }: PostProps) =>
         </div>
 
         {/* Media - Horizontal Scrolling with Drag */}
-        {type === "post" &&
-          post?.mediaUrl &&
-          post?.mediaUrl?.images &&
-          post?.mediaUrl?.images?.length > 0 && (
-            <div className="mb-3">
-              <div
-                ref={scrollContainerRef}
-                className="flex overflow-x-auto gap-2 pb-2 hide-scrollbar"
-                style={{ cursor: "grab" }}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseLeave}
-                onMouseMove={handleMouseMove}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onTouchMove={handleTouchMove}
-              >
-                {post.mediaUrl.images.map((image, index) => (
-                  <div
-                    key={index}
-                    className="flex-shrink-0 relative group"
-                    style={{
-                      width: "auto",
-                      height: "280px",
-                    }}
-                  >
-                    <Image
-                      src={ensureHttps(image.url)}
-                      alt={`post image ${index + 1}`}
-                      width={300}
-                      height={300}
-                      className="w-full h-full object-cover rounded-xl cursor-pointer border border-slate-300"
-                      draggable={false}
-                      onClick={() => handleExplicitImageClick(ensureHttps(image.url))}
-                      priority={true}
-                    />
-                  </div>
-                ))}
-              </div>
+        {type === "post" && post?.mediaUrl && post?.mediaUrl?.images && post?.mediaUrl?.images?.length > 0 && (
+          <div className="mb-3">
+            <div
+              ref={scrollContainerRef}
+              className="flex overflow-x-auto gap-2 pb-2 hide-scrollbar"
+              style={{ cursor: "grab" }}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseLeave}
+              onMouseMove={handleMouseMove}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              onTouchMove={handleTouchMove}
+            >
+              {post.mediaUrl.images.map((image, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 relative group"
+                  style={{
+                    width: "auto",
+                    height: "280px",
+                  }}
+                >
+                  <Image
+                    src={ensureHttps(image.url)}
+                    alt={`post image ${index + 1}`}
+                    width={300}
+                    height={300}
+                    className="w-full h-full object-cover rounded-xl cursor-pointer border border-slate-300"
+                    draggable={false}
+                    onClick={() => handleExplicitImageClick(ensureHttps(image.url))}
+                    priority={true}
+                  />
+                </div>
+              ))}
             </div>
-          )}
+          </div>
+        )}
 
         {type === "comment" &&
           comment?.mediaUrl &&
@@ -280,28 +312,35 @@ const Post = ({ post, comment, isLoading = false, type = "post" }: PostProps) =>
           )}
 
         {/* Actions */}
-        <div className="flex items-center gap-4 mt-2">
-          <div className="text-gray-600 hover:text-red-500 flex items-center gap-1">
-            <FaRegHeart className="w-5 h-5" />
-            {post?.likesCount}
-          </div>
-          <div
-            className="text-gray-600 hover:text-blue-500 flex items-center gap-1"
-            onClick={() => router.push(`/post/${post?.uuid}`)}
-          >
-            <FaRegComment className="w-5 h-5" />
-            {post?.commentsCount}
-          </div>
-          {type === "post" && (
-            <div className="text-gray-600 hover:text-gray-900 flex items-center gap-1">
-              <FaRegBookmark className="w-5 h-5" />
+        {!isAdminReview && (
+          <div className="flex items-center gap-4 mt-2">
+            <div className="text-gray-600 hover:text-red-500 flex items-center gap-1">
+              <FaRegHeart className="w-5 h-5" />
+              {post?.likesCount}
             </div>
-          )}
-        </div>
+            <div
+              className="text-gray-600 hover:text-blue-500 flex items-center gap-1"
+              onClick={() => router.push(`/post/${post?.uuid}`)}
+            >
+              <FaRegComment className="w-5 h-5" />
+              {post?.commentsCount}
+            </div>
+            {type === "post" && (
+              <div className="text-gray-600 hover:text-gray-900 flex items-center gap-1">
+                <FaRegBookmark className="w-5 h-5" />
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Image Modal */}
       {showImageModal && selectedImage && <ImageModal imageUrl={selectedImage} onClose={closeImageModal} />}
+
+      {/* Report Modal */}
+      {showReportModal && (
+        <ReportContent onClose={handleReportClose} cmtUuid={type === "post" ? post?.uuid : comment?.uuid} type={type} />
+      )}
     </div>
   );
 };

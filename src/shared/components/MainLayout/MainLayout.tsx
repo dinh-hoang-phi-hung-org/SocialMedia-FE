@@ -13,6 +13,7 @@ import { store } from "@/shared/redux/store";
 import { Provider } from "react-redux";
 import { setAvatar } from "@/shared/redux/slices/avatarSlice";
 import Search from "../BaseLayouts/Search/Search";
+import Loading from "../BaseLayouts/Loading/Loading";
 
 const SIDEBAR_WIDTH_EXPANDED = "16rem";
 const SIDEBAR_WIDTH_COLLAPSED = "4.5rem";
@@ -172,7 +173,7 @@ const MainLayout = (props: MainLayoutProps) => {
           {/* </PersistGate> */}
         </Provider>
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
       {isConnected && <div className="hidden">Socket connected</div>}
     </>

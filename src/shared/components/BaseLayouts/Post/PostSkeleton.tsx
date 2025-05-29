@@ -2,17 +2,13 @@ import { Skeleton } from "@/shared/components/ui/skeleton";
 
 export function PostSkeleton() {
   return (
-    <div className="w-full flex">
-      {/* Left Side - Avatar and Thread Line Skeleton */}
+    <div className="flex">
       <div className="flex flex-col items-center mr-3">
-        {/* Avatar Skeleton */}
         <Skeleton className="w-10 h-10 rounded-full flex-shrink-0" />
 
-        {/* Thread Line Skeleton */}
         <Skeleton className="w-0.5 h-full mt-2" />
       </div>
 
-      {/* Right Side - Content Skeleton */}
       <div className="flex-1 min-w-0">
         {/* Header Skeleton */}
         <div className="flex items-center justify-between mb-3">
@@ -32,10 +28,10 @@ export function PostSkeleton() {
 
         {/* Media Skeleton */}
         <div className="flex gap-2">
-          <Skeleton className="w-[280px] h-[280px] rounded-xl mb-3" />
-          <Skeleton className="w-[280px] h-[280px] rounded-xl mb-3" />
-          <Skeleton className="w-[280px] h-[280px] rounded-xl mb-3" />
-          <Skeleton className="w-[280px] h-[280px] rounded-xl mb-3" />
+          <Skeleton className="w-full h-[280px] rounded-xl mb-3" />
+          <Skeleton className="w-full h-[280px] rounded-xl mb-3" />
+          <Skeleton className="w-full h-[280px] rounded-xl mb-3" />
+          <Skeleton className="w-full h-[280px] rounded-xl mb-3" />
         </div>
 
         {/* Actions Skeleton */}

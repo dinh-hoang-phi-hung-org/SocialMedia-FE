@@ -7,6 +7,9 @@ import { PaginationParamsType } from "@/shared/types/common-type/pagination-para
 import { userService } from "@/app/_user/_services/user-services";
 import { followService } from "@/app/_follow/_services/follow-services";
 import { commentService } from "@/app/_comment/_services/comment-service";
+import { TReport } from "../types/common-type/report-type";
+import { reportService } from "@/app/_report/_services/report-service";
+import { aiService } from "@/app/_AI/_services/AI-service";
 const createAuthTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
   return {
     repository: entry.repository,
@@ -81,6 +84,28 @@ const createCommentTypeTransferEntry = (entry: TypeTransferEntry): TransferType 
   };
 };
 
+const createReportTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
+  return {
+    repository: entry.repository,
+    otherAPIs: {
+      createReport: (report: TReport) => entry.repository.createReport(report),
+      getReportsByType: (params: PaginationParamsType, type: string) => entry.repository.getReportsByType(params, type),
+      getReportByUuid: (type: string, reportUuid: string) => entry.repository.getReportByUuid(type, reportUuid),
+      updateReport: (reportUuid: string, status: string, type: string) =>
+        entry.repository.updateReport(reportUuid, status, type),
+    },
+  };
+};
+
+const createAITransferEntry = (entry: TypeTransferEntry): TransferType => {
+  return {
+    repository: entry.repository,
+    otherAPIs: {
+      checkLevelToxicOfComment: (content: string) => entry.repository.checkLevelToxicOfComment(content),
+    },
+  };
+};
+
 export const TypeTransfer: Record<string, TransferType> = {
   Auth: createAuthTypeTransferEntry({
     repository: autherizeService,
@@ -99,5 +124,11 @@ export const TypeTransfer: Record<string, TransferType> = {
   } as TypeTransferEntry),
   Comment: createCommentTypeTransferEntry({
     repository: commentService,
+  } as TypeTransferEntry),
+  Report: createReportTypeTransferEntry({
+    repository: reportService,
+  } as TypeTransferEntry),
+  AI: createAITransferEntry({
+    repository: aiService,
   } as TypeTransferEntry),
 };

@@ -201,7 +201,7 @@
   50% {
     transform: translateX(50%);
     z-index: 5;
-    opacity: 1;
+    opacity: 0.5;
     display: block;
   }
   100% {
@@ -212,13 +212,40 @@
   }
 }
 
+/* Social Media Loading Animation */
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
 
-
-@layer base {
-  * {
-    @apply border-border;
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
   }
-  body {
-    @apply bg-background text-foreground;
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-loading-progress {
+  animation: loadingProgress 2s ease-in-out infinite;
+  width: 0%;
+}
+
+@keyframes loadingProgress {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 70%;
+  }
+  75% {
+    width: 90%;
+  }
+  90% {
+    width: 95%;
+  }
+  100% {
+    width: 0%;
   }
 }
