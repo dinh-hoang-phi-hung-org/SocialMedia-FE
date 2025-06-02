@@ -80,6 +80,9 @@ const createCommentTypeTransferEntry = (entry: TypeTransferEntry): TransferType 
       getComments: (postUuid: string, params: PaginationParamsType) => entry.repository.getComments(postUuid, params),
       postComment: (content: string, postUuid: string, files?: File[], parentUuid?: string) =>
         entry.repository.postComment(content, postUuid, files, parentUuid),
+      getCommentByUuid: (commentUuid: string) => entry.repository.getCommentByUuid(commentUuid),
+      getCommentsByUuidParent: (postUuid: string, parentUuid: string, params: PaginationParamsType) =>
+        entry.repository.getCommentsByUuidParent(postUuid, parentUuid, params),
     },
   };
 };

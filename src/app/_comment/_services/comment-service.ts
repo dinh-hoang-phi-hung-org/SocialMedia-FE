@@ -60,7 +60,24 @@ export class CommentService implements ICommentService {
 
   public async getComments(postUuid: string, params: PaginationParamsType): Promise<GetResponse<TComment[]>> {
     return httpClient.get<TComment[]>({
-      url: this.requestBuilder.buildUrl(`${postUuid}`),
+      url: this.requestBuilder.buildUrl(`post/${postUuid}`),
+      config: { params },
+    });
+  }
+
+  public async getCommentByUuid(commentUuid: string): Promise<GetResponse<TComment>> {
+    return httpClient.get<TComment>({
+      url: this.requestBuilder.buildUrl(`comment/${commentUuid}`),
+    });
+  }
+
+  public async getCommentsByUuidParent(
+    postUuid: string,
+    parentUuid: string,
+    params: PaginationParamsType,
+  ): Promise<GetResponse<TComment>> {
+    return httpClient.get<TComment>({
+      url: this.requestBuilder.buildUrl(`post/${postUuid}/parent/${parentUuid}`),
       config: { params },
     });
   }

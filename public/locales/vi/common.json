@@ -15,6 +15,7 @@
     "add": "Thêm",
     "edit": "Sửa",
     "view": "Xem",
+    "reply": "Trả lời",
     "download": "Tải xuống",
     "login": "Đăng nhập",
     "dont-have-account": "Không có tài khoản ?",
@@ -33,7 +34,10 @@
     "submit": "Gửi",
     "submit-comment": "Gửi bình luận",
     "submitting": "Đang gửi bình luận...",
-    "report": "Báo cáo"
+    "report": "Báo cáo",
+    "show-more": "Xem thêm",
+    "show-less": "Thu gọn",
+    "load-more": "Tải thêm"
   },
   "text": {
     "actions": "Hành động",
@@ -66,7 +70,8 @@
     "search-results": "Kết quả tìm kiếm",
     "no-results": "Không tìm thấy kết quả",
     "n-a": "N/A",
-    "try-adjusting-your-search-or-filter": "Thử điều chỉnh tìm kiếm hoặc lọc để tìm kiếm điều bạn đang tìm kiếm."
+    "try-adjusting-your-search-or-filter": "Thử điều chỉnh tìm kiếm hoặc lọc để tìm kiếm điều bạn đang tìm kiếm.",
+    "more-number": "{{count}} bình luận khác"
   },
   "notification": {
     "error": "Lỗi",
@@ -202,12 +207,14 @@
     "following": "Người đang theo dõi"
   },
   "post": {
+    "post": "Bài viết",
     "new-post": "Đăng bài mới",
     "news": "Có gì mới?"
   },
   "comment": {
     "comments": "Bình luận",
-    "add-comment": "Thêm bình luận"
+    "add-comment": "Thêm bình luận",
+    "reply": "Trả lời"
   },
   "pagination": {
     "records-per-page": "bản ghi trên trang"

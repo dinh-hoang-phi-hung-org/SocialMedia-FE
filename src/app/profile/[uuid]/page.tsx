@@ -31,7 +31,7 @@ export default function ProfilePage() {
     const fetchPosts = async () => {
       setIsLoading(true);
       try {
-        const response = await TypeTransfer["Post"]?.otherAPIs?.getPosts(authProvider.getUserUuid(), {
+        const response = await TypeTransfer["Post"]?.otherAPIs?.getPosts(uuid, {
           page: 1,
           limit: 10,
         });
