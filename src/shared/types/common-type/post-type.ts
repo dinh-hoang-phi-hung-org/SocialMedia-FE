@@ -20,10 +20,9 @@ export type TPost = DefaultItemType & {
   user: PostUser;
 
   // Optional fields for post stats
-  likesCount?: number;
+  reactionsCount?: number;
   commentsCount?: number;
-  sharesCount?: number;
-  isLiked?: boolean;
+  isReacted?: boolean;
 
   // Optional fields for post status
   isActive?: boolean;

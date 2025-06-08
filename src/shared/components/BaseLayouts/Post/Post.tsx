@@ -3,7 +3,7 @@ import Image from "next/image";
 // import postData from "@/shared/sample-data/post.json";
 import { TPost } from "@/shared/types/common-type/post-type";
 import TimeAgo from "@/shared/components/ui/TimeAgo";
-import { FaRegComment, FaRegHeart, FaRegBookmark } from "react-icons/fa6";
+import { FaRegComment, FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa6";
 import { IoIosMore } from "react-icons/io";
 import { TbMessageReport } from "react-icons/tb";
 import ImageModal from "../Modal/ImageModal";
@@ -20,7 +20,8 @@ import {
 } from "@/shared/components/ui/dropdown-menu";
 import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 import NewPostModal from "../Modal/NewPostModal";
-import CommentChild from "../CommentChild/CommentChild";
+import { TypeTransfer } from "@/shared/constants/type-transfer";
+import { TReactionCreate } from "@/shared/types/common-type/reaction-type";
 
 interface PostProps {
   type: "post" | "comment" | "comment-child";
@@ -43,11 +44,28 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showReportModal, setShowReportModal] = useState(false);
   const [showCommentForm, setShowCommentForm] = useState(false);
-  const [showCommentChild, setShowCommentChild] = useState(false);
+  const [isReacted, setIsReacted] = useState<boolean>(type === "post" ? post?.isReacted || false : comment?.isReacted || false);
+  const [reactionCount, setReactionCount] = useState<number>(type === "post" ? post?.reactionsCount || 0 : comment?.reactionsCount || 0);
 
   if (isLoading || ((!post || !post.user) && (!comment || !comment.user))) {
     return <PostSkeleton />;
   }
+
+  const handleReaction = () => {
+    const reaction: TReactionCreate = {
+      contentType: type === "post" ? "post" : "comment",
+      contentUuid: type === "post" ? post?.uuid || "" : comment?.uuid || "",
+    };
+    if (isReacted) {
+      TypeTransfer["Reaction"].otherAPIs?.unReact(reaction);
+      setIsReacted(!isReacted);
+      setReactionCount(reactionCount - 1);
+    } else {
+      TypeTransfer["Reaction"].otherAPIs?.react(reaction);
+      setIsReacted(!isReacted);
+      setReactionCount(reactionCount + 1);
+    }
+  };
 
   // Handlers for drag-to-scroll functionality
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -319,9 +337,18 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
         {/* Actions */}
         {!isAdminReview && (
           <div className="flex items-center gap-4 mt-2">
-            <div className="text-gray-600 hover:text-red-500 flex items-center gap-1">
-              <FaRegHeart className="w-5 h-5" />
-              {post?.likesCount}
+            <div
+              className="text-gray-600 hover:text-primary-purple flex items-center gap-1 cursor-pointer"
+              onClick={handleReaction}
+            >
+              <div className="relative">
+                {isReacted ? (
+                  <FaHeart className="w-5 h-5 text-primary-purple transition-all duration-300 ease-out transform hover:scale-110" />
+                ) : (
+                  <FaRegHeart className="w-5 h-5 transition-all duration-300 ease-out transform hover:scale-110" />
+                )}
+              </div>
+              <span className="transition-colors duration-200">{reactionCount}</span>
             </div>
             {type !== "comment-child" && (
               <div
