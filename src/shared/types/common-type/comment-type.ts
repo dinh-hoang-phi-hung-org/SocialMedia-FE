@@ -1,6 +1,6 @@
 import { TMediaUrl } from "@/shared/types/common-type/file-type";
 import { TUserShortCut } from "./user-type";
-
+import { TPost } from "./post-type";
 export type TComment = {
   uuid: string;
   content: string;
@@ -9,6 +9,8 @@ export type TComment = {
   postUuid: string;
   mediaUrl: CommentMedia;
   user: TUserShortCut;
+  post: TPost;
+  childrenCount: number;
 };
 
 interface CommentMedia {

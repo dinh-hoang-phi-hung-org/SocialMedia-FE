@@ -19,6 +19,8 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
 import LabelShadcn from "@/shared/components/ui/LabelShadcn";
+import NewPostModal from "../Modal/NewPostModal";
+import CommentChild from "../CommentChild/CommentChild";
 
 interface PostProps {
   type: "post" | "comment" | "comment-child";
@@ -26,9 +28,10 @@ interface PostProps {
   comment?: TComment | null;
   isLoading?: boolean;
   isAdminReview?: boolean;
+  onAddComment?: (comment: TComment) => void;
 }
 
-const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview = false }: PostProps) => {
+const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview = false, onAddComment }: PostProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [isDragging, setIsDragging] = useState(false);
@@ -39,6 +42,8 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showReportModal, setShowReportModal] = useState(false);
+  const [showCommentForm, setShowCommentForm] = useState(false);
+  const [showCommentChild, setShowCommentChild] = useState(false);
 
   if (isLoading || ((!post || !post.user) && (!comment || !comment.user))) {
     return <PostSkeleton />;
@@ -318,16 +323,34 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
               <FaRegHeart className="w-5 h-5" />
               {post?.likesCount}
             </div>
-            <div
-              className="text-gray-600 hover:text-blue-500 flex items-center gap-1"
-              onClick={() => router.push(`/post/${post?.uuid}`)}
-            >
-              <FaRegComment className="w-5 h-5" />
-              {post?.commentsCount}
-            </div>
+            {type !== "comment-child" && (
+              <div
+                className="text-gray-600 hover:text-blue-500 flex items-center gap-1 cursor-pointer"
+                onClick={() => {
+                  if (type === "post") {
+                    router.push(`/post/${post?.uuid}`);
+                  } else {
+                    router.push(`/post/${comment?.post?.uuid}/${comment?.uuid}`);
+                    // setShowCommentChild(true);
+                  }
+                }}
+              >
+                <FaRegComment className="w-5 h-5" />
+                {type === "post" ? post?.commentsCount : comment?.childrenCount}
+              </div>
+            )}
+
             {type === "post" && (
               <div className="text-gray-600 hover:text-gray-900 flex items-center gap-1">
                 <FaRegBookmark className="w-5 h-5" />
+              </div>
+            )}
+            {(type === "comment" || type === "comment-child") && (
+              <div
+                className="text-gray-600 hover:text-gray-900 flex items-center gap-1"
+                onClick={() => setShowCommentForm(true)}
+              >
+                <LabelShadcn text="common:button.reply" translate inheritedClass className="cursor-pointer" />
               </div>
             )}
           </div>
@@ -340,6 +363,17 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
       {/* Report Modal */}
       {showReportModal && (
         <ReportContent onClose={handleReportClose} cmtUuid={type === "post" ? post?.uuid : comment?.uuid} type={type} />
+      )}
+
+      {showCommentForm && (
+        <NewPostModal
+          onClose={() => setShowCommentForm(false)}
+          title="common:comment.add-comment"
+          type="comment"
+          postUuid={comment?.post?.uuid}
+          parentUuid={type === "comment" ? comment?.uuid : comment?.parentUuid}
+          setComments={onAddComment}
+        />
       )}
     </div>
   );

@@ -15,6 +15,7 @@
     "add": "Add",
     "edit": "Edit",
     "view": "View",
+    "reply": "Reply",
     "download": "Download",
     "login": "Login",
     "dont-have-account": "Don't have an account ?",
@@ -33,7 +34,10 @@
     "submit": "Submit",
     "submit-comment": "Submit Comment",
     "submitting": "Submitting...",
-    "report": "Report"
+    "report": "Report",
+    "show-more": "Show More",
+    "show-less": "Show Less",
+    "load-more": "Load More"
   },
   "text": {
     "actions": "Actions",
@@ -66,7 +70,8 @@
     "search-results": "Search Results",
     "no-results": "No results found",
     "n-a": "N/A",
-    "try-adjusting-your-search-or-filter": "Try adjusting your search or filter to find what you're looking for."
+    "try-adjusting-your-search-or-filter": "Try adjusting your search or filter to find what you're looking for.",
+    "more-number": "{{count}} more"
   },
   "notification": {
     "error": "Error",
@@ -202,12 +207,14 @@
     "following": "Following"
   },
   "post": {
+    "post": "Post",
     "new-post": "New Post",
     "news": "What's new?"
   },
   "comment": {
     "comments": "Comments",
-    "add-comment": "Add Comment"
+    "add-comment": "Add Comment",
+    "reply": "Reply"
   },
   "pagination": {
     "records-per-page": "records per page"
