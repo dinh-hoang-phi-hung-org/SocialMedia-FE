@@ -78,7 +78,13 @@ export default function ChatSection({ receiverUuid }: ChatSectionProps) {
         });
 
         if (response?.payload?.messages?.data?.length) {
-          setMessages((prevMessages) => [...prevMessages, ...response.payload.messages.data]);
+          const newMessages = response.payload.messages.data;
+          setMessages((prevMessages) => {
+            // Filter out messages that already exist to prevent duplicates
+            const existingUuids = new Set(prevMessages.map((msg: TMessage) => msg.messageUuid));
+            const uniqueNewMessages = newMessages.filter((msg: TMessage) => !existingUuids.has(msg.messageUuid));
+            return [...prevMessages, ...uniqueNewMessages];
+          });
           setPage(nextPage);
           setHasMore(response.payload.messages.data.length >= pageSize);
         } else {
@@ -118,7 +124,14 @@ export default function ChatSection({ receiverUuid }: ChatSectionProps) {
         mediaUrl: data.mediaUrl,
       };
 
-      setMessages((prevMessages) => [newMessage, ...prevMessages]);
+      setMessages((prevMessages) => {
+        // Check if message already exists to prevent duplicates
+        const messageExists = prevMessages.some((msg: TMessage) => msg.messageUuid === newMessage.messageUuid);
+        if (messageExists) {
+          return prevMessages;
+        }
+        return [newMessage, ...prevMessages];
+      });
       // setShouldScrollToBottom(true);
     };
 
@@ -339,9 +352,8 @@ export default function ChatSection({ receiverUuid }: ChatSectionProps) {
                     {msg.mediaUrl.images.map((image, index) => (
                       <div
                         key={index}
-                        className={`overflow-hidden rounded-lg ${
-                          msg.isMyMessage ? "rounded-br-none" : "rounded-bl-none"
-                        } border border-gray-200`}
+                        className={`overflow-hidden rounded-lg ${msg.isMyMessage ? "rounded-br-none" : "rounded-bl-none"
+                          } border border-gray-200`}
                         style={{
                           width: "120px",
                           height: "120px",
@@ -364,11 +376,10 @@ export default function ChatSection({ receiverUuid }: ChatSectionProps) {
               {/* Text message */}
               {msg.content && (
                 <div
-                  className={`p-3 rounded-lg ${
-                    msg.isMyMessage
-                      ? "bg-primary-purple text-white rounded-br-none self-end"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-bl-none self-start"
-                  }`}
+                  className={`p-3 rounded-lg ${msg.isMyMessage
+                    ? "bg-primary-purple text-white rounded-br-none self-end"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-bl-none self-start"
+                    }`}
                 >
                   {msg.content}
                 </div>
