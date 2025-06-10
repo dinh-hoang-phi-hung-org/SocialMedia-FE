@@ -71,7 +71,8 @@
     "no-results": "No results found",
     "n-a": "N/A",
     "try-adjusting-your-search-or-filter": "Try adjusting your search or filter to find what you're looking for.",
-    "more-number": "{{count}} more"
+    "more-number": "{{count}} more",
+    "searching": "Searching..."
   },
   "notification": {
     "error": "Error",

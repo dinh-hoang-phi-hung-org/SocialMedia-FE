@@ -71,7 +71,8 @@
     "no-results": "Không tìm thấy kết quả",
     "n-a": "N/A",
     "try-adjusting-your-search-or-filter": "Thử điều chỉnh tìm kiếm hoặc lọc để tìm kiếm điều bạn đang tìm kiếm.",
-    "more-number": "{{count}} bình luận khác"
+    "more-number": "{{count}} bình luận khác",
+    "searching": "Đang tìm kiếm ..."
   },
   "notification": {
     "error": "Lỗi",

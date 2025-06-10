@@ -39,7 +39,7 @@ export class MessageService implements IMessageService {
   }
 
   public async sendMessage(
-    conversationUuid: string,
+    conversationUuid: string | undefined,
     receiverUuid: string,
     content: string,
     files?: File[],
@@ -47,7 +47,9 @@ export class MessageService implements IMessageService {
     try {
       const formData = new FormData();
 
-      formData.append("conversationUuid", conversationUuid);
+      if (conversationUuid) {
+        formData.append("conversationUuid", conversationUuid);
+      }
       formData.append("receiverUuid", receiverUuid);
       formData.append("content", content);
       if (files && files.length > 0) {

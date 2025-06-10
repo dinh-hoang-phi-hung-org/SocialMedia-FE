@@ -42,7 +42,7 @@ const createMessageTypeTransferEntry = (entry: TypeTransferEntry): TransferType 
       getConversations: (params: PaginationParamsType) => entry.repository.getConversations(params),
       getMessages: (receiverUuid: string, params: PaginationParamsType) =>
         entry.repository.getMessages(receiverUuid, params),
-      sendMessage: (conversationUuid: string, receiverUuid: string, content: string, files?: File[]) =>
+      sendMessage: (conversationUuid: string | undefined, receiverUuid: string, content: string, files?: File[]) =>
         entry.repository.sendMessage(conversationUuid, receiverUuid, content, files),
     },
   };
