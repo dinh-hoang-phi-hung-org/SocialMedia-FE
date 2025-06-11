@@ -28,6 +28,12 @@ class SocketService {
         this.socket = io(`${this.socketUrl}`, {
           transports: ["websocket"],
           autoConnect: true,
+          reconnection: true,
+          reconnectionDelay: 1000,
+          reconnectionDelayMax: 5000,
+          reconnectionAttempts: 10,
+          timeout: 20000,
+          forceNew: false,
         });
 
         // Setup default listeners

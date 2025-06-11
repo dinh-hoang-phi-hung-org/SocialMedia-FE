@@ -31,13 +31,34 @@ export function useSocket() {
         });
       };
 
-      const onDisconnect = () => {
-        console.log("Socket disconnected in hook");
+      const onDisconnect = (reason: string) => {
+        console.log("Socket disconnected in hook, reason:", reason);
         setIsConnected(false);
+
+        // If disconnect wasn't intentional, attempt to reconnect
+        if (reason !== "io client disconnect") {
+          console.log("Unexpected disconnect, socket will attempt to reconnect automatically");
+        }
+      };
+
+      const onReconnect = (attemptNumber: number) => {
+        console.log(`Socket reconnected successfully after ${attemptNumber} attempts`);
+        setIsConnected(true);
+
+        // Re-authenticate on reconnection
+        socketInstance.emit("authenticate", userUuid, (response: any) => {
+          console.log("Socket re-authentication response:", response);
+        });
+      };
+
+      const onReconnectError = (error: Error) => {
+        console.error("Socket reconnection failed:", error);
       };
 
       socketInstance.on("connect", onConnect);
       socketInstance.on("disconnect", onDisconnect);
+      socketInstance.on("reconnect", onReconnect);
+      socketInstance.on("reconnect_error", onReconnectError);
 
       if (socketInstance.connected) {
         setIsConnected(true);
@@ -49,6 +70,8 @@ export function useSocket() {
       return () => {
         socketInstance.off("connect", onConnect);
         socketInstance.off("disconnect", onDisconnect);
+        socketInstance.off("reconnect", onReconnect);
+        socketInstance.off("reconnect_error", onReconnectError);
       };
     } else {
       console.error("Failed to create socket instance");

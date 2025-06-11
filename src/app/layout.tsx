@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import I18nextProvider from "@/shared/utils/functions/multilingual/i18nProvider";
 import { LanguageProvider } from "@/shared/hooks/useLanguage";
+import { VideoCallProvider } from "@/shared/providers/VideoCallProvider";
 import "./globals.css";
 import { Toaster } from "@/shared/components/ui/sonner";
 
@@ -29,8 +30,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
         <I18nextProvider>
-          <LanguageProvider>{children}</LanguageProvider>
-          <Toaster />
+          <LanguageProvider>
+            <VideoCallProvider>{children}</VideoCallProvider>
+            <Toaster />
+          </LanguageProvider>
         </I18nextProvider>
       </body>
     </html>
