@@ -212,7 +212,7 @@ const Search = () => {
                         >
                           <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200">
                             <Image
-                              src={user.profilePictureUrl || "/assets/images/sample-avatar.jpeg"}
+                              src={user.profilePictureUrl || "/assets/images/sample-avatar.png"}
                               alt={user.username || ""}
                               width={40}
                               height={40}
@@ -273,7 +273,7 @@ const Search = () => {
                         >
                           <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200">
                             <Image
-                              src={user.profilePictureUrl || "/assets/images/sample-avatar.jpeg"}
+                              src={user.profilePictureUrl || "/assets/images/sample-avatar.png"}
                               alt={user.username || ""}
                               width={40}
                               height={40}

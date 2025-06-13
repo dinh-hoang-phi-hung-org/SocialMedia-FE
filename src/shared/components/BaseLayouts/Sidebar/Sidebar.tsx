@@ -115,8 +115,9 @@ const Sidebar = () => {
 
           <div className="flex flex-col gap-2 px-3">
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "home" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "home" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => {
                 handleActive("home");
                 router.push("/");
@@ -135,8 +136,9 @@ const Sidebar = () => {
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "search" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "search" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={handleSearchClick}
             >
               <div className="flex justify-center items-center w-6 h-6">
@@ -152,8 +154,9 @@ const Sidebar = () => {
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "message" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "message" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => {
                 handleActive("message");
                 router.push("/message");
@@ -172,8 +175,9 @@ const Sidebar = () => {
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "notification" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "notification" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => handleActive("notification")}
             >
               <div className="flex justify-center items-center w-6 h-6">
@@ -189,8 +193,9 @@ const Sidebar = () => {
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "profile" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "profile" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => {
                 handleActive("profile");
                 router.push("/profile");
@@ -198,7 +203,7 @@ const Sidebar = () => {
             >
               <div className="flex justify-center items-center w-6 h-6">
                 <Image
-                  src={store.getState().avatar.avatar || "/assets/images/sample-avatar.jpeg"}
+                  src={store.getState().avatar.avatar || "/assets/images/sample-avatar.png"}
                   alt="avatar"
                   width={26}
                   height={26}

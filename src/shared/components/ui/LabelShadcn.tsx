@@ -8,9 +8,22 @@ import { LabelProps } from "@/shared/types/components-type/label-type";
 
 const LabelShadcn = (props: LabelProps) => {
   const { t: translateFn } = useTranslation(["common"]);
-  const translatedText = props.translate ? (props.t ? props.t(props.text) : translateFn(props.text)) : props.text;
-  const shouldTruncate = props.truncate && translatedText.length > (props.truncateLength ?? 50);
-  const displayedText = shouldTruncate ? `${translatedText.slice(0, props.truncateLength ?? 50)}...` : translatedText;
+  let translatedText = "";
+  let displayedText = "";
+  let shouldTruncate = false;
+
+  if (props.splitAndTranslate) {
+    const texts = props.text.split(" ");
+    texts.forEach((text) => {
+      translatedText += " " + (props.translate ? (props.t ? props.t(text) : translateFn(text)) : text);
+    });
+    shouldTruncate = props.truncate ? translatedText.length > (props.truncateLength ?? 50) : false;
+    displayedText = shouldTruncate ? `${translatedText.slice(0, props.truncateLength ?? 50)}...` : translatedText;
+  } else {
+    translatedText = props.translate ? (props.t ? props.t(props.text) : translateFn(props.text)) : props.text;
+    shouldTruncate = props.truncate ? translatedText.length > (props.truncateLength ?? 50) : false;
+    displayedText = shouldTruncate ? `${translatedText.slice(0, props.truncateLength ?? 50)}...` : translatedText;
+  }
 
   return (
     <TooltipProvider>

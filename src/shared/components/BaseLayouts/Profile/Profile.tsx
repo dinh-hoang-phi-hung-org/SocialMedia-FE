@@ -81,7 +81,7 @@ const Profile = (props: ProfileProps) => {
       <div className="object-center w-32 h-32 relative group">
         <Image
           alt="profile"
-          src={user?.profilePictureUrl || "/assets/images/sample-avatar.jpeg"}
+          src={user?.profilePictureUrl || "/assets/images/sample-avatar.png"}
           className="rounded-full w-full h-full object-cover border border-slate-300"
           width={128}
           height={128}
@@ -103,13 +103,23 @@ const Profile = (props: ProfileProps) => {
 
           {props.isMyProfile ? (
             <Button variant="outline" className="p-2 rounded-md bg-primary-purple text-white">
-              <LabelShadcn text="common:button.edit-profile" className="font-semibold cursor-pointer" inheritedClass translate />
+              <LabelShadcn
+                text="common:button.edit-profile"
+                className="font-semibold cursor-pointer"
+                inheritedClass
+                translate
+              />
             </Button>
           ) : (
             <div className="flex flex-row gap-2">
               {user?.isFollowed ? (
                 <Button variant="outline" className="p-2 rounded-md" onClick={handleUnfollow}>
-                  <LabelShadcn text="common:button.unfollow" className="font-semibold cursor-pointer" inheritedClass translate />
+                  <LabelShadcn
+                    text="common:button.unfollow"
+                    className="font-semibold cursor-pointer"
+                    inheritedClass
+                    translate
+                  />
                 </Button>
               ) : (
                 <Button
@@ -117,11 +127,21 @@ const Profile = (props: ProfileProps) => {
                   className="p-2 rounded-md bg-primary-purple text-white"
                   onClick={handleFollow}
                 >
-                  <LabelShadcn text="common:button.follow" className="font-semibold cursor-pointer" inheritedClass translate />
+                  <LabelShadcn
+                    text="common:button.follow"
+                    className="font-semibold cursor-pointer"
+                    inheritedClass
+                    translate
+                  />
                 </Button>
               )}
               <Button variant="outline" className="p-2 rounded-md">
-                <LabelShadcn text="common:button.message" className="font-semibold cursor-pointer" inheritedClass translate />
+                <LabelShadcn
+                  text="common:button.message"
+                  className="font-semibold cursor-pointer"
+                  inheritedClass
+                  translate
+                />
               </Button>
             </div>
           )}

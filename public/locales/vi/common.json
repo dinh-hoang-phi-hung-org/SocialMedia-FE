@@ -37,7 +37,9 @@
     "report": "Báo cáo",
     "show-more": "Xem thêm",
     "show-less": "Thu gọn",
-    "load-more": "Tải thêm"
+    "load-more": "Tải thêm",
+    "creating": "Đang tạo...",
+    "adding": "Đang thêm..."
   },
   "text": {
     "actions": "Hành động",
@@ -71,7 +73,9 @@
     "no-results": "Không tìm thấy kết quả",
     "n-a": "N/A",
     "try-adjusting-your-search-or-filter": "Thử điều chỉnh tìm kiếm hoặc lọc để tìm kiếm điều bạn đang tìm kiếm.",
-    "more-number": "{{count}} bình luận khác"
+    "more-number": "{{count}} bình luận khác",
+    "searching": "Đang tìm kiếm ...",
+    "you": "Bạn"
   },
   "notification": {
     "error": "Lỗi",

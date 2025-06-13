@@ -196,7 +196,7 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
           <Image
             src={
               ensureHttps(type === "post" ? post?.user.profilePictureUrl : comment?.user.profilePictureUrl) ||
-              "/assets/images/sample-avatar.jpeg"
+              "/assets/images/sample-avatar.png"
             }
             alt="avatar"
             width={40}

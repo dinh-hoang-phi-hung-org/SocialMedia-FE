@@ -22,7 +22,7 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-full overflow-hidden">
               <Image
-                src={"/assets/images/sample-avatar.jpeg"}
+                src={"/assets/images/sample-avatar.png"}
                 alt="avatar"
                 width={100}
                 height={100}

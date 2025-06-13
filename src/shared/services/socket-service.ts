@@ -53,41 +53,6 @@ class SocketService {
 
     return this.socket;
   }
-
-  public getSocket(): Socket | null {
-    return this.socket;
-  }
-
-  public disconnect(): void {
-    if (this.socket) {
-      this.socket.disconnect();
-      this.socket = null;
-    }
-  }
-
-  public joinRoom(conversationId: string): void {
-    if (this.socket) {
-      this.socket.emit("joinRoom", { conversationId });
-    }
-  }
-
-  public leaveRoom(conversationId: string): void {
-    if (this.socket) {
-      this.socket.emit("leaveRoom", { conversationId });
-    }
-  }
-
-  public sendMessage(message: { conversationId: string; messageId: string; senderId: string; content: string }): void {
-    if (this.socket) {
-      this.socket.emit("sendMessage", message);
-    }
-  }
-
-  public sendTypingStatus(data: { conversationId: string; userId: string; isTyping: boolean }): void {
-    if (this.socket) {
-      this.socket.emit("typing", data);
-    }
-  }
 }
 
 export const socketService = SocketService.getInstance();
