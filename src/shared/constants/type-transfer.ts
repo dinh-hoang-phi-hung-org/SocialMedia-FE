@@ -10,6 +10,8 @@ import { commentService } from "@/app/_comment/_services/comment-service";
 import { TReport } from "../types/common-type/report-type";
 import { reportService } from "@/app/_report/_services/report-service";
 import { aiService } from "@/app/_AI/_services/AI-service";
+import { TReactionCreate } from "@/shared/types/common-type/reaction-type";
+import { reactionService } from "@/app/_reaction/_services/reaction-services";
 const createAuthTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
   return {
     repository: entry.repository,
@@ -109,6 +111,15 @@ const createAITransferEntry = (entry: TypeTransferEntry): TransferType => {
   };
 };
 
+const createReactionTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
+  return {
+    repository: entry.repository,
+    otherAPIs: {
+      react: (reaction: TReactionCreate) => entry.repository.react(reaction),
+      unReact: (reaction: TReactionCreate) => entry.repository.unReact(reaction),
+    },
+  };
+};
 export const TypeTransfer: Record<string, TransferType> = {
   Auth: createAuthTypeTransferEntry({
     repository: autherizeService,
@@ -133,5 +144,8 @@ export const TypeTransfer: Record<string, TransferType> = {
   } as TypeTransferEntry),
   AI: createAITransferEntry({
     repository: aiService,
+  } as TypeTransferEntry),
+  Reaction: createReactionTypeTransferEntry({
+    repository: reactionService,
   } as TypeTransferEntry),
 };

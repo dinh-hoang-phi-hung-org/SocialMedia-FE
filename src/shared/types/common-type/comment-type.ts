@@ -11,6 +11,8 @@ export type TComment = {
   user: TUserShortCut;
   post: TPost;
   childrenCount: number;
+  reactionsCount?: number;
+  isReacted?: boolean;
 };
 
 interface CommentMedia {
