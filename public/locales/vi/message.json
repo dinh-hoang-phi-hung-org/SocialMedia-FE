@@ -1,0 +1,32 @@
+{
+  "title": {
+    "messages": "Tin nhắn",
+    "select-conversation": "Chọn cuộc trò chuyện để bắt đầu"
+  },
+  "group": {
+    "create-group": "Tạo nhóm",
+    "created": "đã tạo nhóm",
+    "group-name": "Tên nhóm",
+    "search-users": "Tìm người dùng...",
+    "selected": "Đã chọn",
+    "enter-group-name": "Nhập tên nhóm",
+    "choose-image": "Chọn ảnh",
+    "group-image": "Ảnh nhóm",
+    "added-members": "đã thêm thành viên",
+    "removed-members": "đã xóa thành viên",
+    "members": "Thành viên",
+    "add-members": "Thêm thành viên"
+  },
+  "text": {
+    "message": "Nhắn tin ..."
+  },
+  "message": {
+    "group-created": "Nhóm đã được tạo thành công!",
+    "group-created-failed": "Lỗi khi tạo nhóm",
+    "group-name-required": "Tên nhóm là bắt buộc",
+    "at-least-one-member-required": "Ít nhất một thành viên là bắt buộc",
+    "add-members-failed": "Lỗi khi thêm thành viên",
+    "remove-members-failed": "Lỗi khi xóa thành viên",
+    "have-been-removed-from-the-group": "Bạn đã bị xóa khỏi nhóm"
+  }
+}

@@ -31,7 +31,7 @@ export default function useReportColumns() {
         return (
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src={reporter.profilePictureUrl || "/assets/images/sample-avatar.jpeg"} />
+              <AvatarImage src={reporter.profilePictureUrl || "/assets/images/sample-avatar.png"} />
               <AvatarFallback>
                 <LabelShadcn text={reporter.username} />
               </AvatarFallback>

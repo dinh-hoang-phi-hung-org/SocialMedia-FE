@@ -115,9 +115,24 @@ const MainLayout = (props: MainLayoutProps) => {
         });
       });
 
+      // Lắng nghe event khi bị kick khỏi group
+      socket.on("removedFromGroup", (data) => {
+        console.log("Removed from group:", data);
+        toast.error({
+          title: "Đã bị xóa khỏi nhóm",
+          description: data.message || "Bạn đã bị xóa khỏi nhóm chat",
+        });
+
+        // Reload trang để cập nhật danh sách conversation
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      });
+
       // Cleanup khi component unmount
       return () => {
         socket.off("notification");
+        socket.off("removedFromGroup");
       };
     }
   }, [socket, isConnected]);

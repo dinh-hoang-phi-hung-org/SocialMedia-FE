@@ -323,7 +323,7 @@ const NewPostModal = (props: NewPostModalProps) => {
             <div className="flex flex-col items-center flex-shrink-0">
               <div className="w-10 h-10 rounded-full overflow-hidden">
                 <Image
-                  src="/assets/images/sample-avatar.jpeg"
+                  src="/assets/images/sample-avatar.png"
                   alt="user avatar"
                   width={40}
                   height={40}

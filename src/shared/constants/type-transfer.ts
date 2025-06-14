@@ -42,10 +42,25 @@ const createMessageTypeTransferEntry = (entry: TypeTransferEntry): TransferType 
     repository: entry.repository,
     otherAPIs: {
       getConversations: (params: PaginationParamsType) => entry.repository.getConversations(params),
-      getMessages: (receiverUuid: string, params: PaginationParamsType) =>
-        entry.repository.getMessages(receiverUuid, params),
-      sendMessage: (conversationUuid: string, receiverUuid: string, content: string, files?: File[]) =>
-        entry.repository.sendMessage(conversationUuid, receiverUuid, content, files),
+      getMessages: (
+        conversationUuid: string | undefined,
+        receiverUuid: string | undefined,
+        params: PaginationParamsType,
+      ) => entry.repository.getMessages(conversationUuid, receiverUuid, params),
+      sendMessage: (
+        conversationUuid: string,
+        receiverUuid: string,
+        content: string,
+        type: string | undefined,
+        files?: File[],
+      ) => entry.repository.sendMessage(conversationUuid, receiverUuid, content, type, files),
+      markMessageAsSeen: (messageUuid: string) => entry.repository.markMessageAsSeen(messageUuid),
+      createGroup: (formData: FormData) => entry.repository.createGroup(formData),
+      addMembersToGroup: (conversationUuid: string, participantUuids: string[]) =>
+        entry.repository.addMembersToGroup(conversationUuid, participantUuids),
+      removeMembersFromGroup: (conversationUuid: string, participantUuid: string) =>
+        entry.repository.removeMembersFromGroup(conversationUuid, participantUuid),
+      leaveConversation: (conversationUuid: string) => entry.repository.leaveConversation(conversationUuid),
     },
   };
 };

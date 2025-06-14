@@ -3,25 +3,32 @@
 import { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
 import { socketService } from "../services/socket-service";
+import { authProvider } from "../utils/middleware/auth-provider";
 
 export function useSocket() {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
   useEffect(() => {
-    // Lấy ID người dùng từ localStorage hoặc hệ thống xác thực của bạn
-    const userId = localStorage.getItem("userId") || "guest";
+    const userUuid = authProvider.getUserUuid();
 
-    // Kết nối đến socket server
-    const socketInstance = socketService.connect(userId);
+    if (!userUuid) {
+      console.log("No user UUID found, not connecting socket");
+      return;
+    }
+
+    const socketInstance = socketService.connect(userUuid);
 
     if (socketInstance) {
       setSocket(socketInstance);
 
-      // Thiết lập event listeners
       const onConnect = () => {
         console.log("Socket connected in hook");
         setIsConnected(true);
+
+        socketInstance.emit("authenticate", userUuid, (response: any) => {
+          console.log("Socket authentication response:", response);
+        });
       };
 
       const onDisconnect = () => {
@@ -32,12 +39,13 @@ export function useSocket() {
       socketInstance.on("connect", onConnect);
       socketInstance.on("disconnect", onDisconnect);
 
-      // Kiểm tra nếu đã kết nối
       if (socketInstance.connected) {
         setIsConnected(true);
+        socketInstance.emit("authenticate", userUuid, (response: any) => {
+          console.log("Socket authentication response:", response);
+        });
       }
 
-      // Dọn dẹp event listeners khi unmount
       return () => {
         socketInstance.off("connect", onConnect);
         socketInstance.off("disconnect", onDisconnect);

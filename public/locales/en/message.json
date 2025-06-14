@@ -1,0 +1,32 @@
+{
+  "title": {
+    "messages": "Messages",
+    "select-conversation": "Select conversation to start"
+  },
+  "group": {
+    "create-group": "Create Group",
+    "created": "created the group",
+    "group-name": "Group Name",
+    "search-users": "Search users...",
+    "selected": "Selected",
+    "enter-group-name": "Enter group name",
+    "choose-image": "Choose image",
+    "group-image": "Group Image",
+    "added-members": "added members",
+    "removed-members": "removed members",
+    "members": "Members",
+    "add-members": "Add members"
+  },
+  "text": {
+    "message": "Message ..."
+  },
+  "message": {
+    "group-created": "Group created successfully!",
+    "group-created-failed": "Failed to create group",
+    "group-name-required": "Group name is required",
+    "at-least-one-member-required": "At least one member is required",
+    "add-members-failed": "Failed to add members",
+    "remove-members-failed": "Failed to remove members",
+    "have-been-removed-from-the-group": "You have been removed from the group"
+  }
+}

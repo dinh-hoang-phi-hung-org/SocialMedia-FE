@@ -11,4 +11,5 @@ export type LabelProps = ComponentDefaultProps & {
   onClick?: () => void;
   required?: boolean;
   fullTextSpanOnHover?: boolean;
+  splitAndTranslate?: boolean;
 };

@@ -6,5 +6,8 @@ export type TConversation = DefaultItemType & {
   conversationTitle: string;
   conversationUrl: string;
   user: TUserShortCut;
+  users: TUserShortCut[];
   lastMessage: TMessage;
+  isGroupChat: boolean;
+  adminUuid: string;
 };

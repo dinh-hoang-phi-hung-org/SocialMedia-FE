@@ -37,7 +37,9 @@
     "report": "Report",
     "show-more": "Show More",
     "show-less": "Show Less",
-    "load-more": "Load More"
+    "load-more": "Load More",
+    "creating": "Creating...",
+    "adding": "Adding..."
   },
   "text": {
     "actions": "Actions",
@@ -71,7 +73,9 @@
     "no-results": "No results found",
     "n-a": "N/A",
     "try-adjusting-your-search-or-filter": "Try adjusting your search or filter to find what you're looking for.",
-    "more-number": "{{count}} more"
+    "more-number": "{{count}} more",
+    "searching": "Searching...",
+    "you": "You"
   },
   "notification": {
     "error": "Error",
