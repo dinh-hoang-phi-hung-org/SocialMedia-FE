@@ -1,0 +1,34 @@
+{
+  "admin": {
+    "title": "Admin",
+    "description": "Admin",
+    "dashboard-admin": "Dashboard",
+    "dashboard-admin-description": "Track and analyze system data in a visual and efficient way"
+  },
+  "title-card": {
+    "total-users": "Total Users",
+    "active-users": "Active Users",
+    "total-posts": "Total Posts",
+    "pending-reports": "Pending Reports"
+  },
+  "title-chart": {
+    "user-registrations": "User Registrations",
+    "posts-creation": "Posts Creation",
+    "reports-data": "Reports Data"
+  },
+  "error": {
+    "error-loading-data": "Error loading data",
+    "failed-to-fetch-dashboard-stats": "Failed to fetch dashboard stats",
+    "failed-to-fetch-user-registrations": "Failed to fetch user registrations",
+    "failed-to-fetch-posts-creation": "Failed to fetch posts creation",
+    "failed-to-fetch-reports-data": "Failed to fetch reports data"
+  },
+  "chart": {
+    "point-data": "point data",
+    "total-users": "total users",
+    "total-reports": "total reports"
+  },
+  "footer": {
+    "last-updated": "Dashboard updated last:"
+  }
+}

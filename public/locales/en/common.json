@@ -75,7 +75,9 @@
     "try-adjusting-your-search-or-filter": "Try adjusting your search or filter to find what you're looking for.",
     "more-number": "{{count}} more",
     "searching": "Searching...",
-    "you": "You"
+    "you": "You",
+    "photo": "Photo",
+    "feeling": "Feeling"
   },
   "notification": {
     "error": "Error",
@@ -224,9 +226,17 @@
     "records-per-page": "records per page"
   },
   "filter": {
+    "description": "Filter by time",
     "all": "All",
     "filter-by": "Filter by",
-    "clear": "Clear"
+    "clear": "Clear",
+    "from": "From",
+    "to": "To",
+    "period": "Period",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year"
   },
   "report": {
     "placeholder": "Report Content..."

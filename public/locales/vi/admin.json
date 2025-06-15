@@ -1,0 +1,34 @@
+{
+  "admin": {
+    "title": "Quản trị viên",
+    "description": "Quản trị viên",
+    "dashboard-admin": "Bảng điều khiển",
+    "dashboard-admin-description": "Theo dõi và phân tích dữ liệu hệ thống một cách trực quan và hiệu quả"
+  },
+  "title-card": {
+    "total-users": "Tổng số người dùng",
+    "active-users": "Người dùng hoạt động",
+    "total-posts": "Tổng số bài viết",
+    "pending-reports": "Báo cáo chờ xử lý"
+  },
+  "title-chart": {
+    "user-registrations": "Số lượng người dùng đăng ký",
+    "posts-creation": "Số bài viết được tạo",
+    "reports-data": "Dữ liệu báo cáo"
+  },
+  "error": {
+    "error-loading-data": "Lỗi tải dữ liệu",
+    "failed-to-fetch-dashboard-stats": "Lỗi khi tải dữ liệu bảng điều khiển",
+    "failed-to-fetch-user-registrations": "Lỗi khi tải dữ liệu người dùng đăng ký",
+    "failed-to-fetch-posts-creation": "Lỗi khi tải dữ liệu bài viết được tạo",
+    "failed-to-fetch-reports-data": "Lỗi khi tải dữ liệu báo cáo"
+  },
+  "chart": {
+    "point-data": "điểm dữ liệu",
+    "total-users": "tổng số người dùng",
+    "total-reports": "tổng báo cáo"
+  },
+  "footer": {
+    "last-updated": "Bảng điều khiển được cập nhật lần cuối:"
+  }
+}

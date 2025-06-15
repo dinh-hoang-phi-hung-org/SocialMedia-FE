@@ -77,7 +77,7 @@ const AdminLayoutWrapper = ({ children }: MainLayoutProps) => {
             </div>
 
             <div
-              className="py-5 transition-all duration-300 ease-in-out"
+              className="transition-all duration-300 ease-in-out"
               style={{
                 marginLeft: expanded
                   ? SIDEBAR_WIDTH_EXPANDED

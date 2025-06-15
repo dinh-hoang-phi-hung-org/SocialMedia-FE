@@ -12,6 +12,8 @@ import { reportService } from "@/app/_report/_services/report-service";
 import { aiService } from "@/app/_AI/_services/AI-service";
 import { TReactionCreate } from "@/shared/types/common-type/reaction-type";
 import { reactionService } from "@/app/_reaction/_services/reaction-services";
+import { analystService } from "@/app/_analytics/analytics-services";
+
 const createAuthTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
   return {
     repository: entry.repository,
@@ -33,6 +35,7 @@ const createPostTypeTransferEntry = (entry: TypeTransferEntry): TransferType => 
       createPost: (content: string, files?: File[]) => entry.repository.createPost(content, files),
       getPosts: (userUuid: string, params: PaginationParamsType) => entry.repository.getPosts(userUuid, params),
       getPostByUuid: (uuid: string) => entry.repository.getPostByUuid(uuid),
+      getHomeFeed: (params: PaginationParamsType) => entry.repository.getHomeFeed(params),
     },
   };
 };
@@ -135,6 +138,21 @@ const createReactionTypeTransferEntry = (entry: TypeTransferEntry): TransferType
     },
   };
 };
+
+const createAnalyticsTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
+  return {
+    repository: entry.repository,
+    otherAPIs: {
+      getDashboardStats: () => entry.repository.getDashboardStats(),
+      getUserRegistrations: (dateRange: { startDate: string; endDate: string; period: "day" | "week" | "month" }) =>
+        entry.repository.getUserRegistrations(dateRange),
+      getPostsCreation: (dateRange: { startDate: string; endDate: string; period: "day" | "week" | "month" }) =>
+        entry.repository.getPostsCreation(dateRange),
+      getReportsData: (dateRange: { startDate: string; endDate: string; period: "day" | "week" | "month" }) =>
+        entry.repository.getReportsData(dateRange),
+    },
+  };
+};
 export const TypeTransfer: Record<string, TransferType> = {
   Auth: createAuthTypeTransferEntry({
     repository: autherizeService,
@@ -162,5 +180,8 @@ export const TypeTransfer: Record<string, TransferType> = {
   } as TypeTransferEntry),
   Reaction: createReactionTypeTransferEntry({
     repository: reactionService,
+  } as TypeTransferEntry),
+  Analytics: createAnalyticsTypeTransferEntry({
+    repository: analystService,
   } as TypeTransferEntry),
 };
