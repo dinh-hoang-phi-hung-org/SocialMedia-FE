@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { LanguageProvider } from "@/shared/hooks/useLanguage";
 import { MainLayoutProps } from "@/shared/types/components-type/main-layout-type";
@@ -14,6 +14,8 @@ import { Provider } from "react-redux";
 import { setAvatar } from "@/shared/redux/slices/avatarSlice";
 import Search from "../BaseLayouts/Search/Search";
 import Loading from "../BaseLayouts/Loading/Loading";
+import Notification from "../BaseLayouts/Notification/Notification";
+import { TNotification } from "@/shared/types/common-type/notification-type";
 
 const SIDEBAR_WIDTH_EXPANDED = "16rem";
 const SIDEBAR_WIDTH_COLLAPSED = "4.5rem";
@@ -25,6 +27,13 @@ interface SidebarStateContextType {
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   isSearchActive: boolean;
   setIsSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
+  isNotificationActive: boolean;
+  setIsNotificationActive: React.Dispatch<React.SetStateAction<boolean>>;
+  notifications: TNotification[];
+  setNotifications: React.Dispatch<React.SetStateAction<TNotification[]>>;
+  addNotification: (notification: TNotification) => void;
+  unreadCount: number;
+  markAsRead: (notificationUuid: string) => void;
 }
 
 const SidebarStateContext = React.createContext<SidebarStateContextType | undefined>(undefined);
@@ -38,7 +47,6 @@ export const useSidebarState = (): SidebarStateContextType => {
 };
 
 const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
-  // Initialize from localStorage if available, otherwise default to true
   const [expanded, setExpanded] = useState(() => {
     if (typeof window !== "undefined") {
       const savedState = localStorage.getItem(SIDEBAR_STATE_KEY);
@@ -48,33 +56,173 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
   });
 
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [isNotificationActive, setIsNotificationActive] = useState(false);
+  const [notifications, setNotifications] = useState<TNotification[]>([]);
+  const { socket, isConnected } = useSocket();
 
-  // When search is activated, ensure sidebar is collapsed
+  const unreadCount = notifications.filter(notification => !notification.isRead).length;
+
+  const addNotification = useCallback((notification: TNotification) => {
+    setNotifications((prev) => {
+      const exists = prev.some((n) => n.uuid === notification.uuid);
+      if (exists) {
+        console.log("⚠️ Notification already exists, skipping:", notification.uuid);
+        return prev;
+      }
+      return [notification, ...prev];
+    });
+  }, []);
+
+  const markAsRead = useCallback((notificationUuid: string) => {
+    setNotifications((prev) =>
+      prev.map(notification =>
+        notification.uuid === notificationUuid
+          ? { ...notification, isRead: true }
+          : notification
+      )
+    );
+  }, []);
+
   useEffect(() => {
     if (isSearchActive && expanded) {
       setExpanded(false);
     }
   }, [isSearchActive]);
 
+  useEffect(() => {
+    if (isNotificationActive && expanded) {
+      setExpanded(false);
+    }
+  }, [isNotificationActive]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await TypeTransfer["Notification"]?.otherAPIs?.getNotifications({
+          page: 1,
+          limit: 50,
+        });
+        if (response?.success) {
+          console.log("📋 Loaded initial notifications:", response.payload.data);
+          setNotifications(response?.payload.data || []);
+        }
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+    fetchNotifications();
+  }, []);
+
+  useEffect(() => {
+    if (socket && isConnected) {
+      console.log("🔗 Socket connected in MainLayout");
+
+      const userUuid = authProvider.getUserUuid();
+      console.log("👤 User UUID for notifications:", userUuid);
+
+      if (userUuid) {
+        console.log("🔐 Authenticating and joining notifications for user:", userUuid);
+        socket.emit("authenticate", userUuid);
+        socket.emit("joinNotifications", userUuid);
+      } else {
+        console.log("⚠️ No user UUID found, cannot join notifications");
+      }
+
+      socket.on("newNotification", (notification: TNotification) => {
+        toast.success({
+          title: "notification:message.new-notification",
+          description: `${notification.userRelated?.username} ${notification.content}`,
+        });
+
+        addNotification(notification);
+      });
+
+      socket.on("notification", (data) => {
+        console.log("📢 Received generic notification:", data);
+        toast.success({
+          title: "notification:message.new-notification",
+          description: data.message,
+        });
+      });
+
+      socket.on("removedFromGroup", (data) => {
+        console.log("❌ Removed from group:", data);
+        toast.error({
+          title: "common:notification.error",
+          description: data.message || "message:group.removed-from-group",
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      });
+
+      socket.on("connect", () => {
+        console.log("✅ Socket connected");
+      });
+
+      socket.on("disconnect", () => {
+        console.log("❌ Socket disconnected");
+      });
+
+      socket.on("authenticate", (response) => {
+        console.log("🔐 Authentication response:", response);
+      });
+
+      socket.on("joinNotifications", (response) => {
+        console.log("🔔 Join notifications response:", response);
+      });
+
+      return () => {
+        if (userUuid) {
+          socket.emit("leaveNotifications", userUuid);
+        }
+        socket.off("notification");
+        socket.off("newNotification");
+        socket.off("testEvent");
+        socket.off("removedFromGroup");
+        socket.off("connect");
+        socket.off("disconnect");
+        socket.off("authenticate");
+        socket.off("joinNotifications");
+      };
+    }
+  }, [socket, isConnected, addNotification]);
+
   return (
     <div className="relative min-h-screen w-full bg-background-primary-purple">
       <div className="flex flex-col min-h-screen relative z-10">
-        <SidebarStateContext.Provider value={{ expanded, setExpanded, isSearchActive, setIsSearchActive }}>
+        <SidebarStateContext.Provider
+          value={{
+            expanded,
+            setExpanded,
+            isSearchActive,
+            setIsSearchActive,
+            isNotificationActive,
+            setIsNotificationActive,
+            notifications,
+            setNotifications,
+            addNotification,
+            unreadCount,
+            markAsRead,
+          }}
+        >
           <LanguageProvider>
             <Sidebar />
 
-            {/* Search Panel */}
             <div
               className="fixed top-0 left-0 h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out"
               style={{
-                width: isSearchActive ? SEARCH_PANEL_WIDTH : "0",
-                transform: isSearchActive ? `translateX(${SIDEBAR_WIDTH_COLLAPSED})` : "translateX(0)",
-                opacity: isSearchActive ? 1 : 0,
+                width: isSearchActive || isNotificationActive ? SEARCH_PANEL_WIDTH : "0",
+                transform:
+                  isSearchActive || isNotificationActive ? `translateX(${SIDEBAR_WIDTH_COLLAPSED})` : "translateX(0)",
+                opacity: isSearchActive || isNotificationActive ? 1 : 0,
                 overflow: "hidden",
-                zIndex: isSearchActive ? 9 : -1,
+                zIndex: isSearchActive || isNotificationActive ? 9 : -1,
               }}
             >
               {isSearchActive && <Search />}
+              {isNotificationActive && <Notification />}
             </div>
 
             <div
@@ -82,7 +230,7 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
               style={{
                 marginLeft: expanded
                   ? SIDEBAR_WIDTH_EXPANDED
-                  : isSearchActive
+                  : isSearchActive || isNotificationActive
                     ? `calc(${SIDEBAR_WIDTH_COLLAPSED} + ${SEARCH_PANEL_WIDTH})`
                     : SIDEBAR_WIDTH_COLLAPSED,
               }}
@@ -99,43 +247,6 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
 const MainLayout = (props: MainLayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
-  const { socket, isConnected } = useSocket();
-
-  // Xử lý các sự kiện socket
-  useEffect(() => {
-    if (socket && isConnected) {
-      console.log("Socket connected in MainLayout");
-
-      // Đăng ký lắng nghe các sự kiện từ server
-      socket.on("notification", (data) => {
-        console.log("Received notification:", data);
-        toast.success({
-          title: "Thông báo mới",
-          description: data.message,
-        });
-      });
-
-      // Lắng nghe event khi bị kick khỏi group
-      socket.on("removedFromGroup", (data) => {
-        console.log("Removed from group:", data);
-        toast.error({
-          title: "Đã bị xóa khỏi nhóm",
-          description: data.message || "Bạn đã bị xóa khỏi nhóm chat",
-        });
-
-        // Reload trang để cập nhật danh sách conversation
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      });
-
-      // Cleanup khi component unmount
-      return () => {
-        socket.off("notification");
-        socket.off("removedFromGroup");
-      };
-    }
-  }, [socket, isConnected]);
 
   const checkAuthRedirect = async (): Promise<boolean> => {
     const redirectPath = await authProvider.checkUser();
@@ -159,15 +270,6 @@ const MainLayout = (props: MainLayoutProps) => {
   const checkInitialState = async () => {
     const authRedirect = await checkAuthRedirect();
     if (authRedirect) {
-      // Nếu xác thực thành công, đảm bảo socket được kết nối với ID người dùng thực
-      if (socket && isConnected) {
-        const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
-        if (userId) {
-          socket.emit("authenticate", userId);
-          console.log("User authenticated with socket:", userId);
-        }
-      }
-
       setTimeout(() => {
         setIsAuthenticated(true);
       }, 1000);
@@ -183,14 +285,11 @@ const MainLayout = (props: MainLayoutProps) => {
     <>
       {isAuthenticated ? (
         <Provider store={store}>
-          {/* <PersistGate loading={null} persistor={persistor}> */}
           <MainLayoutWrapper {...props} />
-          {/* </PersistGate> */}
         </Provider>
       ) : (
         <Loading />
       )}
-      {isConnected && <div className="hidden">Socket connected</div>}
     </>
   );
 };

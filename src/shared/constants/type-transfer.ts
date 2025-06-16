@@ -13,6 +13,7 @@ import { aiService } from "@/app/_AI/_services/AI-service";
 import { TReactionCreate } from "@/shared/types/common-type/reaction-type";
 import { reactionService } from "@/app/_reaction/_services/reaction-services";
 import { analystService } from "@/app/_analytics/analytics-services";
+import { notificationService } from "@/app/_notification/_services/notification-services";
 
 const createAuthTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
   return {
@@ -153,6 +154,16 @@ const createAnalyticsTypeTransferEntry = (entry: TypeTransferEntry): TransferTyp
     },
   };
 };
+
+const createNotificationTypeTransferEntry = (entry: TypeTransferEntry): TransferType => {
+  return {
+    repository: entry.repository,
+    otherAPIs: {
+      getNotifications: (query: PaginationParamsType) => entry.repository.getNotifications(query),
+      markAsRead: (uuid: string) => entry.repository.markAsRead(uuid),
+    },
+  };
+};
 export const TypeTransfer: Record<string, TransferType> = {
   Auth: createAuthTypeTransferEntry({
     repository: autherizeService,
@@ -183,5 +194,8 @@ export const TypeTransfer: Record<string, TransferType> = {
   } as TypeTransferEntry),
   Analytics: createAnalyticsTypeTransferEntry({
     repository: analystService,
+  } as TypeTransferEntry),
+  Notification: createNotificationTypeTransferEntry({
+    repository: notificationService,
   } as TypeTransferEntry),
 };

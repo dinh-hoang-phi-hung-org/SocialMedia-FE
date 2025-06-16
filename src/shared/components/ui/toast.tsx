@@ -18,7 +18,7 @@ const createToastContent = (props: ToastProps) => {
     title: title ? <LabelShadcn text={title} translate className="text-white font-bold text-lg" /> : null,
     description:
       typeof description === "string" ? (
-        <LabelShadcn text={description} translate inheritedClass className="text-white" />
+        <LabelShadcn text={description} translate inheritedClass className="text-white" splitAndTranslate />
       ) : (
         description
       ),
@@ -43,6 +43,17 @@ export const toast = {
       ...defaultConfig,
       style: {
         backgroundColor: "var(--danger)",
+        color: "white",
+      },
+    });
+  },
+
+  info: (props: ToastProps) => {
+    toastSonner.info(createToastContent(props).title, {
+      description: createToastContent(props).description,
+      ...defaultConfig,
+      style: {
+        backgroundColor: "var(--info)",
         color: "white",
       },
     });

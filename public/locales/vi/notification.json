@@ -1,0 +1,9 @@
+{
+  "title": "Thông báo",
+  "message": {
+    "new-notification": "Thông báo mới",
+    "follow": "đã theo dõi bạn",
+    "reaction-post": "đã thích bài viết của bạn",
+    "reaction-comment": "đã thích bình luận của bạn"
+  }
+}
