@@ -36,6 +36,7 @@ export default function CommentDetailPage() {
         if (post?.payload) {
           setPost(post.payload);
         }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         setIsError(true);
       } finally {

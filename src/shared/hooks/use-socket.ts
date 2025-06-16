@@ -26,6 +26,7 @@ export function useSocket() {
         console.log("Socket connected in hook");
         setIsConnected(true);
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         socketInstance.emit("authenticate", userUuid, (response: any) => {
           console.log("Socket authentication response:", response);
         });
@@ -41,6 +42,7 @@ export function useSocket() {
 
       if (socketInstance.connected) {
         setIsConnected(true);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         socketInstance.emit("authenticate", userUuid, (response: any) => {
           console.log("Socket authentication response:", response);
         });

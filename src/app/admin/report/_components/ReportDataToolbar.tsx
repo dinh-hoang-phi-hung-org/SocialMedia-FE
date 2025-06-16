@@ -35,7 +35,6 @@ export default function ReportDataTableToolbar<TData>({
   const [status, setStatusDisplay] = useState("all");
   //   const [dateRange, setDateRange] = useState<DateRange>();
 
-
   //   const handleApplyDateRange = () => {
   //     if (dateRange) {
   //       const fromDate = dateRange.from;
@@ -65,8 +64,6 @@ export default function ReportDataTableToolbar<TData>({
     }
   };
 
-
-
   const handleClearFilter = () => {
     setStatusDisplay("all");
     setContentTypeDisplay("post");
@@ -78,16 +75,18 @@ export default function ReportDataTableToolbar<TData>({
       <div className="flex flex-1 items-center space-x-2">
         <Select value={contentType} onValueChange={handleFilterTypeReportChange}>
           <SelectTrigger className="h-8 w-40">
-            <LabelShadcn translate text={`report-management:filter.${contentType}`} truncate truncateLength={10} className="text-sm" />
+            <LabelShadcn
+              translate
+              text={`report-management:filter.${contentType}`}
+              truncate
+              truncateLength={10}
+              className="text-sm"
+            />
           </SelectTrigger>
           <SelectContent>
             {contentTypes.map((type) => (
               <SelectItem key={type} value={type}>
-                <LabelShadcn
-                  translate
-                  text={`report-management:filter.${type}`}
-                  className="text-sm"
-                />
+                <LabelShadcn translate text={`report-management:filter.${type}`} className="text-sm" />
               </SelectItem>
             ))}
           </SelectContent>
@@ -108,11 +107,7 @@ export default function ReportDataTableToolbar<TData>({
             </SelectItem>
             {statusTypes.map((type) => (
               <SelectItem key={type} value={type}>
-                <LabelShadcn
-                  translate
-                  text={`report-management:filter.${type}`}
-                  className="text-sm"
-                />
+                <LabelShadcn translate text={`report-management:filter.${type}`} className="text-sm" />
               </SelectItem>
             ))}
           </SelectContent>

@@ -14,7 +14,6 @@ import { ListFetchOptionProperties, ListProps } from "@/shared/types/components-
 import { FaUser } from "react-icons/fa";
 import ReportDataTable from "./ReportDataTable";
 import { PaginationParamsType } from "@/shared/types/common-type/pagination-params-type";
-import { TReport } from "@/shared/types/common-type/report-type";
 const List = <T extends DefaultItemType>(props: ListProps<T>) => {
   //   const toast = useToast();
   // const router = useRouter();

@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import LabelShadcn from "../../ui/LabelShadcn";
 import { useTranslation } from "react-i18next";
 import { TypeTransfer } from "@/shared/constants/type-transfer";
-import { TReport, TReportCreate } from "@/shared/types/common-type/report-type";
+import { TReport } from "@/shared/types/common-type/report-type";
 import { toast } from "../../ui/toast";
 import Post from "../Post/Post";
 import { TComment } from "@/shared/types/common-type/comment-type";
@@ -41,6 +41,7 @@ const DetailReportModal: React.FC<DetailReportModalProps> = ({ onClose, type, re
     }
   }, []);
   const reportContents = ["Toxic", "Severe Toxic", "Obscene", "Threat", "Insult", "Identity Hate"];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedStates, setSelectedStates] = useState<any[]>(Array(reportContents.length).fill(0));
   const [textareaContent, setTextareaContent] = useState("");
 

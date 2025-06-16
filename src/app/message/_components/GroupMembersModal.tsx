@@ -189,10 +189,11 @@ export default function GroupMembersModal({ isOpen, onClose, conversation, users
         <div className="flex border-b border-gray-200 dark:border-gray-700">
           <button
             onClick={() => setActiveTab("members")}
-            className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${activeTab === "members"
-              ? "text-primary-purple border-b-2 border-primary-purple bg-purple-50 dark:bg-purple-900/20"
-              : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-              }`}
+            className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+              activeTab === "members"
+                ? "text-primary-purple border-b-2 border-primary-purple bg-purple-50 dark:bg-purple-900/20"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+            }`}
           >
             <div className="flex items-center justify-center gap-2">
               <Users className="h-4 w-4" />
@@ -202,10 +203,11 @@ export default function GroupMembersModal({ isOpen, onClose, conversation, users
           {conversation?.isGroupChat && conversation?.adminUuid === currentUserUuid && (
             <button
               onClick={() => setActiveTab("add")}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${activeTab === "add"
-                ? "text-primary-purple border-b-2 border-primary-purple bg-purple-50 dark:bg-purple-900/20"
-                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-                }`}
+              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+                activeTab === "add"
+                  ? "text-primary-purple border-b-2 border-primary-purple bg-purple-50 dark:bg-purple-900/20"
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+              }`}
             >
               <div className="flex items-center justify-center gap-2">
                 <UserPlus className="h-4 w-4" />
@@ -243,7 +245,11 @@ export default function GroupMembersModal({ isOpen, onClose, conversation, users
                           <div className="flex items-center gap-2">
                             <p className="font-medium text-gray-900 dark:text-white">{user.username}</p>
                             {user.uuid === currentUserUuid && (
-                              <LabelShadcn text="common:text.you" translate className="text-xs bg-primary-purple text-white px-2 py-1 rounded-full" />
+                              <LabelShadcn
+                                text="common:text.you"
+                                translate
+                                className="text-xs bg-primary-purple text-white px-2 py-1 rounded-full"
+                              />
                             )}
                           </div>
                           {/* <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -253,18 +259,21 @@ export default function GroupMembersModal({ isOpen, onClose, conversation, users
                       </div>
 
                       {/* Only show options if current user is admin and it's not themselves */}
-                      {conversation?.isGroupChat && conversation?.adminUuid === currentUserUuid && user.uuid !== currentUserUuid && (
-                        <button
-                          onClick={() => handleRemoveMember(user.uuid, user.username)}
-                          className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                          title="Remove member"
-                        >
-                          <FaUserMinus className="h-4 w-4 text-gray-500" />
-                        </button>
-                      )}
+                      {conversation?.isGroupChat &&
+                        conversation?.adminUuid === currentUserUuid &&
+                        user.uuid !== currentUserUuid && (
+                          <button
+                            onClick={() => handleRemoveMember(user.uuid, user.username)}
+                            className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                            title="Remove member"
+                          >
+                            <FaUserMinus className="h-4 w-4 text-gray-500" />
+                          </button>
+                        )}
 
-                      {
-                        conversation?.isGroupChat && conversation?.adminUuid !== currentUserUuid && user.uuid === currentUserUuid && (
+                      {conversation?.isGroupChat &&
+                        conversation?.adminUuid !== currentUserUuid &&
+                        user.uuid === currentUserUuid && (
                           <button
                             onClick={() => handleLeaveConversation()}
                             className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
@@ -272,8 +281,7 @@ export default function GroupMembersModal({ isOpen, onClose, conversation, users
                           >
                             <FaUserMinus className="h-4 w-4 text-gray-500" />
                           </button>
-                        )
-                      }
+                        )}
                     </div>
                   ))}
                 </div>
@@ -343,10 +351,11 @@ export default function GroupMembersModal({ isOpen, onClose, conversation, users
                         <div
                           key={user.uuid}
                           onClick={() => toggleUserSelection(user as TUser)}
-                          className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${isSelected
-                            ? "bg-primary-purple bg-opacity-10 border border-primary-purple"
-                            : "hover:bg-gray-100 dark:hover:bg-gray-700"
-                            }`}
+                          className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${
+                            isSelected
+                              ? "bg-primary-purple bg-opacity-10 border border-primary-purple"
+                              : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                          }`}
                         >
                           <Image
                             src={user.profilePictureUrl || "/assets/images/sample-avatar.png"}

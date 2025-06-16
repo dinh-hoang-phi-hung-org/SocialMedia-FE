@@ -14,6 +14,7 @@ interface ReportContentProps {
 const ReportContent: React.FC<ReportContentProps> = ({ onClose, cmtUuid, type }) => {
   const { t } = useTranslation();
   const reportContents = ["Toxic", "Severe Toxic", "Obscene", "Threat", "Insult", "Identity Hate"];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedStates, setSelectedStates] = useState<any[]>(Array(reportContents.length).fill(0));
   const [textareaContent, setTextareaContent] = useState("");
 

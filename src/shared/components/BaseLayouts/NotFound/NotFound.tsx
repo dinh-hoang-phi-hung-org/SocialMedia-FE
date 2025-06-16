@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/shared/components/ui/button";
-import { LucideHome, LucideRefreshCw, LucideSearch, LucideWifi, LucideWifiOff } from "lucide-react";
+import { LucideHome, LucideRefreshCw, LucideWifi, LucideWifiOff } from "lucide-react";
 import { Card } from "@/shared/components/ui/card";
 import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 

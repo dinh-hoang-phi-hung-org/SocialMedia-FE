@@ -1,7 +1,5 @@
 import { IRequestBuilder, RequestBuilder } from "@/shared/utils/api/request-builder";
-import { GetResponse, PostResponse } from "@/shared/types/common-type/api-type";
-import { PaginationParamsType } from "@/shared/types/common-type/pagination-params-type";
-import { TComment } from "@/shared/types/common-type/comment-type";
+import { PostResponse } from "@/shared/types/common-type/api-type";
 import { httpClient } from "@/shared/utils/api";
 interface IAIService {
   checkLevelToxicOfComment(content: string): Promise<PostResponse<{ is_toxic: boolean }>>;

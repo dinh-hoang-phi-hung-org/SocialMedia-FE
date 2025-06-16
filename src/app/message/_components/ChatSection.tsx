@@ -339,7 +339,6 @@ export default function ChatSection({ receiverUuid, conversationUuid }: ChatSect
       console.log("Current user removed from group:", data);
       if (data.conversationUuid === conversation?.conversationUuid) {
         socket.emit("leaveRoom", { conversationId: data.conversationUuid });
-
       }
     };
 
@@ -731,10 +730,11 @@ export default function ChatSection({ receiverUuid, conversationUuid }: ChatSect
                     {msg.content && (
                       <div className={`${msg.isMyMessage ? "self-end" : "self-start"}`}>
                         <div
-                          className={`p-3 rounded-full text-sm font-medium w-fit ${msg.isMyMessage
-                            ? "bg-gradient-to-br from-primary-purple to-purple-600 text-white rounded-br-md shadow-lg shadow-purple-500/25 "
-                            : "bg-gradient-to-br from-white to-gray-50  text-gray-900 rounded-bl-md shadow-xl shadow-gray-300/60 border border-blue-200/30 ring-1 ring-gray-200/40"
-                            }`}
+                          className={`p-3 rounded-full text-sm font-medium w-fit ${
+                            msg.isMyMessage
+                              ? "bg-gradient-to-br from-primary-purple to-purple-600 text-white rounded-br-md shadow-lg shadow-purple-500/25 "
+                              : "bg-gradient-to-br from-white to-gray-50  text-gray-900 rounded-bl-md shadow-xl shadow-gray-300/60 border border-blue-200/30 ring-1 ring-gray-200/40"
+                          }`}
                         >
                           {msg.content}
                         </div>

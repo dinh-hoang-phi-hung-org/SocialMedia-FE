@@ -68,11 +68,7 @@ export default function Home() {
                   onClick={() => setShowNewPostModal(true)}
                 >
                   <FiImage className="w-5 h-5" />
-                  <LabelShadcn
-                    text="common:text.photo"
-                    className="text-sm font-medium"
-                    translate
-                  />
+                  <LabelShadcn text="common:text.photo" className="text-sm font-medium" translate />
                 </button>
 
                 <button
@@ -80,11 +76,7 @@ export default function Home() {
                   onClick={() => setShowNewPostModal(true)}
                 >
                   <FiSmile className="w-5 h-5" />
-                  <LabelShadcn
-                    text="common:text.feeling"
-                    className="text-sm font-medium"
-                    translate
-                  />
+                  <LabelShadcn text="common:text.feeling" className="text-sm font-medium" translate />
                 </button>
               </div>
 
@@ -94,11 +86,7 @@ export default function Home() {
                 onClick={() => setShowNewPostModal(true)}
               >
                 <FiPlus className="w-4 h-4 text-white" />
-                <LabelShadcn
-                  text="common:button.post"
-                  className="font-semibold text-white"
-                  translate
-                />
+                <LabelShadcn text="common:button.post" className="font-semibold text-white" translate />
               </Button>
             </div>
           </div>
@@ -107,7 +95,10 @@ export default function Home() {
           {isLoading ? (
             <>
               {[...Array(3)].map((_, index) => (
-                <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100/50 p-6 animate-pulse">
+                <div
+                  key={index}
+                  className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100/50 p-6 animate-pulse"
+                >
                   <PostSkeleton />
                 </div>
               ))}
@@ -119,7 +110,7 @@ export default function Home() {
                 className="transform transition-all duration-500 ease-out"
                 style={{
                   animationDelay: `${index * 100}ms`,
-                  animation: 'fadeInUp 0.6s ease-out forwards'
+                  animation: "fadeInUp 0.6s ease-out forwards",
                 }}
               >
                 <Post post={post} type="post" />

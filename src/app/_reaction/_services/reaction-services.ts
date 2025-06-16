@@ -1,8 +1,6 @@
 import { PostResponse, DeleteResponse } from "@/shared/types/common-type/api-type";
 import { IRequestBuilder, RequestBuilder } from "@/shared/utils/api/request-builder";
 import { httpClient } from "@/shared/utils/api";
-import { PaginationParamsType } from "@/shared/types/common-type/pagination-params-type";
-import { TUser } from "@/shared/types/common-type/user-type";
 import { TReactionCreate } from "@/shared/types/common-type/reaction-type";
 
 interface IReactionService {

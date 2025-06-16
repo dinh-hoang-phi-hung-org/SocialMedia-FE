@@ -44,8 +44,12 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showReportModal, setShowReportModal] = useState(false);
   const [showCommentForm, setShowCommentForm] = useState(false);
-  const [isReacted, setIsReacted] = useState<boolean>(type === "post" ? post?.isReacted || false : comment?.isReacted || false);
-  const [reactionCount, setReactionCount] = useState<number>(type === "post" ? post?.reactionsCount || 0 : comment?.reactionsCount || 0);
+  const [isReacted, setIsReacted] = useState<boolean>(
+    type === "post" ? post?.isReacted || false : comment?.isReacted || false,
+  );
+  const [reactionCount, setReactionCount] = useState<number>(
+    type === "post" ? post?.reactionsCount || 0 : comment?.reactionsCount || 0,
+  );
   const [isHovered, setIsHovered] = useState(false);
 
   // Determine if we should show card based on type
@@ -206,8 +210,11 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
     <div className="flex">
       <div className="flex flex-col items-center mr-4">
         <div className="relative group/avatar">
-          <div className={`rounded-full overflow-hidden flex-shrink-0 ${type === "post" ? "w-12 h-12" : type === "comment" ? "w-10 h-10" : "w-8 h-8"
-            }`}>
+          <div
+            className={`rounded-full overflow-hidden flex-shrink-0 ${
+              type === "post" ? "w-12 h-12" : type === "comment" ? "w-10 h-10" : "w-8 h-8"
+            }`}
+          >
             <Image
               src={
                 ensureHttps(type === "post" ? post?.user.profilePictureUrl : comment?.user.profilePictureUrl) ||
@@ -227,7 +234,9 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <p className={`cursor-pointer font-bold text-gray-800 hover:text-purple-600 transition-colors duration-200 ${type === "post" ? "text-lg" : "text-base"
+            <p
+              className={`cursor-pointer font-bold text-gray-800 hover:text-purple-600 transition-colors duration-200 ${
+                type === "post" ? "text-lg" : "text-base"
               }`}
               onClick={() => {
                 if (type === "post") {
@@ -241,32 +250,30 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
             </p>
             <TimeAgo
               timestamp={type === "post" ? post?.createdAt : comment?.createdAt || new Date()}
-              className={`text-gray-500 transition-colors duration-200 ${showCard
-                ? "bg-gray-100 px-2 py-1 rounded-full hover:bg-purple-100 text-sm"
-                : "text-xs"
-                }`}
+              className={`text-gray-500 transition-colors duration-200 ${
+                showCard ? "bg-gray-100 px-2 py-1 rounded-full hover:bg-purple-100 text-sm" : "text-xs"
+              }`}
             />
           </div>
           {!isAdminReview && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className={`text-gray-400 hover:text-gray-600 transition-all duration-200 ${showCard
-                  ? "hover:bg-gray-100 p-2 rounded-full"
-                  : "p-1"
-                  }`}>
+                <button
+                  className={`text-gray-400 hover:text-gray-600 transition-all duration-200 ${
+                    showCard ? "hover:bg-gray-100 p-2 rounded-full" : "p-1"
+                  }`}
+                >
                   <IoIosMore size={20} />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className={
-                showCard
-                  ? "w-48 bg-white/90 backdrop-blur-md border-0 shadow-2xl rounded-xl"
-                  : "w-40"
-              }>
+              <DropdownMenuContent
+                align="end"
+                className={showCard ? "w-48 bg-white/90 backdrop-blur-md border-0 shadow-2xl rounded-xl" : "w-40"}
+              >
                 <DropdownMenuItem
-                  className={`flex items-center justify-between gap-2 cursor-pointer ${showCard
-                    ? "rounded-lg hover:bg-red-50 transition-colors duration-200"
-                    : ""
-                    }`}
+                  className={`flex items-center justify-between gap-2 cursor-pointer ${
+                    showCard ? "rounded-lg hover:bg-red-50 transition-colors duration-200" : ""
+                  }`}
                   onClick={() => setShowReportModal(true)}
                 >
                   <LabelShadcn
@@ -348,10 +355,9 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
                 {comment.mediaUrl.images.map((image, index) => (
                   <div
                     key={index}
-                    className={`flex-shrink-0 relative overflow-hidden transition-all duration-500 ${showCard
-                      ? "rounded-2xl shadow-lg hover:shadow-2xl"
-                      : "rounded-xl shadow-md hover:shadow-lg"
-                      }`}
+                    className={`flex-shrink-0 relative overflow-hidden transition-all duration-500 ${
+                      showCard ? "rounded-2xl shadow-lg hover:shadow-2xl" : "rounded-xl shadow-md hover:shadow-lg"
+                    }`}
                     style={{
                       width: "auto",
                       height: showCard ? "240px" : "200px",
@@ -388,15 +394,18 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
                   <FaRegHeart className="w-5 h-5 text-gray-600 group-hover:text-red-500 transition-all duration-300 ease-out" />
                 )}
               </div>
-              <span className={`font-medium transition-all duration-300 ${isReacted ? 'text-red-500' : 'text-gray-600 group-hover:text-red-500'}`}>
+              <span
+                className={`font-medium transition-all duration-300 ${isReacted ? "text-red-500" : "text-gray-600 group-hover:text-red-500"}`}
+              >
                 {reactionCount}
               </span>
             </button>
 
             {type !== "comment-child" && (
               <button
-                className={`group flex items-center gap-2 px-3 py-2 rounded-full hover:bg-blue-50 transition-all duration-300 ${showCard ? "transform hover:scale-105" : ""
-                  }`}
+                className={`group flex items-center gap-2 px-3 py-2 rounded-full hover:bg-blue-50 transition-all duration-300 ${
+                  showCard ? "transform hover:scale-105" : ""
+                }`}
                 onClick={() => {
                   if (type === "post") {
                     router.push(`/post/${post?.uuid}`);
@@ -413,45 +422,44 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
             )}
 
             {type === "post" && (
-              <button className={`group flex items-center gap-2 px-3 py-2 rounded-full hover:bg-yellow-50 transition-all duration-300 ${showCard ? "transform hover:scale-105" : ""
-                }`}>
+              <button
+                className={`group flex items-center gap-2 px-3 py-2 rounded-full hover:bg-yellow-50 transition-all duration-300 ${
+                  showCard ? "transform hover:scale-105" : ""
+                }`}
+              >
                 <FaRegBookmark className="w-5 h-5 text-gray-600 group-hover:text-yellow-600 transition-all duration-300 transform group-hover:scale-110" />
               </button>
             )}
 
             {(type === "comment" || type === "comment-child") && (
-              <button
-                className="cursor-pointer text-primary-purple"
-                onClick={() => setShowCommentForm(true)}
-              >
+              <button className="cursor-pointer text-primary-purple" onClick={() => setShowCommentForm(true)}>
                 <LabelShadcn text="common:button.reply" translate inheritedClass className="cursor-pointer" />
               </button>
             )}
           </div>
         )}
       </div>
-    </div >
+    </div>
   );
 
   return (
     <div
-      className={`w-full flex transition-all duration-500 ease-out ${type === "comment" ? "pl-6 md:pl-10" : type === "comment-child" ? "pl-12 md:pl-20" : ""
-        }`}
+      className={`w-full flex transition-all duration-500 ease-out ${
+        type === "comment" ? "pl-6 md:pl-10" : type === "comment-child" ? "pl-12 md:pl-20" : ""
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {showCard ? (
         <div className="w-full bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100/50 hover:border-purple-200/50 p-6 relative overflow-hidden group">
-          <div className={`absolute inset-0 bg-gradient-to-br from-purple-50/15 via-transparent to-blue-50/15 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
+          <div
+            className={`absolute inset-0 bg-gradient-to-br from-purple-50/15 via-transparent to-blue-50/15 transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
+          />
 
-          <div className="relative z-10">
-            {PostContent}
-          </div>
+          <div className="relative z-10">{PostContent}</div>
         </div>
       ) : (
-        <div className="w-full">
-          {PostContent}
-        </div>
+        <div className="w-full">{PostContent}</div>
       )}
 
       {showImageModal && selectedImage && <ImageModal imageUrl={selectedImage} onClose={closeImageModal} />}

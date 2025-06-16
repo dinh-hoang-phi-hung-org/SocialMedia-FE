@@ -180,7 +180,7 @@ export default function CreateGroupModal({ isOpen, onClose, onGroupCreated }: Cr
         </div>
 
         {/* Group Image Upload */}
-        <div className='flex w-full'>
+        <div className="flex w-full">
           <div className="p-4 border-b border-gray-200 dark:border-gray-700 w-1/2">
             <LabelShadcn
               text="message:group.group-image"
@@ -188,7 +188,10 @@ export default function CreateGroupModal({ isOpen, onClose, onGroupCreated }: Cr
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
             />
             <div className="flex justify-center">
-              <label htmlFor="group-image-input" className="relative w-20 h-20 cursor-pointer hover:opacity-80 transition-opacity">
+              <label
+                htmlFor="group-image-input"
+                className="relative w-20 h-20 cursor-pointer hover:opacity-80 transition-opacity"
+              >
                 <Image
                   src={imagePreview || "/assets/images/sample-group.png"}
                   alt="Group preview"
@@ -285,10 +288,11 @@ export default function CreateGroupModal({ isOpen, onClose, onGroupCreated }: Cr
                   <div
                     key={user.uuid}
                     onClick={() => toggleUserSelection(user)}
-                    className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${isSelected
-                      ? "bg-primary-purple bg-opacity-10 border border-primary-purple"
-                      : "hover:bg-gray-100 dark:hover:bg-gray-700"
-                      }`}
+                    className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${
+                      isSelected
+                        ? "bg-primary-purple bg-opacity-10 border border-primary-purple"
+                        : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                    }`}
                   >
                     <Image
                       src={user.profilePictureUrl || "/assets/images/sample-avatar.png"}

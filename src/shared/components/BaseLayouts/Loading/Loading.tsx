@@ -1,5 +1,5 @@
 import { Card } from "@/shared/components/ui/card";
-import { LucideLoader2, LucideMessageCircle, LucideHeart, LucideImage, LucideThumbsUp } from "lucide-react";
+import { LucideLoader2, LucideMessageCircle, LucideHeart, LucideThumbsUp } from "lucide-react";
 import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 
 export default function Loading() {
