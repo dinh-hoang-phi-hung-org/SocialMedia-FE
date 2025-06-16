@@ -37,6 +37,7 @@ export default function PostPage() {
           setPost(post.payload);
         }
       } catch (error) {
+        console.error("Error fetching post:", error);
         setIsError(true);
       } finally {
         setLoading(false);

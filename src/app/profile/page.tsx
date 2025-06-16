@@ -76,7 +76,7 @@ export default function ProfilePage() {
             </div>
           ) : posts.length > 0 ? (
             posts.map((post, index) => (
-              <div key={index} className="w-full border-b-2 border-gray-200 py-7 px-10">
+              <div key={index} className="w-full border-b-2 border-gray-200 py-7 px-7">
                 <Post post={post} type="post" />
               </div>
             ))

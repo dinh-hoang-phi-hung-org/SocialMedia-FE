@@ -75,7 +75,9 @@
     "try-adjusting-your-search-or-filter": "Thử điều chỉnh tìm kiếm hoặc lọc để tìm kiếm điều bạn đang tìm kiếm.",
     "more-number": "{{count}} bình luận khác",
     "searching": "Đang tìm kiếm ...",
-    "you": "Bạn"
+    "you": "Bạn",
+    "photo": "Ảnh",
+    "feeling": "Cảm xúc"
   },
   "notification": {
     "error": "Lỗi",
@@ -224,9 +226,17 @@
     "records-per-page": "bản ghi trên trang"
   },
   "filter": {
+    "description": "Lọc thời gian",
     "filter-by": "Lọc theo",
     "clear": "Xóa",
-    "all": "Tất cả"
+    "all": "Tất cả",
+    "from": "Từ",
+    "to": "Đến",
+    "period": "Khoảng thời gian",
+    "day": "Ngày",
+    "week": "Tuần",
+    "month": "Tháng",
+    "year": "Năm"
   },
   "report": {
     "placeholder": "Nội dung báo cáo..."

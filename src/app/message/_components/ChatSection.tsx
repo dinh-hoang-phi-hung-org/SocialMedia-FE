@@ -469,6 +469,7 @@ export default function ChatSection({ receiverUuid, conversationUuid }: ChatSect
         conversation?.conversationUuid,
         receiverUuid,
         message,
+        MessageType.TEXT,
         mediaFiles,
       );
       if (response?.payload) {
@@ -783,9 +784,9 @@ export default function ChatSection({ receiverUuid, conversationUuid }: ChatSect
                 />
                 <button
                   onClick={() => removeImage(index)}
-                  className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full p-1.5 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+                  className="absolute -top-1 -right-1 bg-gradient rounded-full p-1.5"
                 >
-                  <X className="h-3 w-3 text-white" />
+                  <X className="h-4 w-4 text-white" />
                 </button>
               </div>
             ))}

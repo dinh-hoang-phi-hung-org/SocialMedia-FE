@@ -7,7 +7,7 @@ import { PaginationParamsType } from "@/shared/types/common-type/pagination-para
 interface IPostService {
   createPost(content: string, files?: File[]): Promise<PostResponse<{ message: string; postUuid: string }>>;
   getPosts(userUuid: string, params: PaginationParamsType): Promise<GetResponse<TPost[]>>;
-  getPostByUuid(uuid: string): Promise<GetResponse<TPost[]>>;
+  getPostByUuid(uuid: string): Promise<GetResponse<TPost>>;
 }
 
 export class PostService implements IPostService {
@@ -69,9 +69,16 @@ export class PostService implements IPostService {
       config: { params },
     });
   }
-  public async getPostByUuid(uuid: string): Promise<GetResponse<TPost[]>> {
-    return await httpClient.get<TPost[]>({
+  public async getPostByUuid(uuid: string): Promise<GetResponse<TPost>> {
+    return await httpClient.get<TPost>({
       url: this.requestBuilder.buildUrl(`${uuid}`),
+    });
+  }
+
+  public async getHomeFeed(params: PaginationParamsType): Promise<GetResponse<TPost[]>> {
+    return await httpClient.get<TPost[]>({
+      url: this.requestBuilder.buildUrl("home"),
+      config: { params },
     });
   }
 }
