@@ -1,0 +1,9 @@
+{
+  "title": "Notification",
+  "message": {
+    "new-notification": "New notification",
+    "follow": "has followed you",
+    "reaction-post": "has liked your post",
+    "reaction-comment": "has liked your comment"
+  }
+}

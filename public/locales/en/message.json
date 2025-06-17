@@ -15,7 +15,8 @@
     "added-members": "added members",
     "removed-members": "removed members",
     "members": "Members",
-    "add-members": "Add members"
+    "add-members": "Add members",
+    "removed-from-group": "You have been removed from the group"
   },
   "text": {
     "message": "Message ..."

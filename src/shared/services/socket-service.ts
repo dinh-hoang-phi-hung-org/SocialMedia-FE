@@ -9,7 +9,7 @@ class SocketService {
 
   private constructor() {
     // Kết nối đến socket server của backend
-    this.socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3000";
+    this.socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001/socket";
     console.log("Socket URL:", this.socketUrl);
   }
 
@@ -25,25 +25,31 @@ class SocketService {
       try {
         console.log("Attempting to connect to socket server at:", this.socketUrl);
 
-        this.socket = io(`${this.socketUrl}`, {
+        this.socket = io(this.socketUrl, {
           transports: ["websocket"],
           autoConnect: true,
+          withCredentials: true,
         });
 
         // Setup default listeners
         this.socket.on("connect", () => {
-          console.log("Socket connected successfully");
+          console.log("✅ Socket connected successfully to chat namespace");
           // Xác thực người dùng khi kết nối thành công
           this.socket?.emit("authenticate", userId);
         });
 
         this.socket.on("disconnect", () => {
-          console.log("Socket disconnected");
+          console.log("❌ Socket disconnected from chat namespace");
         });
 
         this.socket.on("connect_error", (error) => {
-          console.error("Socket connection error:", error);
+          console.error("❌ Socket connection error:", error);
           console.log("Will try to reconnect automatically");
+        });
+
+        // Debug authentication response
+        this.socket.on("authenticate", (response) => {
+          console.log("🔐 Authentication response:", response);
         });
       } catch (error) {
         console.error("Error creating socket connection:", error);
@@ -52,6 +58,13 @@ class SocketService {
     }
 
     return this.socket;
+  }
+
+  public disconnect(): void {
+    if (this.socket) {
+      this.socket.disconnect();
+      this.socket = null;
+    }
   }
 }
 
