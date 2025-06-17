@@ -21,9 +21,9 @@ const Notification = () => {
     markAsRead(notification.uuid);
     await TypeTransfer["Notification"]?.otherAPIs?.markAsRead(notification.uuid);
 
-    if (notification.type === 'reaction' || notification.type === 'comment') {
+    if (notification.type === "reaction" || notification.type === "comment") {
       router.push(`/post/${notification.relatedUuid}`);
-    } else if (notification.type === 'follow') {
+    } else if (notification.type === "follow") {
       router.push(`/profile/${notification.userRelated?.uuid}`);
     }
   };
@@ -36,10 +36,7 @@ const Notification = () => {
           <h1 className="text-xl font-semibold text-gray-900">
             <LabelShadcn text="notification:title" translate />
           </h1>
-          <button
-            onClick={handleCloseNotification}
-            className="p-1 hover:bg-gray-100 rounded-full transition-colors"
-          >
+          <button onClick={handleCloseNotification} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
             <IoClose className="w-6 h-6 text-gray-600" />
           </button>
         </div>
@@ -81,25 +78,20 @@ const Notification = () => {
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
                         <p className="text-sm text-gray-900 leading-5">
-                          <span className="font-semibold">
-                            {notification.userRelated?.username || 'Unknown User'}
-                          </span>{' '}
+                          <span className="font-semibold">{notification.userRelated?.username || "Unknown User"}</span>{" "}
                           <LabelShadcn
                             text={notification.content}
                             translate
                             className="text-sm font-normal text-gray-700 inline"
                           />
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {getRelativeTime(notification.createdAt)}
-                        </p>
+                        <p className="text-xs text-gray-500 mt-1">{getRelativeTime(notification.createdAt)}</p>
                       </div>
-
                     </div>
                   </div>
 
                   {/* Post thumbnail for post-related notifications */}
-                  {(notification.type === 'like' || notification.type === 'comment') && (
+                  {(notification.type === "like" || notification.type === "comment") && (
                     <div className="flex-shrink-0">
                       <div className="w-10 h-10 bg-gray-200 rounded-md flex items-center justify-center">
                         <div className="w-6 h-6 bg-gray-400 rounded"></div>

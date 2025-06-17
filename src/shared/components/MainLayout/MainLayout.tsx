@@ -60,7 +60,7 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
   const [notifications, setNotifications] = useState<TNotification[]>([]);
   const { socket, isConnected } = useSocket();
 
-  const unreadCount = notifications.filter(notification => !notification.isRead).length;
+  const unreadCount = notifications.filter((notification) => !notification.isRead).length;
 
   const addNotification = useCallback((notification: TNotification) => {
     setNotifications((prev) => {
@@ -75,11 +75,9 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
 
   const markAsRead = useCallback((notificationUuid: string) => {
     setNotifications((prev) =>
-      prev.map(notification =>
-        notification.uuid === notificationUuid
-          ? { ...notification, isRead: true }
-          : notification
-      )
+      prev.map((notification) =>
+        notification.uuid === notificationUuid ? { ...notification, isRead: true } : notification,
+      ),
     );
   }, []);
 

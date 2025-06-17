@@ -43,8 +43,15 @@ const Sidebar = () => {
   const router = useRouter();
   const { changeLanguage, currentLanguage } = useLanguage();
   const pathname = usePathname();
-  const { expanded, setExpanded, isSearchActive, setIsSearchActive, isNotificationActive, setIsNotificationActive, unreadCount } =
-    useSidebarState();
+  const {
+    expanded,
+    setExpanded,
+    isSearchActive,
+    setIsSearchActive,
+    isNotificationActive,
+    setIsNotificationActive,
+    unreadCount,
+  } = useSidebarState();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
@@ -139,8 +146,9 @@ const Sidebar = () => {
 
           <div className="flex flex-col gap-2 px-3">
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "home" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "home" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => {
                 handleActive("home");
                 router.push("/");
@@ -159,8 +167,9 @@ const Sidebar = () => {
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "search" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "search" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={handleSearchClick}
             >
               <div className="flex justify-center items-center w-6 h-6">
@@ -176,8 +185,9 @@ const Sidebar = () => {
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "message" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "message" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => {
                 handleActive("message");
                 router.push("/message");
@@ -196,15 +206,16 @@ const Sidebar = () => {
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "notification" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "notification" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={handleNotificationClick}
             >
               <div className="flex justify-center items-center w-6 h-6 relative">
                 <GoBellFill className={`w-5 h-5 ${isActive === "notification" && "text-white"}`} />
                 {unreadCount > 0 && (
                   <div className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-                    {unreadCount > 99 ? '99+' : unreadCount}
+                    {unreadCount > 99 ? "99+" : unreadCount}
                   </div>
                 )}
               </div>
@@ -218,8 +229,9 @@ const Sidebar = () => {
             </div>
 
             <div
-              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${isActive === "profile" ? "bg-primary-purple" : "hover:bg-gray-200"
-                } transition-all duration-300`}
+              className={`w-full flex gap-2 items-center p-3 rounded-md cursor-pointer ${
+                isActive === "profile" ? "bg-primary-purple" : "hover:bg-gray-200"
+              } transition-all duration-300`}
               onClick={() => {
                 handleActive("profile");
                 router.push("/profile");
