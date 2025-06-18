@@ -7,13 +7,11 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/shared/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
 import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import { TypeTransfer } from "@/shared/constants/type-transfer";
 import { setTokensInfo } from "../../_services/auth-tokens-info";
-import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 import { useForm } from "react-hook-form";
-import { Card } from "@/shared/components/ui/card";
 import { LoginFormType, LoginRequest } from "@/shared/types/common-type/auth-type";
 import { toast } from "@/shared/components/ui/toast";
 
@@ -21,6 +19,7 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
   const { t } = useTranslation();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({
     email: false,
     password: false,
@@ -63,6 +62,7 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
       return;
     }
 
+    setIsLoading(true);
     try {
       const response = await TypeTransfer["Auth"].otherAPIs?.login({
         email: trimmedEmail,
@@ -84,33 +84,52 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
       } catch {
         setError({ email: true, password: true });
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
-    <Card className="w-[350px] h-full bg-white p-8 rounded-2xl shadow-lg">
-      <LabelShadcn className="text-center text-inherit text-2xl font-bold" text="common:button.login" translate />
+    <div className="p-8 bg-transparent">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome</h1>
+        <p className="text-gray-600">Please login to your account</p>
+      </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Username Field */}
+          {/* Email Field */}
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <LabelShadcn className="text-inherit" text="common:auth.email" translate />
-                <FormControl>
-                  <Input
-                    className={`rounded-lg ${error.email ? "border-red-500" : ""}`}
-                    placeholder={t("common:auth.enter-your-email")}
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      setError({ ...error, email: false });
-                    }}
-                  />
-                </FormControl>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
+                    <Mail className="h-5 w-5 text-gray-500" />
+                  </div>
+                  <FormControl>
+                    <Input
+                      className={`
+                        pl-12 pr-4 py-3 h-12 
+                        bg-white/60 backdrop-blur-sm 
+                        border border-gray-300/60 
+                        rounded-xl
+                        text-gray-800 placeholder:text-gray-500
+                        focus:bg-white/80 focus:border-blue-400
+                        transition-all duration-300
+                        ${error.email ? "border-red-400 bg-red-50/60" : ""}
+                      `}
+                      placeholder={t("common:auth.enter-your-email")}
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        setError({ ...error, email: false });
+                      }}
+                    />
+                  </FormControl>
+                </div>
               </FormItem>
             )}
           />
@@ -121,12 +140,23 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <LabelShadcn className="text-inherit" text="common:auth.password" translate />
                 <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
+                    <Lock className="h-5 w-5 text-gray-500" />
+                  </div>
                   <FormControl>
                     <Input
                       type={showPassword ? "text" : "password"}
-                      className={`rounded-lg pr-10 ${error.password ? "border-red-500" : ""}`}
+                      className={`
+                        pl-12 pr-12 py-3 h-12 
+                        bg-white/60 backdrop-blur-sm 
+                        border border-gray-300/60 
+                        rounded-xl
+                        text-gray-800 placeholder:text-gray-500
+                        focus:bg-white/80 focus:border-blue-400
+                        transition-all duration-300
+                        ${error.password ? "border-red-400 bg-red-50/60" : ""}
+                      `}
                       placeholder={t("common:auth.enter-your-password")}
                       {...field}
                       onChange={(e) => {
@@ -139,34 +169,58 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="absolute inset-y-0 right-0 hover:bg-transparent"
+                    className="absolute inset-y-0 right-0 top-1/2 -translate-y-1/2 hover:bg-gray-100/60 text-gray-500 hover:text-gray-700"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </Button>
                 </div>
               </FormItem>
             )}
           />
 
-          {/* Login Button */}
-          <Button variant="default" type="submit" className="w-full">
-            <LabelShadcn className="text-inherit cursor-pointer" text="common:auth.login" translate />
+          <Button
+            variant="default"
+            type="submit"
+            disabled={isLoading}
+            className="
+              w-full h-12 
+              bg-gradient-to-r from-blue-500 to-purple-600 
+              hover:from-blue-600 hover:to-purple-700
+              border-0 rounded-xl 
+              font-semibold text-white
+              transition-all duration-300 
+              transform hover:scale-[1.02] active:scale-[0.98]
+              disabled:opacity-70 disabled:cursor-not-allowed
+              shadow-lg hover:shadow-xl
+              group
+            "
+          >
+            {isLoading ? (
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                <span>Signing in...</span>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center space-x-2">
+                <span>Sign In</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            )}
           </Button>
 
-          <div className="text-center flex items-center justify-center gap-2">
-            <LabelShadcn className="text-inherit" text="common:button.dont-have-account" translate />
-            <Button
+          <div className="text-center">
+            <span className="text-gray-600">Don&apos;t have an account? </span>
+            <button
               type="button"
-              className="cursor-pointer bg-transparent hover:opacity-70 p-0"
+              className="text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-300"
               onClick={() => setToRegister(true)}
-              variant="ghost"
             >
-              <LabelShadcn className="text-primary cursor-pointer font-semibold" text="common:auth.sign-up" translate />
-            </Button>
+              Sign up here
+            </button>
           </div>
         </form>
       </Form>
-    </Card>
+    </div>
   );
 }

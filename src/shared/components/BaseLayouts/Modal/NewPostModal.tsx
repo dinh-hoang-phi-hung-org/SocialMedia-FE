@@ -139,6 +139,16 @@ const NewPostModal = (props: NewPostModalProps) => {
     try {
       const mediaFiles = getFilesFromMedia(selectedMedia);
 
+      const checkToxic = await TypeTransfer["AI"].otherAPIs?.checkLevelToxicOfComment(postContent);
+
+      if (checkToxic?.payload?.is_toxic) {
+        toast.error({
+          title: "common:notification.error",
+          description: "common:message.post-toxic",
+        });
+        return;
+      }
+
       const response = await TypeTransfer["Post"].otherAPIs?.createPost(postContent, mediaFiles);
 
       if (response?.payload?.postUuid) {
@@ -294,24 +304,28 @@ const NewPostModal = (props: NewPostModalProps) => {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-100 p-4">
           <button onClick={props.onClose}>
-            <span className="font-medium text-black">{t("common:button.cancel")}</span>
+            <LabelShadcn text="common:button.cancel" translate className="font-medium text-black" />
           </button>
           {/* <h2 className="font-bold text-lg">{t("common:post.new-post")}</h2> */}
           <div className="absolute left-1/2 transform -translate-x-1/2">
             <LabelShadcn text={props.title} translate className="font-bold text-lg" />
           </div>
           <button
-            className={`font-medium ${postContent.trim() || selectedMedia.length > 0 ? "text-primary-purple" : "text-gray-300"} ${isPosting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+            className={`font-medium ${postContent.trim() ? "text-primary-purple" : "text-gray-300"} ${isPosting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
             onClick={props.type === "post" ? handleSubmitPost : handleSubmitComment}
-            disabled={isPosting || (!postContent.trim() && selectedMedia.length === 0)}
+            disabled={isPosting || !postContent.trim()}
           >
-            {props.type === "post"
-              ? isPosting
-                ? t("common:button.posting")
-                : t("common:button.post")
-              : isPosting
-                ? t("common:button.submitting")
-                : t("common:button.submit-comment")}
+            {props.type === "post" ? (
+              isPosting ? (
+                <LabelShadcn text="common:button.posting" translate className="font-medium text-inherit" />
+              ) : (
+                <LabelShadcn text="common:button.post" translate className="font-medium text-inherit" />
+              )
+            ) : isPosting ? (
+              <LabelShadcn text="common:button.submitting" translate className="font-medium text-inherit" />
+            ) : (
+              <LabelShadcn text="common:button.submit-comment" translate className="font-medium text-inherit" />
+            )}
           </button>
         </div>
 

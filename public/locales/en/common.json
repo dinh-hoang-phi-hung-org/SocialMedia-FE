@@ -84,7 +84,7 @@
     "success": "Success"
   },
   "error": {
-    "file_count_limit": "Cannot upload more than 13 files",
+    "file_count_limit": "Cannot upload more than 10 images or 3 videos",
     "invalid_file_type": "Invalid file type",
     "file_size_limit": "File size cannot exceed 10MB"
   },
@@ -124,6 +124,7 @@
     "post-created": "Post created successfully",
     "post_failed": "Failed to create post",
     "comment-toxic": "Comment is toxic, please check your comment",
+    "post-toxic": "Post is toxic, please check your post",
     "report-success": "Report created successfully",
     "delete-content-success": "Content deleted successfully",
     "close-report-success": "Report closed successfully"
@@ -138,8 +139,8 @@
     "enter-your-password": "Enter your password",
     "username-must-be-at-least-2-characters-long": "Username must be at least 2 characters long",
     "phone-number-must-be-at-least-10-digits": "Phone number must be at least 10 digits",
-    "invalid-credentials": "Invalid username or password",
-    "user-not-found": "User not found",
+    "invalid-credentials": "Invalid email or password",
+    "user-not-found": "Email not found",
     "user-not-verified": "User not verified",
     "this-field-is-required": "This field is required",
     "email-required": "Email is required",

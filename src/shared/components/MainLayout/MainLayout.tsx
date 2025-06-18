@@ -188,7 +188,7 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
   }, [socket, isConnected, addNotification]);
 
   return (
-    <div className="relative min-h-screen w-full bg-background-primary-purple">
+    <div className="relative min-h-screen w-full bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <div className="flex flex-col min-h-screen relative z-10">
         <SidebarStateContext.Provider
           value={{

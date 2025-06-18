@@ -84,7 +84,7 @@
     "success": "Thành công"
   },
   "error": {
-    "file_count_limit": "Không thể tải lên quá 13 tệp",
+    "file_count_limit": "Không thể tải lên quá 10 ảnh hoặc 3 video",
     "invalid_file_type": "Tệp không hợp lệ",
     "file_size_limit": "Kích thước mỗi tệp không được vượt quá 10MB"
   },
@@ -124,6 +124,7 @@
     "post-created": "Bài viết đã được tạo thành công",
     "post_failed": "Không thể tạo bài viết",
     "comment-toxic": "Bình luận đã được đánh giá là độc hại, vui lòng kiểm tra lại",
+    "post-toxic": "Nội dung bài viết tiêu cực, hãy kiểm tra lại nội dung",
     "report-success": "Báo cáo đã được tạo thành công",
     "delete-content-success": "Nội dung đã được xóa thành công",
     "close-report-success": "Báo cáo đã được đóng thành công"
@@ -138,8 +139,8 @@
     "enter-your-password": "Nhập mật khẩu",
     "username-must-be-at-least-2-characters-long": "Tên đăng nhập phải có ít nhất 2 ký tự",
     "phone-number-must-be-at-least-10-digits": "Số điện thoại phải có ít nhất 10 chữ số",
-    "invalid-credentials": "Tên đăng nhập hoặc mật khẩu không đúng",
-    "user-not-found": "Tên đăng nhập không tồn tại",
+    "invalid-credentials": "Email hoặc mật khẩu không đúng",
+    "user-not-found": "Email không tồn tại",
     "user-not-verified": "Tài khoản chưa được xác thực",
     "this-field-is-required": "Trường này là bắt buộc",
     "email-required": "Email là bắt buộc",

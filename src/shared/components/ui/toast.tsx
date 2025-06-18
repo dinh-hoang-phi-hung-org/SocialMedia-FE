@@ -18,7 +18,7 @@ const createToastContent = (props: ToastProps) => {
     title: title ? <LabelShadcn text={title} translate className="text-white font-bold text-lg" /> : null,
     description:
       typeof description === "string" ? (
-        <LabelShadcn text={description} translate inheritedClass className="text-white" splitAndTranslate />
+        <LabelShadcn text={description} translate inheritedClass className="text-white/90" splitAndTranslate />
       ) : (
         description
       ),
@@ -31,7 +31,11 @@ export const toast = {
       description: createToastContent(props).description,
       ...defaultConfig,
       style: {
-        backgroundColor: "var(--success)",
+        background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%)",
+        border: "1px solid rgba(59, 130, 246, 0.3)",
+        backdropFilter: "blur(12px)",
+        borderRadius: "12px",
+        boxShadow: "0 8px 32px rgba(59, 130, 246, 0.3)",
         color: "white",
       },
     });
@@ -42,7 +46,11 @@ export const toast = {
       description: createToastContent(props).description,
       ...defaultConfig,
       style: {
-        backgroundColor: "var(--danger)",
+        background: "linear-gradient(135deg, #f43f5e 0%, #ec4899 50%, #d946ef 100%)",
+        border: "1px solid rgba(244, 63, 94, 0.3)",
+        backdropFilter: "blur(12px)",
+        borderRadius: "12px",
+        boxShadow: "0 8px 32px rgba(244, 63, 94, 0.3)",
         color: "white",
       },
     });
@@ -53,7 +61,11 @@ export const toast = {
       description: createToastContent(props).description,
       ...defaultConfig,
       style: {
-        backgroundColor: "var(--info)",
+        background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%)",
+        border: "1px solid rgba(139, 92, 246, 0.3)",
+        backdropFilter: "blur(12px)",
+        borderRadius: "12px",
+        boxShadow: "0 8px 32px rgba(139, 92, 246, 0.3)",
         color: "white",
       },
     });

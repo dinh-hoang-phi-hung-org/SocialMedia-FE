@@ -33,8 +33,6 @@ export default function Home() {
     <MainLayout>
       <div className="mx-60 px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100/50 hover:border-purple-200/50 p-6 group relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-50/30 via-transparent to-blue-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-4">
               <div className="relative group/avatar">
@@ -81,12 +79,12 @@ export default function Home() {
               </div>
 
               <Button
-                variant="outline"
-                className="bg-gradient-to-r from-purple-500 to-blue-500 text-white border-0 hover:from-purple-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl rounded-full px-6"
+                variant="default"
+                className="!bg-gradient-to-r !from-purple-500 !to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-0 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl rounded-full px-6"
                 onClick={() => setShowNewPostModal(true)}
               >
                 <FiPlus className="w-4 h-4 text-white" />
-                <LabelShadcn text="common:button.post" className="font-semibold text-white" translate />
+                <LabelShadcn text="common:button.post" className="font-semibold text-white cursor-pointer" translate />
               </Button>
             </div>
           </div>
@@ -135,7 +133,8 @@ export default function Home() {
             <h3 className="text-xl font-bold text-gray-800 mb-2">No posts yet</h3>
             <p className="text-gray-600 mb-6">Be the first to share something with your community!</p>
             <Button
-              className="bg-gradient-to-r from-purple-500 to-blue-500 text-white border-0 hover:from-purple-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl rounded-full px-8"
+              variant="default"
+              className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-0 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl rounded-full px-8"
               onClick={() => setShowNewPostModal(true)}
             >
               <FiPlus className="w-4 h-4 mr-2" />
