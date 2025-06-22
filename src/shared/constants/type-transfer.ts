@@ -78,6 +78,7 @@ const createUserTypeTransferEntry = (entry: TypeTransferEntry): TransferType => 
       getMe: () => entry.repository.getMe(),
       getUserByUuid: (uuid: string) => entry.repository.getUserByUuid(uuid),
       getUsers: (params: PaginationParamsType) => entry.repository.getUsers(params),
+      editUser: (uuid: string, data: FormData) => entry.repository.editUser(uuid, data),
     },
   };
 };

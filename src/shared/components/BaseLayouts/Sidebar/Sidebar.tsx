@@ -237,13 +237,13 @@ const Sidebar = () => {
                 router.push("/profile");
               }}
             >
-              <div className="flex justify-center items-center w-6 h-6">
+              <div className="flex justify-center items-center ">
                 <Image
                   src={store.getState().avatar.avatar || "/assets/images/sample-avatar.png"}
                   alt="avatar"
                   width={26}
                   height={26}
-                  className="rounded-full border border-gray-300"
+                  className="rounded-full border border-slate-50 w-7 h-7"
                 />
               </div>
               {expanded && (

@@ -239,6 +239,20 @@
     "month": "Tháng",
     "year": "Năm"
   },
+  "user": {
+    "edit-profile": "Chỉnh sửa hồ sơ",
+    "change-profile-picture": "Thay đổi ảnh đại diện",
+    "username": "Tên đăng nhập",
+    "first-name": "Tên",
+    "last-name": "Họ",
+    "bio": "Giới thiệu",
+    "gender": "Giới tính",
+    "date-of-birth": "Ngày sinh",
+    "select-gender": "Chọn giới tính",
+    "male": "Nam",
+    "female": "Nữ",
+    "bio-placeholder": "Nói cho chúng tôi biết về bạn..."
+  },
   "report": {
     "placeholder": "Nội dung báo cáo..."
   }

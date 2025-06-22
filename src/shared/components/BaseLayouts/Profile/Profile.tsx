@@ -7,6 +7,7 @@ import { Button } from "../../ui/button";
 import LabelShadcn from "../../ui/LabelShadcn";
 import { TypeTransfer } from "@/shared/constants/type-transfer";
 import ListModal from "../Modal/ListModal";
+import EditProfile from "../Modal/EditProfile";
 type ProfileProps = {
   isMyProfile: boolean;
   user: TUser;
@@ -17,20 +18,30 @@ const Profile = (props: ProfileProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isFollowersModalOpen, setIsFollowersModalOpen] = useState(false);
   const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
+  const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [listUsers, setListUsers] = useState<TUser[]>([]);
 
   useEffect(() => {
     setUser(props.user);
   }, [props.user]);
 
-  const handleUploadClick = () => {
-    fileInputRef.current?.click();
-  };
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       console.log("File selected:", file);
+    }
+  };
+
+  const handleEditProfileSave = async (updatedData: FormData) => {
+    try {
+      const response = await TypeTransfer["User"]?.otherAPIs?.editUser(user?.uuid, updatedData);
+      console.log("Saving profile data:", response);
+
+      if (response?.success && response?.payload) {
+        setUser(response.payload);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
     }
   };
 
@@ -89,7 +100,7 @@ const Profile = (props: ProfileProps) => {
         {props.isMyProfile && (
           <div
             className="absolute bottom-0 right-0 bg-white rounded-full p-1 group-hover:bg-gray-200 cursor-pointer transition-colors"
-            onClick={handleUploadClick}
+            onClick={() => setIsEditProfileModalOpen(true)}
           >
             <input type="file" className="hidden" ref={fileInputRef} onChange={handleFileChange} accept="image/*" />
             <IoCameraOutline className="h-6 w-6" />
@@ -102,7 +113,11 @@ const Profile = (props: ProfileProps) => {
           <div className="text-2xl">{user?.username}</div>
 
           {props.isMyProfile ? (
-            <Button variant="outline" className="p-2 rounded-md bg-primary-purple text-white">
+            <Button
+              variant="outline"
+              className="p-2 rounded-md bg-primary-purple text-white"
+              onClick={() => setIsEditProfileModalOpen(true)}
+            >
               <LabelShadcn
                 text="common:button.edit-profile"
                 className="font-semibold cursor-pointer"
@@ -186,6 +201,16 @@ const Profile = (props: ProfileProps) => {
             isOpen={isFollowingModalOpen}
             onClose={() => setIsFollowingModalOpen(false)}
             title="Followers"
+          />
+        )}
+
+        {/* Edit Profile Modal */}
+        {user && (
+          <EditProfile
+            user={user}
+            isOpen={isEditProfileModalOpen}
+            onClose={() => setIsEditProfileModalOpen(false)}
+            onSave={handleEditProfileSave}
           />
         )}
       </div>
