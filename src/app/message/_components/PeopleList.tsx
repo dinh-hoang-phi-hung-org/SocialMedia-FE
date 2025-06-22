@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
-import { Search, Users } from "lucide-react";
+import { Search, Users, Loader2 } from "lucide-react";
 import { TConversation } from "@/shared/types/common-type/conversation-type";
 import TimeAgo from "@/shared/components/ui/TimeAgo";
 import { TypeTransfer } from "@/shared/constants/type-transfer";
@@ -30,6 +30,12 @@ export default function PeopleList({
   const [searchResults, setSearchResults] = useState<TUser[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [hasMoreData, setHasMoreData] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const ITEMS_PER_PAGE = 10;
 
   const performSearch = useCallback(async (query: string) => {
     if (!query.trim()) {
@@ -59,26 +65,74 @@ export default function PeopleList({
     performSearch(searchQuery);
   }, [searchQuery, performSearch]);
 
-  const fetchConversations = async () => {
+  const fetchConversations = async (page: number = 1, append: boolean = false) => {
     try {
+      if (append) {
+        setIsLoadingMore(true);
+      }
+
       const response = await TypeTransfer["Message"].otherAPIs?.getConversations({
-        page: 1,
-        limit: 10,
+        page,
+        limit: ITEMS_PER_PAGE,
       });
 
       if (response?.payload.data) {
-        setConversations(response.payload.data as unknown as TConversation[]);
+        const newConversations = response.payload.data as unknown as TConversation[];
+
+        if (append) {
+          setConversations((prev) => [...prev, ...newConversations]);
+        } else {
+          setConversations(newConversations);
+        }
+
+        const totalPages = response.payload.meta?.lastPage || 1;
+        setHasMoreData(page < totalPages);
       }
     } catch (error) {
       console.error("Error fetching conversations:", error);
+    } finally {
+      if (append) {
+        setIsLoadingMore(false);
+      }
     }
   };
+
+  const loadMoreConversations = useCallback(() => {
+    if (!isLoadingMore && hasMoreData) {
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      fetchConversations(nextPage, true);
+    }
+  }, [currentPage, isLoadingMore, hasMoreData]);
+
+  const handleScroll = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    const isNearBottom = scrollTop + clientHeight >= scrollHeight - 100;
+    if (isNearBottom && !isLoadingMore && hasMoreData && !searchQuery) {
+      loadMoreConversations();
+    }
+  }, [loadMoreConversations, isLoadingMore, hasMoreData, searchQuery]);
+
+  // Add scroll listener
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   useEffect(() => {
     if (initialConversations && initialConversations.length > 0) {
       setConversations(initialConversations);
     } else {
-      fetchConversations();
+      // Reset pagination when component mounts
+      setCurrentPage(1);
+      setHasMoreData(true);
+      fetchConversations(1, false);
     }
   }, [initialConversations]);
 
@@ -87,14 +141,18 @@ export default function PeopleList({
 
     const handleNewMessage = async () => {
       console.log("New message received");
-      await fetchConversations();
+      setCurrentPage(1);
+      setHasMoreData(true);
+      await fetchConversations(1, false);
     };
 
     const handleUpdateConversation = async (data: { userUuid: string }) => {
       console.log("Update conversation", data);
       const currentUserUuid = authProvider.getUserUuid();
       if (currentUserUuid && data.userUuid === currentUserUuid) {
-        await fetchConversations();
+        setCurrentPage(1);
+        setHasMoreData(true);
+        await fetchConversations(1, false);
       }
     };
 
@@ -134,7 +192,7 @@ export default function PeopleList({
         </div>
       </div>
 
-      <div className="overflow-y-auto flex-1 relative">
+      <div ref={scrollContainerRef} className="overflow-y-auto flex-1 relative">
         {/* Search Overlay */}
         {searchQuery && (
           <div className="absolute inset-0 bg-white dark:bg-gray-900 z-10 p-4">
@@ -295,6 +353,21 @@ export default function PeopleList({
             </div>
           </div>
         ))}
+
+        {/* Loading More Indicator */}
+        {isLoadingMore && (
+          <div className="flex justify-center items-center py-4">
+            <Loader2 className="h-6 w-6 animate-spin text-primary-purple" />
+            <span className="ml-2 text-gray-500 dark:text-gray-400">Đang tải thêm...</span>
+          </div>
+        )}
+
+        {/* No More Data Indicator */}
+        {!hasMoreData && conversations.length > 0 && !searchQuery && (
+          <div className="flex justify-center items-center py-4">
+            <span className="text-gray-500 dark:text-gray-400 text-sm">Đã tải hết dữ liệu</span>
+          </div>
+        )}
       </div>
 
       <CreateGroupModal
@@ -302,7 +375,9 @@ export default function PeopleList({
         onClose={() => setIsCreateGroupModalOpen(false)}
         onGroupCreated={async () => {
           // Refresh conversations after group creation
-          fetchConversations();
+          setCurrentPage(1);
+          setHasMoreData(true);
+          fetchConversations(1, false);
           // Optionally navigate to the new group conversation
           // You can implement this based on your routing logic
         }}

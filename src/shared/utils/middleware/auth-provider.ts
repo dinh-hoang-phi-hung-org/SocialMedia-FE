@@ -238,6 +238,7 @@ export const authProvider = {
     if (typeof window !== "undefined") {
       // Xóa token từ localStorage
       localStorage.removeItem(TOKEN_KEY);
+      // lo
 
       // Xóa cookies
       Cookies.remove("accessToken");

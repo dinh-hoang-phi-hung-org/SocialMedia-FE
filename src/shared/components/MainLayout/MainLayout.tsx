@@ -66,7 +66,6 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
     setNotifications((prev) => {
       const exists = prev.some((n) => n.uuid === notification.uuid);
       if (exists) {
-        console.log("⚠️ Notification already exists, skipping:", notification.uuid);
         return prev;
       }
       return [notification, ...prev];
@@ -144,7 +143,6 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
       });
 
       socket.on("removedFromGroup", (data) => {
-        console.log("❌ Removed from group:", data);
         toast.error({
           title: "common:notification.error",
           description: data.message || "message:group.removed-from-group",

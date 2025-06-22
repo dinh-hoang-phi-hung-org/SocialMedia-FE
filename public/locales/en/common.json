@@ -239,6 +239,20 @@
     "month": "Month",
     "year": "Year"
   },
+  "user": {
+    "edit-profile": "Edit Profile",
+    "change-profile-picture": "Change Profile Picture",
+    "username": "Username",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "bio": "Bio",
+    "gender": "Gender",
+    "date-of-birth": "Date of Birth",
+    "select-gender": "Select Gender",
+    "male": "Male",
+    "female": "Female",
+    "bio-placeholder": "Tell us about yourself..."
+  },
   "report": {
     "placeholder": "Report Content..."
   }

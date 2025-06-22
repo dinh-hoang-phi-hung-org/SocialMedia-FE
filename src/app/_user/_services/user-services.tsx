@@ -50,6 +50,13 @@ export class UserService implements IUserService {
       },
     });
   }
+
+  public async editUser(uuid: string, data: FormData): Promise<GetResponse<TUser>> {
+    return await httpClient.patch<TUser, FormData>({
+      url: this.requestBuilder.buildUrl(`${uuid}`),
+      body: data,
+    });
+  }
 }
 
 const requestBuilder = new RequestBuilder();
