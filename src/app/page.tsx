@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <div className="mx-60 px-4 sm:px-6 lg:px-8 space-y-6">
+      <div className="md:mx-16 lg:mx-28 xl:mx-40 px-4 space-y-6 xl:mb-0 md:mb-14">
         <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100/50 hover:border-purple-200/50 p-6 group relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-4">

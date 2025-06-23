@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { IoCameraOutline, IoSettingsOutline } from "react-icons/io5";
+import { IoCameraOutline } from "react-icons/io5";
 // import profileData from "@/shared/sample-data/profile.json";
 import { TUser } from "@/shared/types/common-type/user-type";
 import Image from "next/image";
@@ -88,12 +88,12 @@ const Profile = (props: ProfileProps) => {
   };
 
   return (
-    <div className="w-full grid grid-cols-5">
-      <div className="object-center w-32 h-32 relative group">
+    <div className="w-full flex gap-4">
+      <div className="relative group xl:w-32 xl:h-32 lg:w-28 lg:h-28 md:w-24 md:h-24">
         <Image
           alt="profile"
           src={user?.profilePictureUrl || "/assets/images/sample-avatar.png"}
-          className="rounded-full w-full h-full object-cover border border-slate-300"
+          className="rounded-full w-full h-full object-cover border border-slate-300 xl:w-32 xl:h-32 lg:w-28 lg:h-28 md:w-24 md:h-24"
           width={128}
           height={128}
         />
@@ -108,9 +108,9 @@ const Profile = (props: ProfileProps) => {
         )}
       </div>
 
-      <div className="col-span-4 flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
         <div className="text-gray-800 flex flex-row gap-5 items-center">
-          <div className="text-2xl">{user?.username}</div>
+          <div className="text-2xl md:text-xl font-semibold">{user?.username}</div>
 
           {props.isMyProfile ? (
             <Button
@@ -160,24 +160,22 @@ const Profile = (props: ProfileProps) => {
               </Button>
             </div>
           )}
-
-          <IoSettingsOutline className="h-6 w-6" />
         </div>
 
-        <div className="text-gray-800 flex flex-row gap-10 items-center">
+        <div className="text-gray-800 flex flex-row gap-10 items-center md:gap-5">
           <div className="flex flex-row gap-1 items-center">
-            <span className="font-semibold"> {user?.postsCount} </span>
-            <LabelShadcn text="common:profile.posts" translate />
+            <span className="font-semibold md:text-sm lg:text-base"> {user?.postsCount} </span>
+            <LabelShadcn text="common:profile.posts" translate className="md:text-sm lg:text-base" />
           </div>
 
           <div className="flex flex-row gap-1 items-center cursor-pointer" onClick={handleFollowingModalOpen}>
-            <span className="font-semibold"> {user?.followersCount} </span>
-            <LabelShadcn text="common:profile.followers" translate />
+            <span className="font-semibold md:text-sm lg:text-base"> {user?.followersCount} </span>
+            <LabelShadcn text="common:profile.followers" translate className="md:text-sm lg:text-base" />
           </div>
 
           <div className="flex flex-row gap-1 items-center cursor-pointer" onClick={handleFollowersModalOpen}>
-            <span className="font-semibold"> {user?.followingsCount} </span>
-            <LabelShadcn text="common:profile.following" translate />
+            <span className="font-semibold md:text-sm lg:text-base"> {user?.followingsCount} </span>
+            <LabelShadcn text="common:profile.following" translate className="md:text-sm lg:text-base" />
           </div>
         </div>
 

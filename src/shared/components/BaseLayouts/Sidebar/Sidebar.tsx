@@ -127,8 +127,9 @@ const Sidebar = () => {
 
   return (
     <>
+      {/* Desktop Sidebar */}
       <div
-        className="fixed top-0 left-0 h-screen bg-white border-r border-gray-200 flex flex-col justify-between transition-all duration-300 ease-in-out"
+        className="hidden xl:flex fixed top-0 left-0 h-screen bg-white border-r border-gray-200 flex-col justify-between transition-all duration-300 ease-in-out"
         style={{
           width: expanded ? SIDEBAR_WIDTH_EXPANDED : SIDEBAR_WIDTH_COLLAPSED,
         }}
@@ -365,11 +366,170 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Trigger Button */}
+      {/* Mobile Bottom Navigation */}
+      <div className="xl:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 z-50">
+        <div className="flex justify-around items-center">
+          {/* Home */}
+          <button
+            className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 ${
+              isActive === "home" ? "bg-primary-purple" : "hover:bg-gray-100"
+            }`}
+            onClick={() => {
+              handleActive("home");
+              router.push("/");
+            }}
+          >
+            <GoHomeFill className={`w-6 h-6 ${isActive === "home" ? "text-white" : "text-gray-600"}`} />
+          </button>
+
+          {/* Search */}
+          <button
+            className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 ${
+              isActive === "search" ? "bg-primary-purple" : "hover:bg-gray-100"
+            }`}
+            onClick={handleSearchClick}
+          >
+            <FaSearch className={`w-5 h-5 ${isActive === "search" ? "text-white" : "text-gray-600"}`} />
+          </button>
+
+          {/* Message */}
+          <button
+            className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 ${
+              isActive === "message" ? "bg-primary-purple" : "hover:bg-gray-100"
+            }`}
+            onClick={() => {
+              handleActive("message");
+              router.push("/message");
+            }}
+          >
+            <FaCommentAlt className={`w-5 h-5 ${isActive === "message" ? "text-white" : "text-gray-600"}`} />
+          </button>
+
+          {/* Notification */}
+          <button
+            className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 relative ${
+              isActive === "notification" ? "bg-primary-purple" : "hover:bg-gray-100"
+            }`}
+            onClick={handleNotificationClick}
+          >
+            <GoBellFill className={`w-5 h-5 ${isActive === "notification" ? "text-white" : "text-gray-600"}`} />
+            {unreadCount > 0 && (
+              <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full min-w-[16px] h-[16px] flex items-center justify-center px-1">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </div>
+            )}
+          </button>
+
+          {/* Profile */}
+          <button
+            className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 ${
+              isActive === "profile" ? "bg-primary-purple" : "hover:bg-gray-100"
+            }`}
+            onClick={() => {
+              handleActive("profile");
+              router.push("/profile");
+            }}
+          >
+            <Image
+              src={store.getState().avatar.avatar || "/assets/images/sample-avatar.png"}
+              alt="avatar"
+              width={24}
+              height={24}
+              className="rounded-full border border-slate-50"
+            />
+          </button>
+
+          {/* Language Switcher */}
+          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+            <DropdownMenuTrigger asChild>
+              <button className="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 relative">
+                <LanguagesIcon className="w-5 h-5 text-gray-600" />
+                <motion.div
+                  className="absolute -top-1 -right-1 w-2 h-2 bg-primary-purple rounded-full"
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    opacity: [0.5, 1, 0.5],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                    ease: "easeInOut",
+                  }}
+                />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              side="top"
+              align="center"
+              sideOffset={10}
+              className="w-36 bg-white shadow-lg p-2 rounded-md border border-gray-200 mb-2"
+            >
+              <DropdownMenuRadioGroup value={currentLanguage}>
+                <DropdownMenuRadioItem
+                  value="en"
+                  className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors ${currentLanguage === "en" ? "bg-blue-50" : "hover:bg-gray-50"}`}
+                >
+                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                    <Image
+                      src="/assets/flags/en.svg"
+                      alt="English"
+                      className="w-full h-full object-cover"
+                      width={24}
+                      height={24}
+                    />
+                  </div>
+                  <LabelShadcn
+                    text="common:language.en"
+                    inheritedClass={true}
+                    translate
+                    onClick={() => {
+                      changeLanguage("en");
+                      setDropdownOpen(false);
+                    }}
+                  />
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem
+                  value="vi"
+                  className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors ${currentLanguage === "vi" ? "bg-blue-50" : "hover:bg-gray-50"}`}
+                >
+                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                    <Image
+                      src="/assets/flags/vi.svg"
+                      alt="Tiếng Việt"
+                      className="w-full h-full object-cover"
+                      width={24}
+                      height={24}
+                    />
+                  </div>
+                  <LabelShadcn
+                    text="common:language.vi"
+                    inheritedClass={true}
+                    translate
+                    onClick={() => {
+                      changeLanguage("vi");
+                      setDropdownOpen(false);
+                    }}
+                  />
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Logout */}
+          <button
+            className="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-gray-100 transition-all duration-200"
+            onClick={handleLogout}
+          >
+            <GoSignOut className="w-5 h-5 text-gray-600" />
+          </button>
+        </div>
+      </div>
+
+      {/* Desktop Trigger Button */}
       {!isSearchActive && !isNotificationActive && (
         <button
           onClick={toggleSidebar}
-          className="fixed top-5 z-20 rounded-full bg-white p-1.5 shadow-md border border-gray-200 transition-all duration-300"
+          className="hidden xl:block fixed top-5 z-20 rounded-full bg-white p-1.5 shadow-md border border-gray-200 transition-all duration-300"
           style={{
             left: expanded ? "17rem" : "5rem",
           }}

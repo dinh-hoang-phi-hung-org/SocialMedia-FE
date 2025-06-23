@@ -71,10 +71,13 @@
     "search-users": "Tìm kiếm người dùng ...",
     "search-results": "Kết quả tìm kiếm",
     "no-results": "Không tìm thấy kết quả",
+    "no-notification": "Không có thông báo",
     "n-a": "N/A",
     "try-adjusting-your-search-or-filter": "Thử điều chỉnh tìm kiếm hoặc lọc để tìm kiếm điều bạn đang tìm kiếm.",
     "more-number": "{{count}} bình luận khác",
     "searching": "Đang tìm kiếm ...",
+    "search-not-found": "Không tìm thấy kết quả",
+    "delete-search": "Xóa tìm kiếm",
     "you": "Bạn",
     "photo": "Ảnh",
     "feeling": "Cảm xúc"

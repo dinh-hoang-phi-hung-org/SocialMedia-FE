@@ -8,9 +8,8 @@ import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 
 export default function InstagramPage() {
   const [selectedConversation, setSelectedConversation] = useState<{ conversationUuid?: string; userId?: string }>({});
-  console.log(selectedConversation);
   return (
-    <Card className="flex mx-20 h-[calc(100vh-2.5rem)]">
+    <Card className="flex mx-20 xl:min-h-[calc(100vh-2.5rem)] md:h-[calc(100vh-6rem)] md:mb-14 xl:mb-0">
       {/* Sidebar with people list */}
       <div className="w-1/4 border-r border-gray-200 dark:border-gray-800">
         <PeopleList

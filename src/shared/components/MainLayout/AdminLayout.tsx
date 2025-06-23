@@ -11,14 +11,10 @@ import { TypeTransfer } from "@/shared/constants/type-transfer";
 import { store } from "@/shared/redux/store";
 import { Provider } from "react-redux";
 import { setAvatar } from "@/shared/redux/slices/avatarSlice";
-import Search from "../BaseLayouts/Search/Search";
 import AdminSidebar from "../BaseLayouts/Sidebar/AdminSidebar";
 import Loading from "../BaseLayouts/Loading/Loading";
 import NotFound from "../BaseLayouts/NotFound/NotFound";
 
-const SIDEBAR_WIDTH_EXPANDED = "16rem";
-const SIDEBAR_WIDTH_COLLAPSED = "4.5rem";
-const SEARCH_PANEL_WIDTH = "20rem";
 export const SIDEBAR_STATE_KEY = "sidebar_expanded";
 
 interface AdminSidebarStateContextType {
@@ -61,33 +57,7 @@ const AdminLayoutWrapper = ({ children }: MainLayoutProps) => {
         <AdminSidebarStateContext.Provider value={{ expanded, setExpanded, isSearchActive, setIsSearchActive }}>
           <LanguageProvider>
             <AdminSidebar />
-
-            {/* Search Panel */}
-            <div
-              className="fixed top-0 left-0 h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out"
-              style={{
-                width: isSearchActive ? SEARCH_PANEL_WIDTH : "0",
-                transform: isSearchActive ? `translateX(${SIDEBAR_WIDTH_COLLAPSED})` : "translateX(0)",
-                opacity: isSearchActive ? 1 : 0,
-                overflow: "hidden",
-                zIndex: isSearchActive ? 9 : -1,
-              }}
-            >
-              {isSearchActive && <Search />}
-            </div>
-
-            <div
-              className="transition-all duration-300 ease-in-out"
-              style={{
-                marginLeft: expanded
-                  ? SIDEBAR_WIDTH_EXPANDED
-                  : isSearchActive
-                    ? `calc(${SIDEBAR_WIDTH_COLLAPSED} + ${SEARCH_PANEL_WIDTH})`
-                    : SIDEBAR_WIDTH_COLLAPSED,
-              }}
-            >
-              {children}
-            </div>
+            <div className={`transition-all duration-300 ease-in-out ${expanded && "xl:ml-64"}`}>{children}</div>
           </LanguageProvider>
         </AdminSidebarStateContext.Provider>
       </div>

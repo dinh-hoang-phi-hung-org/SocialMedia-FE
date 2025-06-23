@@ -17,9 +17,6 @@ import Loading from "../BaseLayouts/Loading/Loading";
 import Notification from "../BaseLayouts/Notification/Notification";
 import { TNotification } from "@/shared/types/common-type/notification-type";
 
-const SIDEBAR_WIDTH_EXPANDED = "16rem";
-const SIDEBAR_WIDTH_COLLAPSED = "4.5rem";
-const SEARCH_PANEL_WIDTH = "20rem";
 export const SIDEBAR_STATE_KEY = "sidebar_expanded";
 
 interface SidebarStateContextType {
@@ -207,29 +204,26 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
             <Sidebar />
 
             <div
-              className="fixed top-0 left-0 h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out"
-              style={{
-                width: isSearchActive || isNotificationActive ? SEARCH_PANEL_WIDTH : "0",
-                transform:
-                  isSearchActive || isNotificationActive ? `translateX(${SIDEBAR_WIDTH_COLLAPSED})` : "translateX(0)",
-                opacity: isSearchActive || isNotificationActive ? 1 : 0,
-                overflow: "hidden",
-                zIndex: isSearchActive || isNotificationActive ? 9 : -1,
-              }}
+              className={`fixed top-0 left-0 h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out overflow-hidden
+                ${
+                  isSearchActive || isNotificationActive
+                    ? "xl:w-[18rem] md:w-[16rem] xl:translate-x-[4.5rem] opacity-100 z-[9]"
+                    : "w-0 translate-x-0 opacity-0 -z-[1]"
+                }
+              `}
             >
               {isSearchActive && <Search />}
               {isNotificationActive && <Notification />}
             </div>
 
             <div
-              className="py-5 transition-all duration-300 ease-in-out"
-              style={{
-                marginLeft: expanded
-                  ? SIDEBAR_WIDTH_EXPANDED
+              className={`py-5 transition-all duration-300 ease-in-out ${
+                expanded
+                  ? "xl:ml-64" // 16rem (SIDEBAR_WIDTH_EXPANDED)
                   : isSearchActive || isNotificationActive
-                    ? `calc(${SIDEBAR_WIDTH_COLLAPSED} + ${SEARCH_PANEL_WIDTH})`
-                    : SIDEBAR_WIDTH_COLLAPSED,
-              }}
+                    ? "xl:ml-[22.5rem] md:ml-[16rem]" // 4.5rem + 20rem (SIDEBAR_WIDTH_COLLAPSED + SEARCH_PANEL_WIDTH)
+                    : "xl:ml-[4.5rem]" // 4.5rem (exact SIDEBAR_WIDTH_COLLAPSED)
+              }`}
             >
               {children}
             </div>

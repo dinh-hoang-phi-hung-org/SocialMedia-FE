@@ -91,7 +91,7 @@ const DetailReportModal: React.FC<DetailReportModalProps> = ({ onClose, type, re
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 shadow-md  z-50"
       onClick={handleBackgroundClick}
     >
-      <div className="bg-white w-[50%] rounded-lg p-5 shadow-md border-2">
+      <div className="bg-white md:w-[80%] lg:w-[60%] rounded-lg p-5 shadow-md border-2">
         <LabelShadcn
           text="report-management:title.detail-report-title"
           className="font-bold text-center mb-5 text-2xl text-primary-purple"
@@ -147,22 +147,22 @@ const DetailReportModal: React.FC<DetailReportModalProps> = ({ onClose, type, re
           <div className="flex justify-center gap-x-8">
             <button
               onClick={handleCloseReport}
-              className="px-8 py-2 font-semibold border-2 border-primary-purple text-primary-purple rounded-xl"
+              className="xl:px-8 px-4 py-2 font-semibold border-2 border-primary-purple text-primary-purple rounded-xl md:text-sm xl:text-base"
             >
               <LabelShadcn
                 text="report-management:button.close-report"
-                className="font-semibold cursor-pointer"
+                className="font-semibold cursor-pointer md:text-sm xl:text-base"
                 inheritedClass
                 translate
               />
             </button>
             <button
               onClick={handleDeleteContent}
-              className="px-8 py-2 bg-primary-purple text-white rounded-xl font-semibold"
+              className="xl:px-8 px-4 py-2 bg-primary-purple text-white rounded-xl font-semibold md:text-sm xl:text-base"
             >
               <LabelShadcn
                 text="report-management:button.delete-content"
-                className="font-semibold cursor-pointer"
+                className="font-semibold cursor-pointer md:text-sm xl:text-base"
                 inheritedClass
                 translate
               />
