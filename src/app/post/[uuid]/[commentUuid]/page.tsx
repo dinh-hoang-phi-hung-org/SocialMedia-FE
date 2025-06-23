@@ -141,7 +141,7 @@ export default function CommentDetailPage() {
   }
 
   return (
-    <Card className="2xl:mx-96 xl:mx-60 min-h-[calc(100vh-2.5rem)]">
+    <Card className="2xl:mx-96 xl:mx-60 md:mx-16 lg:mx-24 xl:min-h-[calc(100vh-2.5rem)] md:mb-14 xl:mb-0">
       <div className="flex items-center justify-center mx-10 relative">
         <div
           className="flex items-center justify-center gap-2 cursor-pointer absolute left-0 w-8 h-8 rounded-full bg-background-primary-purple"

@@ -72,7 +72,7 @@ const ReportContent: React.FC<ReportContentProps> = ({ onClose, cmtUuid, type })
                 id={`contentCheck${index}`}
                 checked={selectedStates[index] === 1}
                 onChange={() => handleCheckboxChange(index)}
-                className="accent-primary-purple"
+                className="accent-primary-purple md:w-4 md:h-4"
               />
               <LabelShadcn
                 text={content}

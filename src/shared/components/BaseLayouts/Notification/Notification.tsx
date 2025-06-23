@@ -31,13 +31,12 @@ const Notification = () => {
   return (
     <div className="h-full overflow-auto no-scrollbar bg-white">
       <div className="flex flex-col h-full">
-        {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-gray-900">
-            <LabelShadcn text="notification:title" translate />
+        <div className="flex items-center justify-between p-4 pb-2">
+          <h1 className="text-2xl font-bold">
+            <LabelShadcn text="notification:title" translate className="font-bold text-primary-purple text-[1.2rem]" />
           </h1>
-          <button onClick={handleCloseNotification} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
-            <IoClose className="w-6 h-6 text-gray-600" />
+          <button onClick={handleCloseNotification} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <IoClose className="w-5 h-5 text-primary-purple" />
           </button>
         </div>
 
@@ -48,7 +47,7 @@ const Notification = () => {
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                 <div className="w-8 h-8 border-2 border-gray-300 rounded-full"></div>
               </div>
-              <p className="text-gray-500 text-sm">Không có thông báo mới</p>
+              <LabelShadcn text="common:text.no-notification" translate className="text-gray-500 text-sm" />
             </div>
           ) : (
             <div className="divide-y divide-gray-100">

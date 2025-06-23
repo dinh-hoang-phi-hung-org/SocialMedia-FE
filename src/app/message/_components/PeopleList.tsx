@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
-import { Search, Users, Loader2 } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
+import { MdGroupAdd } from "react-icons/md";
 import { TConversation } from "@/shared/types/common-type/conversation-type";
 import TimeAgo from "@/shared/components/ui/TimeAgo";
 import { TypeTransfer } from "@/shared/constants/type-transfer";
@@ -12,6 +13,7 @@ import { motion } from "framer-motion";
 import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import CreateGroupModal from "./CreateGroupModal";
+import { useTranslation } from "react-i18next";
 
 interface PeopleListProps {
   selectedConversation: { conversationUuid?: string; userId?: string };
@@ -24,6 +26,7 @@ export default function PeopleList({
   onSelectUser,
   conversations: initialConversations,
 }: PeopleListProps) {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [conversations, setConversations] = useState<TConversation[]>([]);
   const { socket, isConnected } = useSocket();
@@ -170,21 +173,25 @@ export default function PeopleList({
   return (
     <div className="flex flex-col h-full">
       <div className="p-4 border-b border-gray-200 dark:border-gray-800">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex md:flex-col lg:flex-row md:items-start md:gap-2 items-center justify-between mb-4">
           <LabelShadcn text="message:title.messages" translate className="text-xl font-bold" />
           <button
             onClick={() => setIsCreateGroupModalOpen(true)}
-            className="flex items-center gap-2 px-3 py-2 bg-primary-purple text-white rounded-lg hover:bg-primary-purple-dark transition-colors text-sm"
+            className="flex items-center justify-center gap-2 px-3 py-2 bg-primary-purple text-white rounded-lg hover:bg-primary-purple-dark transition-colors text-sm md:w-full lg:w-auto"
           >
-            <Users className="h-4 w-4" />
-            <LabelShadcn text="message:group.create-group" translate className="text-white text-sm" />
+            <MdGroupAdd className="h-4 w-4" />
+            <LabelShadcn
+              text="message:group.create-group"
+              translate
+              className="text-white text-sm hidden md:block lg:hidden xl:block"
+            />
           </button>
         </div>
         <div className="relative">
           <input
             type="text"
-            placeholder="Search users..."
-            className="w-full p-2 pl-10 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none"
+            placeholder={t("common:text.search-users")}
+            className="w-full p-2 pl-10 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none md:text-sm"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -236,12 +243,16 @@ export default function PeopleList({
                 </div>
               ) : (
                 <div className="text-center py-4">
-                  <p className="text-gray-500 dark:text-gray-400">Không tìm thấy người dùng nào</p>
+                  <LabelShadcn
+                    text="common:text.search-not-found"
+                    translate
+                    className="text-gray-500 dark:text-gray-400"
+                  />
                   <button
                     onClick={() => setSearchQuery("")}
                     className="mt-4 px-4 py-2 text-sm bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
                   >
-                    Xóa tìm kiếm
+                    <LabelShadcn text="common:text.delete-search" translate className="text-sm" />
                   </button>
                 </div>
               )}
@@ -323,12 +334,14 @@ export default function PeopleList({
                     )}
                 </div>
 
-                {conversation.lastMessage && (
-                  <TimeAgo
-                    timestamp={conversation.lastMessage.createdAt}
-                    className="text-xs text-gray-500 dark:text-gray-400"
-                  />
-                )}
+                <div className="hidden xl:block">
+                  {conversation.lastMessage && (
+                    <TimeAgo
+                      timestamp={conversation.lastMessage.createdAt}
+                      className="text-xs text-gray-500 dark:text-gray-400"
+                    />
+                  )}
+                </div>
               </div>
               {conversation.lastMessage && (
                 <LabelShadcn

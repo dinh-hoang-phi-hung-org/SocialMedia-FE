@@ -69,8 +69,8 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 md:mb-10">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-8 lg:px-10 py-12">
         <div className="mb-12 text-center">
           <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-sm font-semibold mb-6 shadow-lg">
             <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse" />
@@ -79,7 +79,7 @@ const AdminPage = () => {
           <LabelShadcn
             text="admin:admin.dashboard-admin-description"
             translate
-            className="text-3xl font-bold bg-gradient-to-r from-gray-800 via-purple-800 to-pink-800 bg-clip-text text-transparent mb-4"
+            className="lg:text-3xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 via-purple-800 to-pink-800 bg-clip-text text-transparent mb-4"
           />
         </div>
 
@@ -158,12 +158,12 @@ const AdminPage = () => {
 
         {/* Enhanced Statistics Cards */}
         {dashboardStats && (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
+          <div className="grid grid-cols-2 gap-4 lg:gap-6 mb-8">
             <StatCard
               title="admin:title-card.total-users"
               value={dashboardStats.totalUsers}
               icon={<FaUser />}
-              gradient="bg-gradient-to-br from-blue-500 to-indigo-600"
+              gradient="!bg-gradient-to-br !from-blue-500 !to-indigo-600"
             />
             <StatCard
               title="admin:title-card.active-users"
@@ -176,7 +176,7 @@ const AdminPage = () => {
               title="admin:title-card.total-posts"
               value={dashboardStats.totalPosts}
               icon={<BsFillPostcardHeartFill />}
-              gradient="bg-gradient-to-br from-purple-500 to-violet-600"
+              gradient="!bg-gradient-to-br !from-purple-500 !to-violet-600"
             />
             <StatCard
               title="admin:title-card.pending-reports"
@@ -188,8 +188,11 @@ const AdminPage = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div className="mb-12">
           <LineChart data={userRegistrations} title="admin:title-chart.user-registrations" color="bg-blue-500" />
+        </div>
+
+        <div className="mb-12">
           <LineChart data={postsCreation} title="admin:title-chart.posts-creation" color="bg-purple-500" />
         </div>
 

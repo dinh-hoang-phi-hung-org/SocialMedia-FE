@@ -112,7 +112,7 @@ export default function PostPage() {
   }
 
   return (
-    <Card className="2xl:mx-96 xl:mx-60 min-h-[calc(100vh-2.5rem)]">
+    <Card className="2xl:mx-96 xl:mx-60 md:mx-16 lg:mx-24 xl:min-h-[calc(100vh-2.5rem)] md:mb-14 xl:mb-0">
       <LabelShadcn text="common:post.post" translate className="font-bold text-[1.4rem] mx-auto mt-5 text-center" />
       <div className="w-full border-b-2 border-background-primary-purple py-7 px-10">
         <Post post={post} isLoading={loading} type="post" />

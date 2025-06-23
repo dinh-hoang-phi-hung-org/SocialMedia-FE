@@ -52,7 +52,7 @@ export default function ProfilePage() {
   }, []);
 
   return (
-    <Card className="2xl:mx-96 xl:mx-60 min-h-[calc(100vh-2.5rem)]">
+    <Card className="xl:mx-36 md:mx-20 xl:min-h-[calc(100vh-2.5rem)] md:mb-14 xl:mb-0">
       <div className="w-full pt-10 pb-5 px-10">
         <Profile isMyProfile={authProvider.getUserUuid() === uuid} user={user} />
       </div>

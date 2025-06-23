@@ -11,9 +11,9 @@ import { TypeTransfer } from "@/shared/constants/type-transfer";
 // import { Button } from "@/shared/components/ui/button";
 import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 import { ListFetchOptionProperties, ListProps } from "@/shared/types/components-type/list-type";
-import { FaUser } from "react-icons/fa";
 import ReportDataTable from "./ReportDataTable";
 import { PaginationParamsType } from "@/shared/types/common-type/pagination-params-type";
+import { MdReport } from "react-icons/md";
 const List = <T extends DefaultItemType>(props: ListProps<T>) => {
   //   const toast = useToast();
   // const router = useRouter();
@@ -206,7 +206,7 @@ const List = <T extends DefaultItemType>(props: ListProps<T>) => {
     <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
       <div className="flex items-center justify-between space-y-2">
         <div className="flex items-center gap-5">
-          <FaUser className="w-10 h-10 text-primary-purple" />
+          <MdReport className="w-10 h-10 text-primary-purple" />
           <div className="flex flex-col">
             <LabelShadcn
               translate
