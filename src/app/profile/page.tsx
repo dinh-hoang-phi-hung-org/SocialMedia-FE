@@ -9,9 +9,11 @@ import { TUser } from "@/shared/types/common-type/user-type";
 import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import { TPost } from "@/shared/types/common-type/post-type";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
+import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 export default function ProfilePage() {
   const [user, setUser] = useState<TUser>({} as TUser);
   const [posts, setPosts] = useState<TPost[]>([]);
+  const [savedPosts, setSavedPosts] = useState<TPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -45,8 +47,27 @@ export default function ProfilePage() {
       }
     };
 
+    const fetchSavedPosts = async () => {
+      setIsLoading(true);
+      try {
+        const response = await TypeTransfer["Post"]?.otherAPIs?.getSavedPosts({
+          page: 1,
+          limit: 10,
+        });
+        if (response?.payload) {
+          setSavedPosts(response.payload.data);
+        }
+      } catch (error) {
+        console.error("Error fetching saved posts:", error);
+        setSavedPosts([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchProfile();
     fetchPosts();
+    fetchSavedPosts();
   }, []);
 
   return (
@@ -60,13 +81,13 @@ export default function ProfilePage() {
             value="posts"
             className="flex-1 border-b-2 border-transparent py-3 text-base font-semibold text-gray-500 hover:text-gray-700 data-[state=active]:border-primary-purple data-[state=active]:text-primary-purple data-[state=active]:bg-transparent data-[state=active]:shadow-none rounded-none"
           >
-            Posts
+            <LabelShadcn text="common:post.posts" translate inheritedClass className="text-base font-semibold" />
           </TabsTrigger>
           <TabsTrigger
             value="saved"
             className="flex-1 border-b-2 border-transparent py-3 text-base font-semibold text-gray-500 hover:text-gray-700 data-[state=active]:border-primary-purple data-[state=active]:text-primary-purple data-[state=active]:bg-transparent data-[state=active]:shadow-none rounded-none"
           >
-            Saved
+            <LabelShadcn text="common:post.saved" translate inheritedClass className="text-base font-semibold" />
           </TabsTrigger>
         </TabsList>
         <TabsContent value="posts">
@@ -83,6 +104,23 @@ export default function ProfilePage() {
           ) : (
             <div className="flex justify-center py-10">
               <p>No posts found</p>
+            </div>
+          )}
+        </TabsContent>
+        <TabsContent value="saved">
+          {isLoading ? (
+            <div className="flex justify-center py-10">
+              <p>Loading saved posts...</p>
+            </div>
+          ) : savedPosts.length > 0 ? (
+            savedPosts.map((post, index) => (
+              <div key={index} className="w-full border-b-2 border-gray-200 py-7 px-7">
+                <Post post={post} type="post" />
+              </div>
+            ))
+          ) : (
+            <div className="flex justify-center py-10">
+              <p>No saved posts found</p>
             </div>
           )}
         </TabsContent>
