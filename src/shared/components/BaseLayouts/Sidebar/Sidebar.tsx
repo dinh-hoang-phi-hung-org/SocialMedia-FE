@@ -6,13 +6,6 @@ import LabelShadcn from "../../ui/LabelShadcn";
 import Image from "next/image";
 import { useLanguage } from "@/shared/hooks/useLanguage";
 import { motion } from "framer-motion";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
 import { usePathname, useRouter } from "next/navigation";
 import { store } from "@/shared/redux/store";
 import { useSidebarState, SIDEBAR_STATE_KEY } from "../../MainLayout/MainLayout";
@@ -282,29 +275,47 @@ const Sidebar = () => {
               </div>
 
               {expanded && (
-                <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-                  <DropdownMenuTrigger asChild>
-                    <div className="flex-grow flex justify-between items-center">
-                      <LabelShadcn
-                        text="common:language.title"
-                        translate
-                        className={`font-semibold cursor-pointer text-black`}
-                      />
+                <div className="language-dropdown relative flex-grow">
+                  <div
+                    className="flex justify-between items-center cursor-pointer rounded-md transition-all duration-200"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setDropdownOpen(!dropdownOpen);
+                    }}
+                  >
+                    <LabelShadcn text="common:language.title" translate className="font-semibold text-black" />
+                    <div className="flex items-center gap-2">
                       <LanguageFlag language={currentLanguage} />
                     </div>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    side="top"
-                    align="end"
-                    sideOffset={5}
-                    className="w-36 bg-white shadow-md p-2 rounded-md border border-gray-200"
-                  >
-                    <DropdownMenuRadioGroup value={currentLanguage}>
-                      <DropdownMenuRadioItem
-                        value="en"
-                        className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors ${currentLanguage === "en" ? "bg-blue-50" : "hover:bg-gray-50"}`}
+                  </div>
+
+                  {dropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      className="absolute bottom-full left-2 mb-6 w-full bg-white shadow-xl p-1 rounded-lg border border-gray-200 z-[9999] language-dropdown"
+                      style={{
+                        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <div
+                        className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200 cursor-pointer ${
+                          currentLanguage === "en"
+                            ? "bg-blue-50 text-blue-700 shadow-sm"
+                            : "hover:bg-gray-50 text-gray-700"
+                        }`}
+                        onClick={() => {
+                          changeLanguage("en");
+                          setDropdownOpen(false);
+                        }}
                       >
-                        <div className="w-5 h-5 rounded-full overflow-hidden">
+                        <div className="w-6 h-6 rounded-full overflow-hidden shadow-sm border-2 border-white">
                           <Image
                             src="/assets/flags/en.svg"
                             alt="English"
@@ -313,21 +324,21 @@ const Sidebar = () => {
                             height={24}
                           />
                         </div>
-                        <LabelShadcn
-                          text="common:language.en"
-                          inheritedClass={true}
-                          translate
-                          onClick={() => {
-                            changeLanguage("en");
-                            setDropdownOpen(false);
-                          }}
-                        />
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem
-                        value="vi"
-                        className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors ${currentLanguage === "vi" ? "bg-blue-50" : "hover:bg-gray-50"}`}
+                        <LabelShadcn text="common:language.en" translate className="font-semibold text-black" />
+                        {currentLanguage === "en" && <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>}
+                      </div>
+                      <div
+                        className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200 cursor-pointer ${
+                          currentLanguage === "vi"
+                            ? "bg-blue-50 text-blue-700 shadow-sm"
+                            : "hover:bg-gray-50 text-gray-700"
+                        }`}
+                        onClick={() => {
+                          changeLanguage("vi");
+                          setDropdownOpen(false);
+                        }}
                       >
-                        <div className="w-5 h-5 rounded-full overflow-hidden">
+                        <div className="w-6 h-6 rounded-full overflow-hidden shadow-sm border-2 border-white">
                           <Image
                             src="/assets/flags/vi.svg"
                             alt="Tiếng Việt"
@@ -336,19 +347,12 @@ const Sidebar = () => {
                             height={24}
                           />
                         </div>
-                        <LabelShadcn
-                          text="common:language.vi"
-                          inheritedClass={true}
-                          translate
-                          onClick={() => {
-                            changeLanguage("vi");
-                            setDropdownOpen(false);
-                          }}
-                        />
-                      </DropdownMenuRadioItem>
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                        <LabelShadcn text="common:language.vi" translate className="font-semibold text-black" />
+                        {currentLanguage === "vi" && <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>}
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
               )}
             </div>
           </div>
@@ -440,36 +444,54 @@ const Sidebar = () => {
           </button>
 
           {/* Language Switcher */}
-          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-            <DropdownMenuTrigger asChild>
-              <button className="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 relative">
-                <LanguagesIcon className="w-5 h-5 text-gray-600" />
-                <motion.div
-                  className="absolute -top-1 -right-1 w-2 h-2 bg-primary-purple rounded-full"
-                  animate={{
-                    scale: [1, 1.3, 1],
-                    opacity: [0.5, 1, 0.5],
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 2,
-                    ease: "easeInOut",
-                  }}
-                />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              side="top"
-              align="center"
-              sideOffset={10}
-              className="w-36 bg-white shadow-lg p-2 rounded-md border border-gray-200 mb-2"
+          <div className="language-dropdown relative">
+            <button
+              className="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 relative"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setDropdownOpen(!dropdownOpen);
+              }}
             >
-              <DropdownMenuRadioGroup value={currentLanguage}>
-                <DropdownMenuRadioItem
-                  value="en"
-                  className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors ${currentLanguage === "en" ? "bg-blue-50" : "hover:bg-gray-50"}`}
+              <LanguagesIcon className="w-5 h-5 text-gray-600" />
+              <motion.div
+                className="absolute -top-1 -right-1 w-2 h-2 bg-primary-purple rounded-full"
+                animate={{
+                  scale: [1, 1.3, 1],
+                  opacity: [0.5, 1, 0.5],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2,
+                  ease: "easeInOut",
+                }}
+              />
+            </button>
+
+            {dropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                className="absolute bottom-full left-0 transform -translate-x-1/2 mb-5 w-40 bg-white p-1 rounded-lg border border-gray-200 z-[9999] language-dropdown"
+                style={{
+                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <div
+                  className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200 cursor-pointer ${
+                    currentLanguage === "en" ? "bg-blue-50 text-blue-700 shadow-sm" : "hover:bg-gray-50 text-gray-700"
+                  }`}
+                  onClick={() => {
+                    changeLanguage("en");
+                    setDropdownOpen(false);
+                  }}
                 >
-                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                  <div className="w-6 h-6 rounded-full overflow-hidden shadow-sm border-2 border-white">
                     <Image
                       src="/assets/flags/en.svg"
                       alt="English"
@@ -478,21 +500,19 @@ const Sidebar = () => {
                       height={24}
                     />
                   </div>
-                  <LabelShadcn
-                    text="common:language.en"
-                    inheritedClass={true}
-                    translate
-                    onClick={() => {
-                      changeLanguage("en");
-                      setDropdownOpen(false);
-                    }}
-                  />
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem
-                  value="vi"
-                  className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors ${currentLanguage === "vi" ? "bg-blue-50" : "hover:bg-gray-50"}`}
+                  <span className="text-sm font-medium">English</span>
+                  {currentLanguage === "en" && <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>}
+                </div>
+                <div
+                  className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200 cursor-pointer ${
+                    currentLanguage === "vi" ? "bg-blue-50 text-blue-700 shadow-sm" : "hover:bg-gray-50 text-gray-700"
+                  }`}
+                  onClick={() => {
+                    changeLanguage("vi");
+                    setDropdownOpen(false);
+                  }}
                 >
-                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                  <div className="w-6 h-6 rounded-full overflow-hidden shadow-sm border-2 border-white">
                     <Image
                       src="/assets/flags/vi.svg"
                       alt="Tiếng Việt"
@@ -501,19 +521,12 @@ const Sidebar = () => {
                       height={24}
                     />
                   </div>
-                  <LabelShadcn
-                    text="common:language.vi"
-                    inheritedClass={true}
-                    translate
-                    onClick={() => {
-                      changeLanguage("vi");
-                      setDropdownOpen(false);
-                    }}
-                  />
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <span className="text-sm font-medium">Tiếng Việt</span>
+                  {currentLanguage === "vi" && <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>}
+                </div>
+              </motion.div>
+            )}
+          </div>
 
           {/* Logout */}
           <button
