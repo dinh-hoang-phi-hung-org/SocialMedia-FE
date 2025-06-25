@@ -1,4 +1,4 @@
-import { PostResponse, GetResponse } from "@/shared/types/common-type/api-type";
+import { PostResponse, GetResponse, DeleteResponse } from "@/shared/types/common-type/api-type";
 import { IRequestBuilder, RequestBuilder } from "@/shared/utils/api/request-builder";
 import { httpClient } from "@/shared/utils/api";
 import { TPost } from "@/shared/types/common-type/post-type";
@@ -8,6 +8,9 @@ interface IPostService {
   createPost(content: string, files?: File[]): Promise<PostResponse<{ message: string; postUuid: string }>>;
   getPosts(userUuid: string, params: PaginationParamsType): Promise<GetResponse<TPost[]>>;
   getPostByUuid(uuid: string): Promise<GetResponse<TPost>>;
+  savePost(postUuid: string): Promise<PostResponse<{ message: string }>>;
+  unsavePost(postUuid: string): Promise<DeleteResponse<{ message: string }>>;
+  getSavedPosts(params: PaginationParamsType): Promise<GetResponse<TPost[]>>;
 }
 
 export class PostService implements IPostService {
@@ -78,6 +81,26 @@ export class PostService implements IPostService {
   public async getHomeFeed(params: PaginationParamsType): Promise<GetResponse<TPost[]>> {
     return await httpClient.get<TPost[]>({
       url: this.requestBuilder.buildUrl("home"),
+      config: { params },
+    });
+  }
+
+  public async savePost(postUuid: string): Promise<PostResponse<{ message: string }>> {
+    return await httpClient.post<{ message: string }, null>({
+      url: this.requestBuilder.buildUrl(`save/${postUuid}`),
+      body: null,
+    });
+  }
+
+  public async unsavePost(postUuid: string): Promise<DeleteResponse<{ message: string }>> {
+    return await httpClient.delete<{ message: string }>({
+      url: this.requestBuilder.buildUrl(`save/${postUuid}`),
+    });
+  }
+
+  public async getSavedPosts(params: PaginationParamsType): Promise<GetResponse<TPost[]>> {
+    return await httpClient.get<TPost[]>({
+      url: this.requestBuilder.buildUrl("saved"),
       config: { params },
     });
   }

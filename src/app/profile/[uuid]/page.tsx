@@ -10,6 +10,7 @@ import { authProvider } from "@/shared/utils/middleware/auth-provider";
 import { TPost } from "@/shared/types/common-type/post-type";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import { useParams } from "next/navigation";
+import LabelShadcn from "@/shared/components/ui/LabelShadcn";
 export default function ProfilePage() {
   const [user, setUser] = useState<TUser>({} as TUser);
   const [posts, setPosts] = useState<TPost[]>([]);
@@ -62,13 +63,7 @@ export default function ProfilePage() {
             value="posts"
             className="flex-1 border-b-2 border-transparent py-3 text-base font-semibold text-gray-500 hover:text-gray-700 data-[state=active]:border-primary-purple data-[state=active]:text-primary-purple data-[state=active]:bg-transparent data-[state=active]:shadow-none rounded-none"
           >
-            Posts
-          </TabsTrigger>
-          <TabsTrigger
-            value="saved"
-            className="flex-1 border-b-2 border-transparent py-3 text-base font-semibold text-gray-500 hover:text-gray-700 data-[state=active]:border-primary-purple data-[state=active]:text-primary-purple data-[state=active]:bg-transparent data-[state=active]:shadow-none rounded-none"
-          >
-            Saved
+            <LabelShadcn text="common:post.posts" translate inheritedClass className="text-base font-semibold" />
           </TabsTrigger>
         </TabsList>
         <TabsContent value="posts">

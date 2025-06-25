@@ -37,6 +37,9 @@ const createPostTypeTransferEntry = (entry: TypeTransferEntry): TransferType => 
       getPosts: (userUuid: string, params: PaginationParamsType) => entry.repository.getPosts(userUuid, params),
       getPostByUuid: (uuid: string) => entry.repository.getPostByUuid(uuid),
       getHomeFeed: (params: PaginationParamsType) => entry.repository.getHomeFeed(params),
+      savePost: (postUuid: string) => entry.repository.savePost(postUuid),
+      unsavePost: (postUuid: string) => entry.repository.unsavePost(postUuid),
+      getSavedPosts: (params: PaginationParamsType) => entry.repository.getSavedPosts(params),
     },
   };
 };

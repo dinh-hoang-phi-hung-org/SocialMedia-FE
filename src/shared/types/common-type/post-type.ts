@@ -23,7 +23,7 @@ export type TPost = DefaultItemType & {
   reactionsCount?: number;
   commentsCount?: number;
   isReacted?: boolean;
-
+  isSaved?: boolean;
   // Optional fields for post status
   isActive?: boolean;
   isHidden?: boolean;

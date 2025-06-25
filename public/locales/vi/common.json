@@ -218,6 +218,8 @@
   },
   "post": {
     "post": "Bài viết",
+    "posts": "Bài viết",
+    "saved": "Đã lưu",
     "new-post": "Đăng bài mới",
     "news": "Có gì mới?"
   },

@@ -3,7 +3,7 @@ import Image from "next/image";
 // import postData from "@/shared/sample-data/post.json";
 import { TPost } from "@/shared/types/common-type/post-type";
 import TimeAgo from "@/shared/components/ui/TimeAgo";
-import { FaRegComment, FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa6";
+import { FaRegComment, FaRegHeart, FaRegBookmark, FaHeart, FaBookmark } from "react-icons/fa6";
 import { IoIosMore } from "react-icons/io";
 import { TbMessageReport } from "react-icons/tb";
 import ImageModal from "../Modal/ImageModal";
@@ -51,7 +51,7 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
     type === "post" ? post?.reactionsCount || 0 : comment?.reactionsCount || 0,
   );
   const [isHovered, setIsHovered] = useState(false);
-
+  const [isSaved, setIsSaved] = useState<boolean>(false);
   // Determine if we should show card based on type
   const showCard = type === "post";
 
@@ -60,11 +60,12 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
     if (type === "post" && post) {
       setIsReacted(post.isReacted || false);
       setReactionCount(post.reactionsCount || 0);
+      setIsSaved(post.isSaved || false);
     } else if (type === "comment" && comment) {
       setIsReacted(comment.isReacted || false);
       setReactionCount(comment.reactionsCount || 0);
     }
-  }, [type, post?.isReacted, post?.reactionsCount, comment?.isReacted, comment?.reactionsCount]);
+  }, [type, post?.isReacted, post?.reactionsCount, comment?.isReacted, comment?.reactionsCount, post?.isSaved]);
 
   if (isLoading || ((!post || !post.user) && (!comment || !comment.user))) {
     return <PostSkeleton />;
@@ -204,6 +205,16 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
 
   const handleReportClose = () => {
     setShowReportModal(false);
+  };
+
+  const handleSavePost = () => {
+    TypeTransfer["Post"].otherAPIs?.savePost(post?.uuid || "");
+    setIsSaved(!isSaved);
+  };
+
+  const handleDeleteSavePost = () => {
+    TypeTransfer["Post"].otherAPIs?.unsavePost(post?.uuid || "");
+    setIsSaved(!isSaved);
   };
 
   const PostContent = (
@@ -426,8 +437,13 @@ const Post = ({ post, comment, isLoading = false, type = "post", isAdminReview =
                 className={`group flex items-center gap-2 px-3 py-2 rounded-full hover:bg-yellow-50 transition-all duration-300 ${
                   showCard ? "transform hover:scale-105" : ""
                 }`}
+                onClick={isSaved ? handleDeleteSavePost : handleSavePost}
               >
-                <FaRegBookmark className="w-5 h-5 text-gray-600 group-hover:text-yellow-600 transition-all duration-300 transform group-hover:scale-110" />
+                {isSaved ? (
+                  <FaBookmark className="w-5 h-5 text-gray-600 group-hover:text-yellow-600 transition-all duration-300 transform group-hover:scale-110" />
+                ) : (
+                  <FaRegBookmark className="w-5 h-5 text-gray-600 group-hover:text-yellow-600 transition-all duration-300 transform group-hover:scale-110" />
+                )}
               </button>
             )}
 
