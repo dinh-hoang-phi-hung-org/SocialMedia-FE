@@ -18,6 +18,7 @@ import {
 } from "@/shared/types/common-type/file-type";
 import LabelShadcn from "../../ui/LabelShadcn";
 import { TComment } from "@/shared/types/common-type/comment-type";
+import { useRouter } from "next/navigation";
 
 const emojiRegex = /(\p{Emoji_Presentation}|\p{Emoji}\uFE0F)/u;
 
@@ -39,6 +40,7 @@ const MAX_LINES = 5;
 
 const NewPostModal = (props: NewPostModalProps) => {
   const { t } = useTranslation();
+  const router = useRouter();
   const [postContent, setPostContent] = useState("");
   const [username, setUsername] = useState<string | null>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -157,6 +159,8 @@ const NewPostModal = (props: NewPostModalProps) => {
           description: "common:message.post-created",
         });
         props.onClose();
+        router.push(`/post/${response.payload.postUuid}`);
+        return;
       }
       // eslint-disable-next-line
     } catch (error: any) {
