@@ -1,0 +1,18 @@
+services:
+  socialmedia-frontend:
+    image: ${DOCKER_IMAGE}
+    ports:
+      - "${PORT}:${PORT}"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://206.189.89.131:${PORT}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - socialmedia-frontend-network
+
+networks:
+  socialmedia-frontend-network:
+    driver: bridge

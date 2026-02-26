@@ -1,0 +1,26 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci
+
+COPY . .
+
+ARG NEXT_PUBLIC_SOCKET_URL
+ARG NEXT_PUBLIC_URL_API
+ARG NEXT_PUBLIC_URL_API_AI
+
+ENV NEXT_PUBLIC_SOCKET_URL=${NEXT_PUBLIC_SOCKET_URL}
+ENV NEXT_PUBLIC_URL_API=${NEXT_PUBLIC_URL_API}
+ENV NEXT_PUBLIC_URL_API_AI=${NEXT_PUBLIC_URL_API_AI}
+
+RUN npm run build
+
+RUN npm ci --omit=dev && npm cache clean --force
+ENV NODE_ENV=production
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
