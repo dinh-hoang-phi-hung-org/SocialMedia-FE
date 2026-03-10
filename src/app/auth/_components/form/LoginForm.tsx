@@ -14,6 +14,7 @@ import { setTokensInfo } from "../../_services/auth-tokens-info";
 import { useForm } from "react-hook-form";
 import { LoginFormType, LoginRequest } from "@/shared/types/common-type/auth-type";
 import { toast } from "@/shared/components/ui/toast";
+import GoogleLoginButton from "@/shared/components/ui/ButtonGoogle";
 
 export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
   const { t } = useTranslation();
@@ -208,19 +209,21 @@ export function LoginForm({ setToRegister }: Readonly<LoginFormType>) {
               </div>
             )}
           </Button>
-
-          <div className="text-center">
-            <span className="text-gray-600">Don&apos;t have an account? </span>
-            <button
-              type="button"
-              className="text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-300"
-              onClick={() => setToRegister(true)}
-            >
-              Sign up here
-            </button>
-          </div>
         </form>
       </Form>
+
+      <GoogleLoginButton className="my-6" />
+
+      <div className="text-center text-sm">
+        <span className="text-gray-600">Don&apos;t have an account? </span>
+        <button
+          type="button"
+          className="text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-300"
+          onClick={() => setToRegister(true)}
+        >
+          Sign up here
+        </button>
+      </div>
     </div>
   );
 }

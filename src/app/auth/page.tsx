@@ -8,6 +8,9 @@ import Overlay from "@/shared/components/BaseLayouts/Overlay/Overlay";
 
 export default function LoginPage() {
   const [isRegister, setIsRegister] = useState<boolean>(false);
+  if (window.google) {
+    window.google.accounts.id.cancel();
+  }
 
   return (
     <UnAuthLayout>

@@ -15,6 +15,7 @@ import commonValidators from "@/shared/utils/validation/common-validator";
 import { toast } from "@/shared/components/ui/toast";
 import { TypeTransfer } from "@/shared/constants/type-transfer";
 import { useRouter } from "next/navigation";
+import GoogleLoginButton from "@/shared/components/ui/ButtonGoogle";
 
 export function RegisterForm() {
   const { t } = useTranslation();
@@ -366,6 +367,8 @@ export function RegisterForm() {
           </Button>
         </form>
       </Form>
+
+      <GoogleLoginButton className="my-4 " />
     </div>
   );
 }

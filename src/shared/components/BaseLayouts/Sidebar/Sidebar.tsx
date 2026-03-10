@@ -91,6 +91,10 @@ const Sidebar = () => {
   const handleLogout = async () => {
     const logout = await TypeTransfer["Auth"]?.otherAPIs?.logout();
     if (logout?.payload) {
+      if (window.google) {
+        window.google.accounts.id.disableAutoSelect();
+        window.google.accounts.id.cancel();
+      }
       router.push("/auth");
       toast.success({
         title: "common:notification.success",

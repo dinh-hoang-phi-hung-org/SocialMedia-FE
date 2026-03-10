@@ -134,7 +134,7 @@ export default function Home() {
             <p className="text-gray-600 mb-6">Be the first to share something with your community!</p>
             <Button
               variant="default"
-              className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-0 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl rounded-full px-8"
+              className="bg-gradient-to-r !from-purple-500 !to-blue-500 hover:!from-purple-600 hover:!to-blue-600 text-white border-0 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl rounded-full px-8"
               onClick={() => setShowNewPostModal(true)}
             >
               <FiPlus className="w-4 h-4 mr-2" />
