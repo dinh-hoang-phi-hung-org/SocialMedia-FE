@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import I18nextProvider from "@/shared/utils/functions/multilingual/i18nProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { LanguageProvider } from "@/shared/hooks/useLanguage";
 import "./globals.css";
 import { Toaster } from "@/shared/components/ui/sonner";
@@ -37,10 +39,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-        <I18nextProvider>
-          <LanguageProvider>{children}</LanguageProvider>
-          <Toaster />
-        </I18nextProvider>
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+          <Script src="https://accounts.google.com/gsi/client" strategy="beforeInteractive" />
+          <I18nextProvider>
+            <LanguageProvider>{children}</LanguageProvider>
+            <Toaster />
+          </I18nextProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

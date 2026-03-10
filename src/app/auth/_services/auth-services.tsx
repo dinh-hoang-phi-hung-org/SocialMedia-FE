@@ -45,6 +45,13 @@ export class AutherizeService implements IAutherizeService {
     return response;
   }
 
+  public async googleLogin(code: string): Promise<PostResponse<LoginResponse>> {
+    return httpClient.post<LoginResponse, { code: string }>({
+      url: this.requestBuilder.buildUrl("google"),
+      body: { code },
+    });
+  }
+
   public async register(data: RegisterFormData): Promise<PostResponse<RegisterResponse>> {
     return httpClient.post<RegisterResponse, RegisterFormData>({
       url: this.requestBuilder.buildUrl("signup"),

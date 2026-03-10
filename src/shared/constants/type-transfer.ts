@@ -25,6 +25,7 @@ const createAuthTypeTransferEntry = (entry: TypeTransferEntry): TransferType => 
       getCurrentUser: () => entry.repository.getCurrentUser(),
       logout: () => entry.repository.logout(),
       verifyEmail: (token: string) => entry.repository.verifyEmail(token),
+      googleLogin: (code: string) => entry.repository.googleLogin(code),
     },
   };
 };
