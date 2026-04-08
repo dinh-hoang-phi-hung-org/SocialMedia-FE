@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Socialmedia
+
+This graduation project is a multilingual social media platform where users can create posts, interact, and chat in real time.
+
+From a frontend perspective, the focus is on building an interactive, responsive user experience, handling real-time updates, content moderation states, and a comprehensive admin dashboard for managing users, posts, and reports.
+
+---
+
+## Tech Stack
+
+| Technology                                        | Version | Purpose                                              |
+| ------------------------------------------------- | ------- | ---------------------------------------------------- |
+| [Next.js](https://nextjs.org)                     | 15.x    | Core framework (App Router)                          |
+| [React](https://react.dev)                        | 19.x    | UI                                                   |
+| [TypeScript](https://www.typescriptlang.org)      | 5.x     | Type safety                                          |
+| [Shadcn UI](https://ui.shadcn.com/)               |         | Reusable, accessible UI components                   |
+| [i18next](https://www.i18next.com/)               | 24.x    | Internationalization and localization                |
+| [Tailwind CSS](https://tailwindcss.com)           | 4.x     | Styling                                              |
+| [Google OAuth](https://console.cloud.google.com/) |         | User authentication (OAuth 2.0 flow, token handling) |
+
+---
+
+## Page Structure
+
+```
+/	                Home — View posts from other users and create new posts
+/auth	            Authentication — Sign in and register
+/message	        Messaging — Chat with other users
+/profile/[uuid]	    View a user’s profile page
+/post/[uuid]	    View post details
+/admin	            Admin dashboard overview
+/admin/user	        Manage system users
+/admin/report	    Review and moderate reported content
+```
+
+---
+
+## Environment Variables
+
+Create a `.env.local` file at the root of the project with the following variables:
+
+```env
+NEXT_PUBLIC_URL_API=http://your-backend-api-url
+NEXT_PUBLIC_URL_API_AI=http://your-ai-api-url
+NEXT_PUBLIC_SOCKET_URL=http://your-socket-server-url
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-oauth-client-id
+```
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js >= 20
+- npm
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build & Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Internationalization (i18n)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The app supports **English** and **Vietnamese** out of the box.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Translation files are located in `public/locales/{locale}/`
+- Namespaces: `common`, `admin`, `message`, `notification`, `user-management`, `report-management`
+- Default locale: `en`
+- Language can be switched at runtime via the `useLanguage` hook
 
-## Deploy on Vercel
+To add a new language, add a new locale folder under `public/locales/` and register the locale in `next-i18next.config.js`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Goals
+
+- Learned how to structure, organize, and maintain a scalable frontend codebase
+- Deployed the application and understood the production workflow
+- Optimized performance for smooth user experience across devices
+- Designed user-friendly UI/UX focused on clarity and usability
+- Implemented practical features such as multilingual support, Google account authentication, ...
+- Integrated the frontend with the backend through RESTful APIs
+- Managed real-time data updates and application state effectively
+- Improved problem-solving skills through handling edge cases and performance bottlenecks
