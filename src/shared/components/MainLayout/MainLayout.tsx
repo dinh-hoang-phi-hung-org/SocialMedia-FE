@@ -97,7 +97,6 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
           limit: 50,
         });
         if (response?.success) {
-          console.log("📋 Loaded initial notifications:", response.payload.data);
           setNotifications(response?.payload.data || []);
         }
       } catch (error) {
@@ -109,17 +108,16 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
 
   useEffect(() => {
     if (socket && isConnected) {
-      console.log("🔗 Socket connected in MainLayout");
-
       const userUuid = authProvider.getUserUuid();
-      console.log("👤 User UUID for notifications:", userUuid);
 
       if (userUuid) {
-        console.log("🔐 Authenticating and joining notifications for user:", userUuid);
         socket.emit("authenticate", userUuid);
         socket.emit("joinNotifications", userUuid);
       } else {
-        console.log("⚠️ No user UUID found, cannot join notifications");
+        toast.error({
+          title: "common:notification.error",
+          description: "common:message.no-user-uuid",
+        });
       }
 
       socket.on("newNotification", (notification: TNotification) => {
@@ -132,7 +130,6 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
       });
 
       socket.on("notification", (data) => {
-        console.log("📢 Received generic notification:", data);
         toast.success({
           title: "notification:message.new-notification",
           description: data.message,
@@ -151,19 +148,15 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
       });
 
       socket.on("connect", () => {
-        console.log("✅ Socket connected");
       });
 
       socket.on("disconnect", () => {
-        console.log("❌ Socket disconnected");
       });
 
-      socket.on("authenticate", (response) => {
-        console.log("🔐 Authentication response:", response);
+      socket.on("authenticate", () => {
       });
 
-      socket.on("joinNotifications", (response) => {
-        console.log("🔔 Join notifications response:", response);
+      socket.on("joinNotifications", () => {
       });
 
       return () => {
@@ -205,10 +198,9 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
 
             <div
               className={`fixed top-0 left-0 h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out overflow-hidden
-                ${
-                  isSearchActive || isNotificationActive
-                    ? "xl:w-[18rem] md:w-[16rem] xl:translate-x-[4.5rem] opacity-100 z-[9]"
-                    : "w-0 translate-x-0 opacity-0 -z-[1]"
+                ${isSearchActive || isNotificationActive
+                  ? "xl:w-[18rem] md:w-[16rem] xl:translate-x-[4.5rem] opacity-100 z-[9]"
+                  : "w-0 translate-x-0 opacity-0 -z-[1]"
                 }
               `}
             >
@@ -217,13 +209,12 @@ const MainLayoutWrapper = ({ children }: MainLayoutProps) => {
             </div>
 
             <div
-              className={`py-5 transition-all duration-300 ease-in-out ${
-                expanded
-                  ? "xl:ml-64" // 16rem (SIDEBAR_WIDTH_EXPANDED)
-                  : isSearchActive || isNotificationActive
-                    ? "xl:ml-[22.5rem] md:ml-[16rem]" // 4.5rem + 20rem (SIDEBAR_WIDTH_COLLAPSED + SEARCH_PANEL_WIDTH)
-                    : "xl:ml-[4.5rem]" // 4.5rem (exact SIDEBAR_WIDTH_COLLAPSED)
-              }`}
+              className={`py-5 transition-all duration-300 ease-in-out ${expanded
+                ? "xl:ml-64" // 16rem (SIDEBAR_WIDTH_EXPANDED)
+                : isSearchActive || isNotificationActive
+                  ? "xl:ml-[22.5rem] md:ml-[16rem]" // 4.5rem + 20rem (SIDEBAR_WIDTH_COLLAPSED + SEARCH_PANEL_WIDTH)
+                  : "xl:ml-[4.5rem]" // 4.5rem (exact SIDEBAR_WIDTH_COLLAPSED)
+                }`}
             >
               {children}
             </div>

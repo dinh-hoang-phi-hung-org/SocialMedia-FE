@@ -141,7 +141,7 @@ const NewPostModal = (props: NewPostModalProps) => {
     try {
       const mediaFiles = getFilesFromMedia(selectedMedia);
 
-      const checkToxic = await TypeTransfer["AI"].otherAPIs?.checkLevelToxicOfComment(postContent);
+      const checkToxic = await TypeTransfer["AI"].otherAPIs?.checkLevelToxicOfComment(postContent.trim());
 
       if (checkToxic?.payload?.is_toxic) {
         toast.error({

@@ -33,23 +33,23 @@ class SocketService {
 
         // Setup default listeners
         this.socket.on("connect", () => {
-          console.log("✅ Socket connected successfully to chat namespace");
+          console.log("Socket connected successfully to chat namespace");
           // Xác thực người dùng khi kết nối thành công
           this.socket?.emit("authenticate", userId);
         });
 
         this.socket.on("disconnect", () => {
-          console.log("❌ Socket disconnected from chat namespace");
+          console.log("Socket disconnected from chat namespace");
         });
 
         this.socket.on("connect_error", (error) => {
-          console.error("❌ Socket connection error:", error);
+          console.error("Socket connection error:", error);
           console.log("Will try to reconnect automatically");
         });
 
         // Debug authentication response
         this.socket.on("authenticate", (response) => {
-          console.log("🔐 Authentication response:", response);
+          console.log("Authentication response:", response);
         });
       } catch (error) {
         console.error("Error creating socket connection:", error);
