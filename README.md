@@ -6,6 +6,27 @@ From a frontend perspective, the focus is on building an interactive, responsive
 
 ---
 
+## Report
+
+This project was developed as a graduation thesis at the University of Science and Technology — The University of Danang.
+
+**Title:** Social Media System Integrated with Negative Content Prevention Technology
+
+**Author:** Đinh Hoàng Phi Hùng · Student ID: 102210114 · Class: 21T-DT2
+
+**Major:** Software Engineering — Information Technology
+
+**Advisor:** ThS. Nguyễn Thế Xuân Ly
+
+**Institution:** Faculty of Information Technology, University of Science and Technology, The University of Danang
+
+**Year:** 2025
+
+The full graduation thesis report is available here:
+[Graduation Thesis Report (PDF)](https://drive.google.com/file/d/1Ue4nHwUSQQDds60lackH7RDCsJ0p5kNf/view?usp=sharing)
+
+---
+
 ## Tech Stack
 
 | Technology                                        | Version | Purpose                                              |
